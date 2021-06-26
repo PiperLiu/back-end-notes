@@ -1,4 +1,4 @@
-# Piper的前端学习笔记
+# Piper的后端学习笔记
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
@@ -15,4 +15,4 @@
 
 - [./bigdata/spark/READMD.md](./bigdata/spark/READMD.md)
 
-关于学习 spark 的心路历程（本项目成立的原因）：[./journey/drafts/20210625spark.md](./journey/drafts/20210625spark.md)
+关于学习 spark 的心路历程（本项目成立的原因）：[准备开始系统学习后端：以 Spark 项目为契机](./journey/drafts/20210625spark.md)
