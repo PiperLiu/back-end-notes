@@ -47,3 +47,11 @@
 #### scala语言思想与基础
 [./drafts/0102scala语言思想与基础.md](./drafts/0102scala语言思想与基础.md)
 
+- [Scala 基本思想与注意事项](./drafts/0102scala语言思想与基础.md#scala-基本思想与注意事项)
+- [最基本的语法示例](./drafts/0102scala语言思想与基础.md#最基本的语法示例)
+  - [类型的声明、控制结构（for、模式匹配、case）](./drafts/0102scala语言思想与基础.md#类型的声明-控制结构for-模式匹配-case)
+  - [Scala 语法独特的地方](./drafts/0102scala语言思想与基础.md#scala-语法独特的地方)
+  - [Scala 的面向对象与一等公民“函数”](./drafts/0102scala语言思想与基础.md#scala-的面向对象与一等公民函数)
+- [基本数据结构](./drafts/0102scala语言思想与基础.md#基本数据结构)
+  - [注意事项与 Scala 奇技淫巧](./drafts/0102scala语言思想与基础.md#注意事项与-scala-奇技淫巧)
+  - [关于数据结构的讨论（List or Array?）](./drafts/0102scala语言思想与基础.md#关于数据结构的讨论list-or-array)
