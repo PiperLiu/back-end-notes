@@ -48,6 +48,7 @@
 [./drafts/0102scala语言思想与基础.md](./drafts/0102scala语言思想与基础.md)
 
 - [Scala 基本思想与注意事项](./drafts/0102scala语言思想与基础.md#scala-基本思想与注意事项)
+  - [注意事项速查！](./drafts/0102scala语言思想与基础.md#注意事项速查)
 - [最基本的语法示例](./drafts/0102scala语言思想与基础.md#最基本的语法示例)
   - [类型的声明、控制结构（for、模式匹配、case）](./drafts/0102scala语言思想与基础.md#类型的声明-控制结构for-模式匹配-case)
   - [Scala 语法独特的地方](./drafts/0102scala语言思想与基础.md#scala-语法独特的地方)
