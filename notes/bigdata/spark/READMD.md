@@ -10,6 +10,7 @@
 - [历史、生态概述以及工具基础](#历史-生态概述以及工具基础)
   - [大数据技术生态略写与Spark历史](#大数据技术生态略写与spark历史)
   - [scala语言思想与基础](#scala语言思想与基础)
+  - [关于 Spark 工作日志记录](#关于-spark-工作日志记录)
 
 <!-- /code_chunk_output -->
 
@@ -56,3 +57,14 @@
 - [基本数据结构](./drafts/0102scala语言思想与基础.md#基本数据结构)
   - [注意事项与 Scala 奇技淫巧](./drafts/0102scala语言思想与基础.md#注意事项与-scala-奇技淫巧)
   - [关于数据结构的讨论（List or Array?）](./drafts/0102scala语言思想与基础.md#关于数据结构的讨论list-or-array)
+
+#### 关于 Spark 工作日志记录
+[./drafts/0103关于Spark工作日志.md](./drafts/0103关于Spark工作日志.md)
+
+- [数据『读写』以及『分列』操作](./drafts/0103关于Spark工作日志.md#数据读写以及分列操作)
+  - [『分列』](./drafts/0103关于Spark工作日志.md#分列)
+  - [读写](./drafts/0103关于Spark工作日志.md#读写)
+- [一些技巧](./drafts/0103关于Spark工作日志.md#一些技巧)
+  - [.zipWithIndex.foreach](./drafts/0103关于Spark工作日志.md#zipwithindexforeach)
+- [一些疑惑](./drafts/0103关于Spark工作日志.md#一些疑惑)
+  - [如何从 DataFrame 中取出具体某一行！](./drafts/0103关于Spark工作日志.md#如何从-dataframe-中取出具体某一行)
