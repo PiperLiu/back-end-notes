@@ -335,3 +335,19 @@ import org.apache.spark.ml.feature.{Bucketizer, QuantileDiscretizer}
 ```
 
 `spark`中 `Bucketizer` 的作用和我实现的需求差不多（尽管细节不同），我猜测其中也应该有相似逻辑。有能力和精力了应该去读读源码，看看官方怎么实现的。
+
+##### 7月20日：想到了一个好方案
+
+一列一列 collect 太慢了，全都 collect 还爆内存，我这里调了配置也没用.
+
+![](../assets/images/20210720collect1.png)
+
+![](../assets/images/20210720collect2.png)
+
+既然我的需求横竖都需要对数组进行排序，在操作某一列时，肯定要把这一列都安排到内存里来。
+
+因此我减少 IO 时间，少 IO 几次，可以一次 collect 一些列。
+
+比如我有 2184 个列，以前一次 collect 一列，要 2184 次 IO ，现在一次 collect 100 个，要 22 次 IO 就行了。快了大概能有 100 倍。
+
+实践中，我的用时从 15 小时提升到了 12 分钟。（快了 75 倍）
