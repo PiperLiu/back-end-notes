@@ -16,7 +16,8 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 <!-- code_chunk_output -->
 
 - [第一讲 常用文件管理命令](#第一讲-常用文件管理命令)
-- [第二讲](#第二讲)
+- [第二讲 tmux和vim](#第二讲-tmux和vim)
+- [第三讲 shell语法](#第三讲-shell语法)
 
 <!-- /code_chunk_output -->
 
@@ -34,7 +35,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [创建作业&测试作业的正确性](./drafts/01.md#创建作业测试作业的正确性)
 - [作业](./drafts/01.md#作业)
 
-### 第二讲
+### 第二讲 tmux和vim
 [./drafts/02.md](./drafts/02.md)
 
 - [tmux](./drafts/02.md#tmux)
@@ -45,3 +46,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
   - [vim模式](./drafts/02.md#vim模式)
   - [vim操作](./drafts/02.md#vim操作)
 - [作业](./drafts/02.md#作业)
+
+### 第三讲 shell语法
+![./drafts/03.md](./drafts/03.md)
+
