@@ -18,6 +18,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [第一讲 常用文件管理命令](#第一讲-常用文件管理命令)
 - [第二讲 tmux和vim](#第二讲-tmux和vim)
 - [第三讲 shell语法](#第三讲-shell语法)
+- [第四讲 ssh](#第四讲-ssh)
 
 <!-- /code_chunk_output -->
 
@@ -67,3 +68,10 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [文件重定向](./drafts/03.md#文件重定向)
 - [引入外部脚本](./drafts/03.md#引入外部脚本)
 - [作业](./drafts/03.md#作业)
+
+### 第四讲 ssh
+![./drafts/04.md](./drafts/04.md)
+
+- [ssh登录](./drafts/04.md#ssh登录)
+- [scp传文件](./drafts/04.md#scp传文件)
+- [作业](./drafts/04.md#作业)
