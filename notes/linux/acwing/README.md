@@ -19,6 +19,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [第二讲 tmux和vim](#第二讲-tmux和vim)
 - [第三讲 shell语法](#第三讲-shell语法)
 - [第四讲 ssh](#第四讲-ssh)
+- [第五讲 git](#第五讲-git)
 
 <!-- /code_chunk_output -->
 
@@ -75,3 +76,11 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [ssh登录](./drafts/04.md#ssh登录)
 - [scp传文件](./drafts/04.md#scp传文件)
 - [作业](./drafts/04.md#作业)
+
+### 第五讲 git
+[./drafts/05.md](./drafts/05.md)
+
+- [代码托管平台：git.acwing.com](./drafts/05.md#代码托管平台gitacwingcom)
+- [讲义：各个命令介绍](./drafts/05.md#讲义各个命令介绍)
+- [课堂笔记](./drafts/05.md#课堂笔记)
+- [作业](./drafts/05.md#作业)
