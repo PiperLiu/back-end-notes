@@ -20,6 +20,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [第三讲 shell语法](#第三讲-shell语法)
 - [第四讲 ssh](#第四讲-ssh)
 - [第五讲 git](#第五讲-git)
+- [第六讲 thrift](#第六讲-thrift)
 
 <!-- /code_chunk_output -->
 
@@ -50,7 +51,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [作业](./drafts/02.md#作业)
 
 ### 第三讲 shell语法
-![./drafts/03.md](./drafts/03.md)
+[./drafts/03.md](./drafts/03.md)
 
 - [概论](./drafts/03.md#概论)
 - [注释](./drafts/03.md#注释)
@@ -71,7 +72,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [作业](./drafts/03.md#作业)
 
 ### 第四讲 ssh
-![./drafts/04.md](./drafts/04.md)
+[./drafts/04.md](./drafts/04.md)
 
 - [ssh登录](./drafts/04.md#ssh登录)
 - [scp传文件](./drafts/04.md#scp传文件)
@@ -84,3 +85,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [讲义：各个命令介绍](./drafts/05.md#讲义各个命令介绍)
 - [课堂笔记](./drafts/05.md#课堂笔记)
 - [作业](./drafts/05.md#作业)
+
+### 第六讲 thrift
+[./drafts/06.md](./drafts/06.md)
+
