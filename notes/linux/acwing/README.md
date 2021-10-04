@@ -89,3 +89,6 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 ### 第六讲 thrift
 [./drafts/06.md](./drafts/06.md)
 
+- [thrift教程](./drafts/06.md#thrift教程)
+- [项目：游戏匹配系统](./drafts/06.md#项目游戏匹配系统)
+- [作业](./drafts/06.md#作业)
