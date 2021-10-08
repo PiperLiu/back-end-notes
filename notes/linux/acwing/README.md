@@ -21,6 +21,7 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [第四讲 ssh](#第四讲-ssh)
 - [第五讲 git](#第五讲-git)
 - [第六讲 thrift](#第六讲-thrift)
+- [第七讲 管道、环境变量与常用命令](#第七讲-管道-环境变量与常用命令)
 
 <!-- /code_chunk_output -->
 
@@ -92,3 +93,12 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [thrift教程](./drafts/06.md#thrift教程)
 - [项目：游戏匹配系统](./drafts/06.md#项目游戏匹配系统)
 - [作业](./drafts/06.md#作业)
+- [thrift 学习总结](./drafts/06.md#thrift-学习总结)
+
+### 第七讲 管道、环境变量与常用命令
+[./drafts/07.md](./drafts/07.md)
+
+- [管道](./drafts/07.md#管道)
+- [环境变量](./drafts/07.md#环境变量)
+- [常用命令](./drafts/07.md#常用命令)
+- [作业](./drafts/07.md#作业)
