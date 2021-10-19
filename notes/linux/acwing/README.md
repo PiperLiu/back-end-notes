@@ -111,4 +111,5 @@ y 总：本课程为【AcWing工程课系列】的基础课，讲解各种项目
 - [阿里云](./drafts/08.md#阿里云)
 - [腾讯云](./drafts/08.md#腾讯云)
 - [华为云](./drafts/08.md#华为云)
+- [docker教程](./drafts/08.md#docker教程)
 - [作业](./drafts/08.md#作业)
