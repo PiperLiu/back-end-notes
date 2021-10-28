@@ -19,7 +19,18 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 <!-- code_chunk_output -->
 
 - [课程概论和Python3语法](#课程概论和python3语法)
+- [配置docker、git环境与项目创建](#配置docker-git环境与项目创建)
 
 <!-- /code_chunk_output -->
 
 ### 课程概论和Python3语法
+[./drafts/01_python3.md](./drafts/01_python3.md)
+
+- [课程体系](./drafts/01_python3.md#课程体系)
+- [Django简介](./drafts/01_python3.md#django简介)
+- [实战项目](./drafts/01_python3.md#实战项目)
+- [开发环境](./drafts/01_python3.md#开发环境)
+- [Python3语法](./drafts/01_python3.md#python3语法)
+
+### 配置docker、git环境与项目创建
+[./drafts/02_docker.md](./drafts/02_docker.md)
