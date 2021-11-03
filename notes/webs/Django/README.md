@@ -2,6 +2,8 @@
 
 框架其实还是自学为好，毕竟，以后工作中根据业务探索新技术时，不可能指望有人手把手带你用框架。 **必须有读文档自学的能力。** 那我为啥要买这个课呢？急于吸取经验：看看一个熟练用户是如何理解 Django 的，看看 Django 有哪些注意事项，看看一些其他开发的技巧与知识点，比如 web socket 等等。
 
+前端主要是用 `jQuery` ，页面用 `js` 在客户端渲染。路由等内容还是用 `Django` 在控制。
+
 y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django框架课》，讲解Python语法和Django框架。
 
 课程期间会带领大家开发一个`Django`项目。
@@ -22,6 +24,7 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 
 - [课程概论和Python3语法](#课程概论和python3语法)
 - [配置docker、git环境与项目创建](#配置docker-git环境与项目创建)
+- [创建菜单界面（Django基础）](#创建菜单界面django基础)
 
 <!-- /code_chunk_output -->
 
@@ -39,3 +42,10 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 
 - [配置 docker 环境](./drafts/02_docker.md#配置-docker-环境)
 - [知识点拾遗](./drafts/02_docker.md#知识点拾遗)
+
+### 创建菜单界面（Django基础）
+[./drafts/03_django.md](./drafts/03_django.md)
+
+- [项目结构与素材](./drafts/03_django.md#项目结构与素材)
+- [操作路径记录](./drafts/03_django.md#操作路径记录)
+- [总结](./drafts/03_django.md#总结)
