@@ -254,7 +254,7 @@ acs:~/acapp/game/static/js/src$ vim zbase.js
 - 因为是拿 `shell` 根据字典序打包的，所以为了把 `zbase.js` 放在最后...
 
 `/home/acs/acapp/game/static/js/src/zbase.js`：
-```bash
+```js
 class AcGame {
     constructor(id) {
         this.id = id;
@@ -317,7 +317,7 @@ acs:~/acapp/game/urls$ vim index.py
 ```
 
 `vim index.py`：
-```bash
+```python
 from django.urls import path, include
 from game.views.index import index
 
