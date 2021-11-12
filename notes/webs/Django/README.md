@@ -26,6 +26,7 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 - [配置docker、git环境与项目创建](#配置docker-git环境与项目创建)
 - [创建菜单界面（Django基础）](#创建菜单界面django基础)
 - [创建游戏界面（js制作游戏）](#创建游戏界面js制作游戏)
+- [部署nginx与对接acapp（干货不多）](#部署nginx与对接acapp干货不多)
 
 <!-- /code_chunk_output -->
 
@@ -56,3 +57,8 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 
 - [个人心得](./drafts/04_js.md#个人心得)
 - [课程概述](./drafts/04_js.md#课程概述)
+
+### 部署nginx与对接acapp（干货不多）
+[./drafts/05_nginx.md](./drafts/05_nginx.md)
+
+
