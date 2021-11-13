@@ -85,7 +85,7 @@ git remote add origin git@git.acwing.com:xxx/XXX.git #建立连接
 git push --set-upstream origin master
 ```
 
-再打开一个`tmux`，(一个`tmux`用于维护控制台，另一个`tmux`用于开发)跑一下我们的项目 `pyhton3 manage.py runserver 0.0.0.0:8000`
+再打开一个`tmux`，(一个`tmux`用于维护控制台，另一个`tmux`用于开发)跑一下我们的项目 `python3 manage.py runserver 0.0.0.0:8000`
 
 `ag ALLOWED_HOSTS` 全文搜索
 - 找到这个字段所在位置，并将自己的IP地址添加到里面
