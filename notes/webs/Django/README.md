@@ -26,7 +26,7 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 - [配置docker、git环境与项目创建](#配置docker-git环境与项目创建)
 - [创建菜单界面（Django基础）](#创建菜单界面django基础)
 - [创建游戏界面（js制作游戏）](#创建游戏界面js制作游戏)
-- [部署nginx与对接acapp（干货不多）](#部署nginx与对接acapp干货不多)
+- [部署nginx与对接acapp（y总干货不多，我补充了一些）](#部署nginx与对接acappy总干货不多我补充了一些)
 
 <!-- /code_chunk_output -->
 
@@ -58,7 +58,35 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 - [个人心得](./drafts/04_js.md#个人心得)
 - [课程概述](./drafts/04_js.md#课程概述)
 
-### 部署nginx与对接acapp（干货不多）
+### 部署nginx与对接acapp（y总干货不多，我补充了一些）
 [./drafts/05_nginx.md](./drafts/05_nginx.md)
 
+- [部署流程](./drafts/05_nginx.md#部署流程)
+- [注意事项](./drafts/05_nginx.md#注意事项)
+- [一些关于 nginx 和 uWSGI 的知识](./drafts/05_nginx.md#一些关于-nginx-和-uwsgi-的知识)
 
+关于 `nginx` 与 `uWSGI` 记录在 [get_to_know_nginx](./drafts/get_to_know_nginx.md) ：
+- [前置知识](./drafts/get_to_know_nginx.md#前置知识)
+  - [代理](./drafts/get_to_know_nginx.md#代理)
+  - [正向代理](./drafts/get_to_know_nginx.md#正向代理)
+  - [反向代理](./drafts/get_to_know_nginx.md#反向代理)
+  - [负载均衡](./drafts/get_to_know_nginx.md#负载均衡)
+  - [负载均衡和反向代理的区别](./drafts/get_to_know_nginx.md#负载均衡和反向代理的区别)
+    - [SLB 产生背景](./drafts/get_to_know_nginx.md#slb-产生背景)
+    - [SLB 的三种传输模式](./drafts/get_to_know_nginx.md#slb-的三种传输模式)
+    - [反向代理模式](./drafts/get_to_know_nginx.md#反向代理模式)
+    - [反向代理总结](./drafts/get_to_know_nginx.md#反向代理总结)
+- [Nginx](./drafts/get_to_know_nginx.md#nginx)
+  - [Nginx 常用命令](./drafts/get_to_know_nginx.md#nginx-常用命令)
+  - [Nginx作用与conf相应配置](./drafts/get_to_know_nginx.md#nginx作用与conf相应配置)
+    - [Nginx配置简单示例](./drafts/get_to_know_nginx.md#nginx配置简单示例)
+    - [动静分离与相应配置](./drafts/get_to_know_nginx.md#动静分离与相应配置)
+    - [反向代理与负载均衡](./drafts/get_to_know_nginx.md#反向代理与负载均衡)
+  - [一些关于Nginx的讨论](./drafts/get_to_know_nginx.md#一些关于nginx的讨论)
+    - [Nginx的Master-Worker模式](./drafts/get_to_know_nginx.md#nginx的master-worker模式)
+    - [Nginx如何做到热部署？](./drafts/get_to_know_nginx.md#nginx如何做到热部署)
+    - [Nginx如何做到高并发下的高效处理？](./drafts/get_to_know_nginx.md#nginx如何做到高并发下的高效处理)
+    - [Nginx挂了怎么办？](./drafts/get_to_know_nginx.md#nginx挂了怎么办)
+- [如何理解wsgi](./drafts/get_to_know_nginx.md#如何理解wsgi)
+  - [作为应用程序](./drafts/get_to_know_nginx.md#作为应用程序)
+  - [作为服务器](./drafts/get_to_know_nginx.md#作为服务器)

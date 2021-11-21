@@ -143,3 +143,5 @@ uwsgi --ini scripts/uwsgi.ini
 ### 一些关于 nginx 和 uWSGI 的知识
 
 我的 app 用到的 [nginx 在 ../etc/ 里](../etc/nginx.conf) 。
+
+我的专门开了个[笔记详细记录 nginx 与 uWSGI](./get_to_know_nginx.md) 。
