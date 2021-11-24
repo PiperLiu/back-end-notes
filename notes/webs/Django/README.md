@@ -27,6 +27,7 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 - [创建菜单界面（Django基础）](#创建菜单界面django基础)
 - [创建游戏界面（js制作游戏）](#创建游戏界面js制作游戏)
 - [部署nginx与对接acapp（y总干货不多，我补充了一些）](#部署nginx与对接acappy总干货不多我补充了一些)
+- [创建账号系统（中）（简单应用Redis与授权第三方）](#创建账号系统中简单应用redis与授权第三方)
 
 <!-- /code_chunk_output -->
 
@@ -98,3 +99,7 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 - [开始设计登录逻辑](./drafts/06_login1.md#开始设计登录逻辑)
 - [实现用户登录注册后端](./drafts/06_login1.md#实现用户登录注册后端)
 - [实现用户登录注册前端](./drafts/06_login1.md#实现用户登录注册前端)
+
+### 创建账号系统（中）（简单应用Redis与授权第三方）
+[./drafts/06_login2.md](./drafts/06_login2.md)
+
