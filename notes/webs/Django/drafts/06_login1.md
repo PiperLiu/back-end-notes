@@ -175,6 +175,10 @@ def getinfo(request):
         return getinfo_web(request)
 ```
 
+**这里补充一点：request.user哪来的？**
+- 我们在 js 中进行 `getinfo` GET 请求，并没有显示传入 `user`
+- 实际上， Django 应该是在 `authenticate.login` 时就维持了一个会话 `Session`
+
 #### 登入登出
 
 在 `game/views/settings/login.py` ：

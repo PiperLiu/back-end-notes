@@ -9,6 +9,7 @@
 
 <!-- code_chunk_output -->
 
+- [AcApp思想与区别](#acapp思想与区别)
 - [AcApp流程](#acapp流程)
 
 <!-- /code_chunk_output -->
@@ -19,13 +20,26 @@
 
 <!-- code_chunk_output -->
 
+- [AcApp思想与区别](#acapp思想与区别)
 - [AcApp流程](#acapp流程)
   - [后端相关流程](#后端相关流程)
   - [前后端实现要点](#前后端实现要点)
 
 <!-- /code_chunk_output -->
 
+### AcApp思想与区别
+
+在 AcApp 里不需要有登录页面，会在前端调用 `AcWingOS` 对象（由 AcWing 提供）中的 API 弹出登录框。
+
+此外，在前端 `this.root.AcWingOS.api.oauth2.authorize`需要传入一个 `callback` 函数，用于处理 AcWing 返回的数据信息。
+
+这些都是 AcWing 平台独创，不必太纠结。
+
 ### AcApp流程
+
+- 我的项目地址：[https://app160.acapp.acwing.com.cn/](https://app160.acapp.acwing.com.cn/)
+- 我的 AcApp 地址：[https://www.acwing.com/file_system/file/content/whole/index/content/3262287/](https://www.acwing.com/file_system/file/content/whole/index/content/3262287/)
+- 我的项目地址：[https://git.acwing.com/PiperLiu/acapp](https://git.acwing.com/PiperLiu/acapp)
 
 #### 后端相关流程
 
@@ -264,3 +278,225 @@ https://www.acwing.com/third_party/api/meta/identity/getinfo/?access_token=ACCES
 ```
 
 #### 前后端实现要点
+
+实现和上节课基本相似。
+
+修改如下：
+- 后端处理 oauth2 逻辑
+  - `game/views/settings/acwing/acapp/apply_code.py`
+  - `game/views/settings/acwing/acapp/receive_code.py`
+- 修改路由 `game/urls/settings/acwing/index.py`
+- 修改前端请求逻辑 `game/static/js/src/settings/zbase.js`
+
+来看具体：
+
+`game/views/settings/acwing/acapp/apply_code.py`：
+
+```python
+from django.http import JsonResponse
+from urllib.parse import quote
+from random import randint
+from django.core.cache import cache
+
+
+def get_state():
+    res = ""
+    for i in range(8):
+        res += str(randint(0, 9))
+    return res
+
+
+def apply_code(request):
+    appid = "160"
+    redirect_uri = quote("https://app160.acapp.acwing.com.cn/settings/acwing/acapp/receive_code/")
+    scope = "userinfo"
+    state = get_state()
+
+    cache.set(state, True, 7200)   # 有效期2小时
+
+    return JsonResponse({
+        'result': "success",
+        'appid': appid,
+        'redirect_uri': redirect_uri,
+        'scope': scope,
+        'state': state,
+    })
+```
+
+这个和 web 版没啥区别。
+
+`game/views/settings/acwing/acapp/receive_code.py`：
+
+```python
+from django.http import JsonResponse
+from django.core.cache import cache
+import requests
+from django.contrib.auth.models import User
+from game.models.player.player import Player
+from random import randint
+
+
+def receive_code(request):
+    data = request.GET
+
+    if "errcode" in data:
+        return JsonResponse({
+            'result': "apply failed",
+            'errcode': data['errcode'],
+            'errmsg': data['errmsg'],
+        })
+
+    code = data.get('code')
+    state = data.get('state')
+
+    if not cache.has_key(state):
+        return JsonResponse({
+            'result': "state not exist"
+        })
+    cache.delete(state)
+
+    apply_access_token_url = "https://www.acwing.com/third_party/api/oauth2/access_token/"
+    params = {
+        'appid': "160",
+        'secret': "9da264b9110443649ae71692f1ee974e",
+        'code': code
+    }
+
+    access_token_res = requests.get(apply_access_token_url, params=params).json()
+
+    access_token = access_token_res['access_token']
+    openid = access_token_res['openid']
+
+    players = Player.objects.filter(openid=openid)
+    if players.exists():  # 如果该用户已存在，则无需重新获取信息，直接登录即可
+        player = players[0]
+        return JsonResponse({
+            'result': "success",
+            'username': player.user.username,
+            'photo': player.photo,
+        })
+
+
+    get_userinfo_url = "https://www.acwing.com/third_party/api/meta/identity/getinfo/"
+    params = {
+        "access_token": access_token,
+        "openid": openid
+    }
+    userinfo_res = requests.get(get_userinfo_url, params=params).json()
+    username = userinfo_res['username']
+    photo = userinfo_res['photo']
+
+    while User.objects.filter(username=username).exists():  # 找到一个新用户名
+        username += str(randint(0, 9))
+
+    user = User.objects.create(username=username)
+    player = Player.objects.create(user=user, photo=photo, openid=openid)
+
+    return JsonResponse({
+        'result': "success",
+        'username': player.user.username,
+        'photo': player.photo,
+    })
+```
+
+这个和 web 版也没啥区别。
+
+修改路由：`game/urls/settings/acwing/index.py`
+
+```python
+  from django.urls import path
+- from game.views.settings.acwing.web.apply_code import apply_code
+- from game.views.settings.acwing.web.receive_code import receive_code
++ from game.views.settings.acwing.web.apply_code import apply_code as apply_code_web
++ from game.views.settings.acwing.web.receive_code import receive_code as receive_code_web
++ from game.views.settings.acwing.acapp.apply_code import apply_code as apply_code_acapp
++ from game.views.settings.acwing.acapp.receive_code import receive_code as receive_code_acapp
+  
+  
+  urlpatterns = [
+-     path("web/apply_code/", apply_code, name="settings_acwing_web_apply_code"),
+-     path("web/receive_code/", receive_code, name="settings_acwing_web_receive_code"),
++     path("web/apply_code/", apply_code_web, name="settings_acwing_web_apply_code"),
++     path("web/receive_code/", receive_code_web, name="settings_acwing_web_receive_code"),
++     path("acapp/apply_code/", apply_code_acapp, name="settings_acwing_acapp_apply_code"),
++     path("acapp/receive_code/", receive_code_acapp, name="settings_acwing_acapp_receive_code"),
+  ]
+```
+
+整理了一下函数名。
+
+然后是前端，前端的修改最为重要，因为 acapp 是通过 AcWingOS 提供的 API 进行回调函数来实现页面重定向/刷新的。
+
+`static/js/src/settings/zbase.js`：
+
+```js
+      start() {
+-        this.getinfo();
+-        this.add_listening_events();
++        if (this.platform === "ACAPP") {
++            // console.log("start")
++            console.log("this.platform === ACAPP")
++            this.getinfo_acapp();
++        } else {
++            this.getinfo_web();
++            this.add_listening_events();
++        }
+      }
+  
+      add_listening_events_login() {
+          this.$login.show();
+      }
+  
+-     getinfo() {
++     getinfo_web() {
+          let outer = this;
+  
+          $.ajax({
+              ...
+          });
+      }
+  
++     // 注意如果是在 acapp 中
++     // 每次都要 apply code 一次
++     getinfo_acapp() {
++         let outer = this;
++ 
++         console.log("getinfo_acapp");
++         $.ajax({
++             url: "https://app160.acapp.acwing.com.cn/settings/acwing/acapp/apply_code/",
++             type: "GET",
++             data: {
++                 platform: outer.platform,
++             },
++             success: function (resp) {
++                 if (resp.result === "success") {
++                     outer.acapp_login(resp.appid, resp.redirect_uri, resp.scope, resp.state);
++                 }
++             }
++         })
++     }
+  
++     acapp_login(appid, redirect_uri, scope, state) {
++         let outer = this;
++ 
++         // 这里利用 AcWing 提供的实例
++         this.root.AcWingOS.api.oauth2.authorize(appid, redirect_uri, scope, state, function (resp)+{
++             console.log("called from acapp_login function");
++             console.log(resp);
++             if (resp.result === "success") {
++                 outer.username = resp.username;
++                 outer.photo = resp.photo;
++                 outer.hide();
++                 outer.root.menu.show();
++             }
++         });
++     }
+  
+      hide() {
+          this.$settings.hide();
+      }
+```
+
+将之前写的 `getinfo` 改为 `getinfo_web` ；新增 `acapp` 登录专用逻辑。
+
+注意：注意如果是在 acapp 中，每次都要 apply code 一次。

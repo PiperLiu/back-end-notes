@@ -118,3 +118,5 @@ y 总：本课程为【AcWing工程课系列——Level-2 第一篇】《Django�
 ### 创建账号系统（下）（AcApp端AcWing一键登录）
 [./drafts/06_login3.md](./drafts/06_login3.md)
 
+- [AcApp思想与区别](./drafts/06_login3.md#acapp思想与区别)
+- [AcApp流程](./drafts/06_login3.md#acapp流程)

@@ -399,8 +399,8 @@ def get_state():
 
 
 def apply_code(request):
-    appid = "165"
-    redirect_uri = quote("https://app165.acapp.acwing.com.cn/settings/acwing/web/receive_code/")
+    appid = "160"
+    redirect_uri = quote("https://app160.acapp.acwing.com.cn/settings/acwing/web/receive_code/")
     scope = "userinfo"
     state = get_state()
 
@@ -504,7 +504,7 @@ urlpatterns = [
     path("login/", signin, name="settings_login"),
     path("logout/", signout, name="settings_logout"),
     path("register/", register, name="settings_register"),
-    path("acwing/", include("games.urls.settings.acwing.index")),  # 新增
+    path("acwing/", include("game.urls.settings.acwing.index")),  # 新增
 ]
 ```
 
@@ -513,6 +513,10 @@ urlpatterns = [
 `game/static/js/src/settings/zbase.js` ：
 
 ![](./images/2021112504.png)
+
+最终效果如下。
+
+![](./images/2021112505.png)
 
 ### Django shell
 
