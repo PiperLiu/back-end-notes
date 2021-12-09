@@ -12,3 +12,5 @@ https://sqlzoo.net/wiki/SQL_Tutorial
 <!-- /code_chunk_output -->
 
 ### SELECT basics
+
+[./drafts/sql.001.md](./drafts/sql.001.md)
