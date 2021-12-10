@@ -6,6 +6,7 @@
 <!-- code_chunk_output -->
 
 - [基础的查询与运算](#基础的查询与运算)
+- [高级用法拾遗](#高级用法拾遗)
 
 <!-- /code_chunk_output -->
 
@@ -17,7 +18,12 @@
 - [基础的查询与运算](#基础的查询与运算)
   - [热身：WHERE, IN, BETWEEN, LIKE](#热身where-in-between-like)
   - [基本运算：AND, OR, 加减乘除, length](#基本运算and-or-加减乘除-length)
-  - [异或XOR, 圆整ROUND, LEFT与不等号](#异或xor-圆整round-left与不等号)
+  - [异或XOR, 圆整ROUND, LEFT与不等号NOT](#异或xor-圆整round-left与不等号not)
+- [高级用法拾遗](#高级用法拾遗)
+  - [Umlaut 非ASC码字符 Non-ASCII characters](#umlaut-非asc码字符-non-ascii-characters)
+  - [Apostrophe 撇号](#apostrophe-撇号)
+  - [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
+  - [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
 
 <!-- /code_chunk_output -->
 
@@ -85,7 +91,7 @@ SELECT name, gdp / population
  WHERE population >= 200000000
 ```
 
-#### 异或XOR, 圆整ROUND, LEFT与不等号
+#### 异或XOR, 圆整ROUND, LEFT与不等号NOT
 
 异或`XOR`：
 
@@ -153,5 +159,90 @@ SELECT name FROM world
  name  LIKE '%i%' AND 
  name  LIKE '%o%' AND 
  name  LIKE '%u%' AND 
- name NOT LIKE '% %'
+ name NOT LIKE '% %'  --不含空格
+
+/*
+Show the year, subject,
+  and name of winners for 1980
+  excluding Chemistry and Medicine
+*/
+SELECT *
+  FROM nobel
+ WHERE yr = 1980 AND subject NOT IN ('Chemistry', 'Medicine')
+```
+
+### 高级用法拾遗
+
+#### Umlaut 非ASC码字符 Non-ASCII characters
+
+Find all details of the prize won by PETER GRÜNBERG.
+
+Non-ASCII characters:
+- The u in his name has an umlaut. You may find this link useful
+- [https://en.wikipedia.org/wiki/%C3%9C#Keyboarding](https://en.wikipedia.org/wiki/%C3%9C#Keyboarding).
+
+```sql
+SELECT *
+  FROM nobel
+ WHERE winner LIKE 'peter gr%nberg'
+```
+
+|yr|subject|winner|
+|---|---|---|
+|2007|Physics|Peter Grünberg|
+
+#### Apostrophe 撇号
+
+Find all details of the prize won by `EUGENE O'NEILL`.
+
+两个 `''` 相当于字符 `'` 。
+
+```sql
+SELECT *
+FROM nobel
+WHERE winner = 'Eugene O''Neill'
+```
+
+#### 排序 ORDER BY 与逆序 DESC
+
+List the winners, year and subject where the winner starts with Sir. Show the the most recent first, then by name order.
+
+```sql
+SELECT winner, yr, subject
+FROM nobel
+WHERE winner LIKE 'sir%'
+ORDER BY yr DESC, winner
+```
+
+#### CASE 与 ORDER BY 混用
+
+Show the 1984 winners and subject ordered by subject and winner name; but list Chemistry and Physics last.
+
+查找1984年获奖者和主题，按主题和获胜者名称排序，并把化学奖和物理奖排到最后面显示。
+
+```sql
+SELECT winner, subject
+FROM nobel
+WHERE yr=1984
+ORDER BY
+CASE
+WHEN subject IN ('Physics','Chemistry')
+THEN 1
+ELSE 0
+END ASC,
+subject,
+winner
+```
+
+啥意思呢，这句 `CASE WHEN subject IN ('Physics','Chemistry') THEN 1 ELSE 0 END` 会让属于'物理'和'化学'的返回 `1` ，否则返回 `0` ，然后按照 `ASC` 升序排列，因此属于 `1` 的就到后面去，接着再按照 `subject` 和 `winner` 排序。
+
+其实这里 `subject IN ('Physics','Chemistry') ` 自动返回 `1` 和 `0` 因此可以用不 `case` ：
+
+```sql
+SELECT winner, subject
+FROM nobel
+WHERE yr=1984
+ORDER BY subject IN ('Physics','Chemistry') ASC,
+subject,
+winner
 ```
