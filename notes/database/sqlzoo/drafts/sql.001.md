@@ -6,7 +6,10 @@
 <!-- code_chunk_output -->
 
 - [基础的查询与运算](#基础的查询与运算)
-- [高级用法拾遗](#高级用法拾遗)
+- [Umlaut 非ASC码字符 Non-ASCII characters](#umlaut-非asc码字符-non-ascii-characters)
+- [Apostrophe 撇号](#apostrophe-撇号)
+- [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
+- [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
 
 <!-- /code_chunk_output -->
 
@@ -19,11 +22,10 @@
   - [热身：WHERE, IN, BETWEEN, LIKE](#热身where-in-between-like)
   - [基本运算：AND, OR, 加减乘除, length](#基本运算and-or-加减乘除-length)
   - [异或XOR, 圆整ROUND, LEFT与不等号NOT](#异或xor-圆整round-left与不等号not)
-- [高级用法拾遗](#高级用法拾遗)
-  - [Umlaut 非ASC码字符 Non-ASCII characters](#umlaut-非asc码字符-non-ascii-characters)
-  - [Apostrophe 撇号](#apostrophe-撇号)
-  - [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
-  - [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
+- [Umlaut 非ASC码字符 Non-ASCII characters](#umlaut-非asc码字符-non-ascii-characters)
+- [Apostrophe 撇号](#apostrophe-撇号)
+- [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
+- [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
 
 <!-- /code_chunk_output -->
 
@@ -171,9 +173,7 @@ SELECT *
  WHERE yr = 1980 AND subject NOT IN ('Chemistry', 'Medicine')
 ```
 
-### 高级用法拾遗
-
-#### Umlaut 非ASC码字符 Non-ASCII characters
+### Umlaut 非ASC码字符 Non-ASCII characters
 
 Find all details of the prize won by PETER GRÜNBERG.
 
@@ -191,7 +191,7 @@ SELECT *
 |---|---|---|
 |2007|Physics|Peter Grünberg|
 
-#### Apostrophe 撇号
+### Apostrophe 撇号
 
 Find all details of the prize won by `EUGENE O'NEILL`.
 
@@ -203,7 +203,7 @@ FROM nobel
 WHERE winner = 'Eugene O''Neill'
 ```
 
-#### 排序 ORDER BY 与逆序 DESC
+### 排序 ORDER BY 与逆序 DESC
 
 List the winners, year and subject where the winner starts with Sir. Show the the most recent first, then by name order.
 
@@ -214,7 +214,7 @@ WHERE winner LIKE 'sir%'
 ORDER BY yr DESC, winner
 ```
 
-#### CASE 与 ORDER BY 混用
+### CASE 与 ORDER BY 混用
 
 Show the 1984 winners and subject ordered by subject and winner name; but list Chemistry and Physics last.
 
