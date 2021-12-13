@@ -9,6 +9,7 @@
 - [Umlaut 非ASC码字符 Non-ASCII characters](#umlaut-非asc码字符-non-ascii-characters)
 - [Apostrophe 撇号](#apostrophe-撇号)
 - [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
+- [取前 K 个数用 LIMIT](#取前-k-个数用-limit)
 - [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
 - [嵌套查询、去重 DISTINCT、聚合 GROUP BY](#嵌套查询-去重-distinct-聚合-group-by)
 - [混合练习：CONCAT与处理NULL值](#混合练习concat与处理null值)
@@ -29,6 +30,7 @@
 - [Umlaut 非ASC码字符 Non-ASCII characters](#umlaut-非asc码字符-non-ascii-characters)
 - [Apostrophe 撇号](#apostrophe-撇号)
 - [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
+- [取前 K 个数用 LIMIT](#取前-k-个数用-limit)
 - [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
 - [嵌套查询、去重 DISTINCT、聚合 GROUP BY](#嵌套查询-去重-distinct-聚合-group-by)
   - [简单嵌套查询及其用处（条件筛选/运算/ALL等）](#简单嵌套查询及其用处条件筛选运算all等)
@@ -225,6 +227,17 @@ FROM nobel
 WHERE winner LIKE 'sir%'
 ORDER BY yr DESC, winner
 ```
+
+### 取前 K 个数用 LIMIT
+
+```sql
+SELECT name, population
+  FROM bbc
+  WHERE population > 100000000
+  ORDER BY population DESC LIMIT 3
+```
+
+如上，取最大的前 3 个数（先降序，再 `LIMIT`）。
 
 ### CASE 与 ORDER BY 混用
 
