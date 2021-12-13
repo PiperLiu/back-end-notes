@@ -10,9 +10,13 @@
 - [Apostrophe 撇号](#apostrophe-撇号)
 - [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
 - [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
+- [嵌套查询、去重 DISTINCT、聚合 GROUP BY](#嵌套查询-去重-distinct-聚合-group-by)
+- [混合练习：CONCAT与处理NULL值](#混合练习concat与处理null值)
+- [correlated sub-query or synchronized sub-query（子查询同步？）](#correlated-sub-query-or-synchronized-sub-query子查询同步)
 
 <!-- /code_chunk_output -->
 
+细分目录：
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
@@ -26,6 +30,14 @@
 - [Apostrophe 撇号](#apostrophe-撇号)
 - [排序 ORDER BY 与逆序 DESC](#排序-order-by-与逆序-desc)
 - [CASE 与 ORDER BY 混用](#case-与-order-by-混用)
+- [嵌套查询、去重 DISTINCT、聚合 GROUP BY](#嵌套查询-去重-distinct-聚合-group-by)
+  - [简单嵌套查询及其用处（条件筛选/运算/ALL等）](#简单嵌套查询及其用处条件筛选运算all等)
+  - [嵌套与DISTINCT用法](#嵌套与distinct用法)
+  - [GROUPBY](#groupby)
+- [混合练习：CONCAT与处理NULL值](#混合练习concat与处理null值)
+  - [字符串合并CONCAT](#字符串合并concat)
+  - [可用大于0处理NULL](#可用大于0处理null)
+- [correlated sub-query or synchronized sub-query（子查询同步？）](#correlated-sub-query-or-synchronized-sub-query子查询同步)
 
 <!-- /code_chunk_output -->
 
@@ -245,4 +257,219 @@ WHERE yr=1984
 ORDER BY subject IN ('Physics','Chemistry') ASC,
 subject,
 winner
+```
+
+### 嵌套查询、去重 DISTINCT、聚合 GROUP BY
+
+#### 简单嵌套查询及其用处（条件筛选/运算/ALL等）
+
+条件筛选：
+```sql
+--List each country in the same continent as 'Brazil'.
+SELECT name FROM world WHERE continent =
+  (SELECT continent FROM world WHERE name='Brazil')
+/*
+  有些版本的 sql 可以用 AS 设置表的别名
+*/
+SELECT name FROM world WHERE continent = 
+  (SELECT continent FROM world WHERE name='Brazil') AS brazil_continent
+
+--List each country and its continent in the same continent as 'Brazil' or 'Mexico'.
+SELECT name, continent FROM world
+WHERE continent IN
+  (SELECT continent 
+     FROM world WHERE name='Brazil'
+                   OR name='Mexico')
+
+-- List the name and continent of countries in the continents
+--  containing either Argentina or Australia.
+--  Order by name of the country.
+SELECT name, continent
+FROM world
+WHERE continent IN
+  (SELECT continent FROM world WHERE name IN ('Argentina', 'Australia'))
+ORDER BY name
+```
+
+运算：
+```sql
+--Show the population of China as a multiple of
+--  the population of the United Kingdom
+SELECT
+ population/(SELECT population FROM world
+             WHERE name='United Kingdom')
+  FROM world
+WHERE name = 'China'
+
+/*
+Result:
+population/(S..
+21.2987
+*/
+
+--Show the countries in Europe with a per capita GDP
+--  greater than 'United Kingdom'.
+SELECT name
+FROM world
+WHERE gdp/population >
+    (SELECT gdp/population FROM world WHERE name = 'United Kingdom') AND continent = 'Europe'
+```
+
+`ALL` 和 `ANY` 可以同运算联用：
+
+You can use the words `ALL` or `ANY `where the right side of the operator might have multiple values.
+
+```sql
+--Show each country that has a population greater than
+--  the population of ALL countries in Europe.
+
+--Note that we mean greater than every single country in Europe;
+--  not the combined population of Europe.
+SELECT name FROM world
+ WHERE population > ALL
+      (SELECT population FROM world
+        WHERE continent='Europe')
+```
+
+#### 嵌套与DISTINCT用法
+
+```sql
+--Select the code which would show the year
+--  when neither a Physics or Chemistry award was given
+SELECT yr FROM nobel
+ WHERE yr NOT IN(SELECT yr 
+                   FROM nobel
+                 WHERE subject IN ('Chemistry','Physics'))
+
+--Pick the code that shows the amount of
+--  years where no Medicine awards were given
+SELECT COUNT(DISTINCT yr) FROM nobel
+ WHERE yr NOT IN (SELECT DISTINCT yr FROM nobel WHERE subject = 'Medicine')
+
+--Select the code which shows the years
+--  when a Medicine award was given but no Peace or Literature award was
+SELECT DISTINCT yr
+  FROM nobel
+ WHERE subject='Medicine' 
+   AND yr NOT IN(SELECT yr FROM nobel 
+                  WHERE subject='Literature')
+   AND yr NOT IN (SELECT yr FROM nobel
+                   WHERE subject='Peace')
+```
+
+#### GROUPBY
+
+`GROUP BY` 也很直观：
+
+原表：
+```
+nobel
+yr	subject	winner
+1960	Chemistry	Willard F. Libby
+1960	Literature	Saint-John Perse
+1960	Medicine	Sir Frank Macfarlane Burnet
+1960	Medicine	Peter Medawar
+1960	Physics	Donald A. Glaser
+1960	Peace	Albert Lutuli
+```
+
+```sql
+ SELECT subject, COUNT(subject) 
+   FROM nobel 
+  WHERE yr ='1960' 
+  GROUP BY subject
+```
+
+查询后：
+```
+Chemistry	1
+Literature	1
+Medicine	2
+Peace	1
+Physics	1
+```
+
+### 混合练习：CONCAT与处理NULL值
+
+#### 字符串合并CONCAT
+
+```sql
+/*
+Germany (population 80 million) has the largest population of the
+  countries in Europe. Austria (population 8.5 million) has 11% of the
+  population of Germany.
+
+Show the name and the population of each country in Europe. Show the
+  population as a percentage of the population of Germany.
+
+The format should be Name, Percentage for example:
+
+name	percentage
+Albania	3%
+Andorra	0%
+Austria	11%
+...	...
+Decimal places
+Percent symbol %
+You can use the function CONCAT to add the percentage symbol.
+*/
+SELECT name, CONCAT(
+  ROUND(
+    100 * population / (
+      SELECT population FROM world WHERE name = 'Germany'), 0), '%')
+FROM world
+WHERE continent = 'Europe'
+```
+
+#### 可用大于0处理NULL
+
+处理 `NULL` ：
+```sql
+SELECT name
+FROM world
+WHERE gdp >= ALL(
+  SELECT gdp FROM world WHERE gdp >=0 AND continent = 'Europe') AND continent != 'Europe'
+```
+
+### correlated sub-query or synchronized sub-query（子查询同步？）
+
+A correlated subquery works like a nested loop: the subquery only has access to rows related to a single record at a time in the outer query. The technique relies on table aliases to identify two different uses of the same table, one in the outer query and the other in the subquery.
+
+One way to interpret the line in the WHERE clause that references the two table is “… where the correlated values are the same”.
+
+```sql
+--Find the largest country (by area) in each continent,
+--  show the continent, the name and the area:
+SELECT continent, name, area FROM world x
+  WHERE area >= ALL
+    (SELECT area FROM world y
+        WHERE y.continent = x.continent
+          AND area > 0)
+
+--巧妙地应用了字母序比较
+--List each continent and the name of the country
+--  that comes first alphabetically.
+SELECT continent, name
+FROM world x
+WHERE name <= ALL(SELECT name FROM world y WHERE y.continent = x.continent)
+
+--Find the continents where all countries have a population <= 25000000.
+--  Then find the names of the countries associated with these continents.
+--  Show name, continent and population.
+SELECT name, continent, population
+FROM world x
+WHERE 25000000 > ALL(  /* 把这个洲筛选出来 */
+  SELECT population
+  FROM world y
+  WHERE x.continent = y.continent AND y.population > 0)
+
+--Some countries have populations more than three times that
+--  of any of their neighbours (in the same continent).
+--  Give the countries and continents.
+SELECT name, continent
+FROM world x
+WHERE population > ALL(  /* 把这个洲其他国家筛选出来 */
+  SELECT population * 3 FROM world y
+  WHERE x.continent = y.continent
+  AND population > 0 AND y.name != x.name)
 ```
