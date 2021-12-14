@@ -33,6 +33,13 @@ https://sqlzoo.net/wiki/SQL_Tutorial
 
 [./drafts/sql.002.md](./drafts/sql.002.md)
 
+- [Using SUM, Count, MAX, DISTINCT and ORDER BY](./drafts/sql.002.md#using-sum-count-max-distinct-and-order-by)
+- [Using GROUP BY and HAVING](./drafts/sql.002.md#using-group-by-and-having)
+- [CONCAT, SUBSTRING, LOWER, POSITION](./drafts/sql.002.md#concat-substring-lower-position)
+- [ROUND, COALESCE, CASE](./drafts/sql.002.md#round-coalesce-case)
+- [CURRENT_TIMESTAMP, CURRENT_DATE, DATE_FORMAT, EXTRACT](./drafts/sql.002.md#current_timestamp-current_date-date_format-extract)
+- [REPLACE, INSTR, IFNULL, NVL, NULLIF](./drafts/sql.002.md#replace-instr-ifnull-nvl-nullif)
+
 ### JOIN
 
 [./drafts/sql.003.md](./drafts/sql.003.md)
