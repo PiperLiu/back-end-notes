@@ -138,3 +138,42 @@ SELECT mdate,
     ORDER BY mdate, matchid, team1, team2
 ```
 
+另一个与电影有关的例子，嵌套查找与 `join` 联合使用等内容：
+```sql
+--List the film title and the leading actor for all of the films
+--  'Julie Andrews' played in.
+SELECT title, name FROM 
+  movie JOIN casting ON (movie.id = movieid)
+    JOIN actor ON (actor.id = actorid)
+    WHERE ord = 1 AND movieid IN (
+      SELECT movieid FROM 
+        casting JOIN actor ON (actor.id = actorid)
+        WHERE name = 'Julie Andrews'
+    )
+
+--Obtain a list, in alphabetical order,
+--  of actors who've had at least 15 starring roles.
+SELECT name FROM
+  actor JOIN casting ON (actorid = actor.id)
+  WHERE ord = 1  /* 先把 ord=1 都取出来，再 Groupby */
+  GROUP BY name
+  HAVING COUNT(movieid) >= 15
+  ORDER BY name  /* ORDER 指定的表是最终结果，放在 GROUPBY 后 */
+
+--List the films released in the year 1978 ordered by
+--  the number of actors in the cast, then by title.
+SELECT title, COUNT(*)  FROM
+  movie JOIN casting ON (movie.id = movieid)
+  WHERE yr = 1978	
+  GROUP BY title
+  ORDER BY COUNT(*) DESC, title
+
+--List all the people who have worked with 'Art Garfunkel'.
+SELECT name FROM
+  actor JOIN casting on (actor.id = actorid)
+  WHERE movieid IN (
+    SELECT movieid FROM 
+      casting JOIN actor on (actor.id = actorid)
+      WHERE name = 'Art Garfunkel'
+  ) AND name <> 'Art Garfunkel'
+```
