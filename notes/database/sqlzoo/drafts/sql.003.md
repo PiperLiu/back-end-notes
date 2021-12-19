@@ -6,9 +6,15 @@
 <!-- code_chunk_output -->
 
 - [JOIN basics](#join-basics)
+- [INNER JOIN](#inner-join)
+- [LEFT JOIN](#left-join)
+- [RIGHT JOIN](#right-join)
+- [JOIN 与 COALCASE、CASE](#join-与-coalcase-case)
+- [SELF JOIN](#self-join)
 
 <!-- /code_chunk_output -->
 
+细分目录：
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
@@ -17,6 +23,11 @@
 - [JOIN basics](#join-basics)
   - [基础的 JOIN 用法](#基础的-join-用法)
   - [一些组合应用](#一些组合应用)
+- [INNER JOIN](#inner-join)
+- [LEFT JOIN](#left-join)
+- [RIGHT JOIN](#right-join)
+- [JOIN 与 COALCASE、CASE](#join-与-coalcase-case)
+- [SELF JOIN](#self-join)
 
 <!-- /code_chunk_output -->
 
@@ -176,4 +187,121 @@ SELECT name FROM
       casting JOIN actor on (actor.id = actorid)
       WHERE name = 'Art Garfunkel'
   ) AND name <> 'Art Garfunkel'
+```
+
+### INNER JOIN
+
+Note the INNER JOIN misses the teachers with no department and the departments with no teacher.
+
+```sql
+SELECT teacher.name, dept.name
+ FROM teacher INNER JOIN dept
+           ON (teacher.dept=dept.id)
+```
+
+### LEFT JOIN
+
+Use a different JOIN so that all teachers are listed.
+
+```sql
+SELECT teacher.name, dept.name
+  FROM teacher LEFT JOIN dept
+  ON (teacher.dept=dept.id)
+```
+
+### RIGHT JOIN
+
+Use a different JOIN so that all departments are listed.
+
+```sql
+SELECT teacher.name, dept.name
+  FROM teacher RIGHT JOIN dept
+  ON (teacher.dept=dept.id)
+```
+
+### JOIN 与 COALCASE、CASE
+
+```sql
+/*
+Use COALESCE to print the mobile number. Use the number '07986 444 2266'
+  if there is no number given. Show teacher name and mobile number or
+  '07986 444 2266'
+*/
+SELECT name,
+  COALESCE(mobile, '07986 444 2266')
+  FROM teacher
+
+/*
+Use the COALESCE function and a LEFT JOIN to print the teacher name
+  and department name. Use the string 'None' where there
+  is no department.
+*/
+SELECT teacher.name, COALESCE(dept.name, 'None')
+  FROM teacher LEFT JOIN dept
+  ON (teacher.dept=dept.id)
+
+/*
+Use COUNT and GROUP BY dept.name to show each department and the number of staff.
+  Use a RIGHT JOIN to ensure that the Engineering department is listed.
+*/
+SELECT dept.name, COUNT(teacher.name)
+  FROM teacher RIGHT JOIN dept ON (teacher.dept=dept.id)
+  GROUP BY dept.name
+
+/*
+Use CASE to show the name of each teacher followed by 'Sci' if the
+  teacher is in dept 1 or 2 and 'Art' otherwise.
+*/
+SELECT teacher.name,
+  CASE WHEN dept.id = 1 THEN 'Sci'
+       WHEN dept.id = 2 THEN 'Sci'
+       ELSE 'Art' END
+  FROM teacher LEFT JOIN dept ON (teacher.dept=dept.id)
+
+/*
+Use CASE to show the name of each teacher followed by 'Sci' if the teacher is
+  in dept 1 or 2, show 'Art' if the teacher's dept is 3 and 'None' otherwise.
+*/
+SELECT teacher.name,
+  CASE WHEN dept.id = 1 THEN 'Sci'
+       WHEN dept.id = 2 THEN 'Sci'
+       WHEN dept.id = 3 THEN 'Art'
+       ELSE 'None' END
+  FROM teacher LEFT JOIN dept ON (teacher.dept=dept.id)
+```
+
+### SELF JOIN
+
+```sql
+/* How many stops are in the database. */
+SELECT COUNT(DISTINCT id)
+  FROM stops
+
+/*
+The query shown gives the number of routes that visit either London Road
+  (149) or Craiglockhart (53). Run the query and notice the two services that link
+  these stops have a count of 2. Add a HAVING clause to restrict the output to these two routes.
+*/
+SELECT company, num, COUNT(*) AS visits
+  FROM route WHERE stop=149 OR stop=53
+  GROUP BY company, num
+    HAVING visits=2
+
+/*
+Execute the self join shown and observe that b.stop gives all
+  the places you can get to from Craiglockhart, without changing routes.
+*/
+SELECT a.company, a.num, a.stop, b.stop
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+WHERE a.stop=53
+
+/*
+Change the query so that it shows the services
+  from Craiglockhart to London Road.
+*/
+SELECT a.company, a.num, a.stop, b.stop
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+WHERE a.stop=53 AND b.stop=149
 ```
