@@ -11,7 +11,7 @@ https://sqlzoo.net/wiki/SQL_Tutorial
 - [FUNCTIONS](#functions)
 - [JOIN](#join)
 - [INSERT, UPDATE, DELETE, CREATE, DROP](#insert-update-delete-create-drop)
-- [ALTER, UNION, LEFT JOIN, NULL](#alter-union-left-join-null)
+- [ALTER, UNION, Full Text Search, Equi Join, Column Name with Spaces](#alter-union-full-text-search-equi-join-column-name-with-spaces)
 
 <!-- /code_chunk_output -->
 
@@ -65,8 +65,12 @@ https://sqlzoo.net/wiki/SQL_Tutorial
 - [CREATE](./drafts/sql.004.md#create)
 - [DROP](./drafts/sql.004.md#drop)
 
-### ALTER, UNION, LEFT JOIN, NULL
+### ALTER, UNION, Full Text Search, Equi Join, Column Name with Spaces
 
 [./drafts/sql.005.md](./drafts/sql.005.md)
 
-
+- [ALTER](./drafts/sql.005.md#alter)
+- [UNION](./drafts/sql.005.md#union)
+- [Full Text Search](./drafts/sql.005.md#full-text-search)
+- [Equi Join](./drafts/sql.005.md#equi-join)
+- [Column Name with Spaces](./drafts/sql.005.md#column-name-with-spaces)

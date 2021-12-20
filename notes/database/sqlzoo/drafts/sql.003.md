@@ -417,4 +417,4 @@ SELECT S2.id, S2.name, R2.company, R2.num
    AND R2.stop=S2.id AND R2.num='2A'
 ```
 
-如上， `FROM` 多个表，实际上是将这些表全连接，比如 `S1` 有 $n$ 行， $FROM S1 S1$ 就会有 $n \times n$ 行。
+如上， `FROM` 多个表，实际上是将这些表 `SELF-JOIN` ，比如 `S1` 有 $n$ 行， $FROM S1 S1$ 就会有 $n \times n$ 行。
