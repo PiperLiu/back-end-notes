@@ -59,6 +59,14 @@ https://sqlzoo.net/wiki/SQL_Tutorial
 
 [./drafts/sql.004.md](./drafts/sql.004.md)
 
+- [INSERT](./drafts/sql.004.md#insert)
+- [UPDATE](./drafts/sql.004.md#update)
+- [DELETE](./drafts/sql.004.md#delete)
+- [CREATE](./drafts/sql.004.md#create)
+- [DROP](./drafts/sql.004.md#drop)
+
 ### ALTER, UNION, LEFT JOIN, NULL
 
 [./drafts/sql.005.md](./drafts/sql.005.md)
+
+

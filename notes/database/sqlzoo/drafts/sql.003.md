@@ -11,6 +11,7 @@
 - [RIGHT JOIN](#right-join)
 - [JOIN 与 COALCASE、CASE](#join-与-coalcase-case)
 - [SELF JOIN](#self-join)
+- [FROM 多个表](#from-多个表)
 
 <!-- /code_chunk_output -->
 
@@ -28,6 +29,7 @@
 - [RIGHT JOIN](#right-join)
 - [JOIN 与 COALCASE、CASE](#join-与-coalcase-case)
 - [SELF JOIN](#self-join)
+- [FROM 多个表](#from-多个表)
 
 <!-- /code_chunk_output -->
 
@@ -403,3 +405,16 @@ SELECT S2.id, S2.name, R2.company, R2.num
    AND R1.company=R2.company AND R1.num=R2.num
    AND R2.stop=S2.id AND R2.num='2A'
 ```
+
+### FROM 多个表
+
+上面的例子中，有：
+```sql
+SELECT S2.id, S2.name, R2.company, R2.num
+  FROM stops S1, stops S2, route R1, route R2
+ WHERE S1.name='Haymarket' AND S1.id=R1.stop
+   AND R1.company=R2.company AND R1.num=R2.num
+   AND R2.stop=S2.id AND R2.num='2A'
+```
+
+如上， `FROM` 多个表，实际上是将这些表全连接，比如 `S1` 有 $n$ 行， $FROM S1 S1$ 就会有 $n \times n$ 行。
