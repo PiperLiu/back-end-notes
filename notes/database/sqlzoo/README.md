@@ -15,6 +15,10 @@ https://sqlzoo.net/wiki/SQL_Tutorial
 
 <!-- /code_chunk_output -->
 
+答案与代码参考了：
+- [Find the routes involving two buses that can go from A to B](https://stackoverflow.com/a/65947086/17707800)
+- [github.com/jisaw/sqlzoo-solutions](https://github.com/jisaw/sqlzoo-solutions)
+
 ### SELECT basics
 
 [./drafts/sql.001.md](./drafts/sql.001.md)
@@ -43,6 +47,13 @@ https://sqlzoo.net/wiki/SQL_Tutorial
 ### JOIN
 
 [./drafts/sql.003.md](./drafts/sql.003.md)
+
+- [JOIN basics](./drafts/sql.003.md#join-basics)
+- [INNER JOIN](./drafts/sql.003.md#inner-join)
+- [LEFT JOIN](./drafts/sql.003.md#left-join)
+- [RIGHT JOIN](./drafts/sql.003.md#right-join)
+- [JOIN 与 COALCASE、CASE](./drafts/sql.003.md#join-与-coalcase-case)
+- [SELF JOIN](./drafts/sql.003.md#self-join)
 
 ### INSERT, UPDATE, DELETE, CREATE, DROP
 

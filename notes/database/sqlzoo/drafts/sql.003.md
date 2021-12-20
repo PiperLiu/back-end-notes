@@ -304,4 +304,84 @@ SELECT a.company, a.num, a.stop, b.stop
 FROM route a JOIN route b ON
   (a.company=b.company AND a.num=b.num)
 WHERE a.stop=53 AND b.stop=149
+
+/*
+The query shown is similar to the previous one, however by joining two copies
+  of the stops table we can refer to stops by name rather than by number.
+  Change the query so that the services between 'Craiglockhart' and 'London
+  Road' are shown. If you are tired of these places try
+  'Fairmilehead' against 'Tollcross'
+*/
+SELECT a.company, a.num, stopa.name, stopb.name
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' and stopb.name='London Road'
+
+/*
+Give a list of all the services which connect stops 115 and 137
+  ('Haymarket' and 'Leith')
+*/
+SELECT DISTINCT a.company, a.num
+FROM route a JOIN route b ON
+  (a.company =b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Haymarket' AND stopb.name='Leith'
+
+/*
+Give a list of the services which connect the stops 'Craiglockhart'
+  and 'Tollcross'
+*/
+SELECT DISTINCT a.company, a.num
+FROM route a JOIN route b ON
+  (a.company =b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' AND stopb.name='Tollcross'
+
+/*
+Give a distinct list of the stops which may be reached from
+  'Craiglockhart' by taking one bus, including 'Craiglockhart' itself,
+  offered by the LRT company. Include the company and bus no. of
+  the relevant services.
+*/
+SELECT DISTINCT stopb.name, a.company, a.num
+FROM route a 
+JOIN route b 
+ON a.company = b.company AND a.num = b.num
+JOIN stops stopa ON a.stop = stopa.id  /* stopb 是其他有连接车站 */
+JOIN stops stopb ON b.stop = stopb.id  /* stopa 是 Craiglockhart */
+WHERE stopa.name = 'Craiglockhart';
+
+/*
+Find the routes involving two buses that can go from Craiglockhart to Lochend.
+  Show the bus no. and company for the first bus, the name of the stop for
+  the transfer, and the bus no. and company for the second bus.
+
+Hint:
+  Self-join twice to find buses that visit Craiglockhart and Lochend,
+  then join those on matching stops.
+*/
+SET SQL_BIG_SELECTS=1;
+
+WITH sel1 AS (SELECT r1.num, r1.company, s2.name transferstop
+FROM route r1
+JOIN route r2 ON (r1.num=r2.num AND r1.company=r2.company)
+JOIN stops s1 ON s1.id=r1.stop
+JOIN stops s2 ON s2.id=r2.stop
+WHERE s1.name = 'Craiglockhart'), 
+
+sel2 AS (SELECT s1.name transferstop, r2.num, r2.company
+FROM route r1
+JOIN route r2 ON (r1.num=r2.num AND r1.company=r2.company)
+JOIN stops s1 ON s1.id=r1.stop
+JOIN stops s2 ON s2.id=r2.stop
+WHERE s2.name = 'Lochend')
+
+SELECT sel1.num, sel1.company, sel1.transferstop, sel2.num, sel2.company
+  FROM sel1
+  JOIN sel2 ON sel1.transferstop=sel2.transferstop
+ ORDER BY 1,3,4
 ```
