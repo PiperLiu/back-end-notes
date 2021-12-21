@@ -23,6 +23,12 @@
 
 在这个网站（[sqlzoo.net](https://sqlzoo.net/wiki/SQL_Tutorial)）做练习。笔记记在了：[这里](./sqlzoo/README.md)。
 
+- [SELECT basics](./sqlzoo/README.md#select-basics)
+- [FUNCTIONS](./sqlzoo/README.md#functions)
+- [JOIN](./sqlzoo/README.md#join)
+- [INSERT, UPDATE, DELETE, CREATE, DROP](./sqlzoo/README.md#insert-update-delete-create-drop)
+- [ALTER, UNION, Full Text Search, Equi Join, Column Name with Spaces](./sqlzoo/README.md#alter-union-full-text-search-equi-join-column-name-with-spaces)
+
 ### MySQL
 
 #### MySQL 实战 45 讲
