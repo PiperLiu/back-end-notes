@@ -12,6 +12,7 @@ https://time.geekbang.org/column/intro/100020801
 - [开篇词 (1讲)](#开篇词-1讲)
 - [基础篇 (8讲)](#基础篇-8讲)
   - [01 | 基础架构：一条SQL查询语句是如何执行的？](#01-基础架构一条sql查询语句是如何执行的)
+  - [02 | 日志系统：一条SQL更新语句是如何执行的？](#02-日志系统一条sql更新语句是如何执行的)
 
 <!-- /code_chunk_output -->
 
@@ -37,3 +38,14 @@ https://time.geekbang.org/column/intro/100020801
 - [优化器](./drafts/mysql.45.01.001.md#优化器)
 - [执行器](./drafts/mysql.45.01.001.md#执行器)
 - [问题：不存在列在哪个阶段检查](./drafts/mysql.45.01.001.md#问题不存在列在哪个阶段检查)
+
+#### 02 | 日志系统：一条SQL更新语句是如何执行的？
+
+[./drafts/mysql.45.01.002.md](./drafts/mysql.45.01.002.md)
+
+- [概述](./drafts/mysql.45.01.002.md#概述)
+- [redo log（InnoDB特有）](./drafts/mysql.45.01.002.md#redo-loginnodb特有)
+- [重要的日志模块：binlog](./drafts/mysql.45.01.002.md#重要的日志模块binlog)
+- [InnoDB 中 update 内部流程](./drafts/mysql.45.01.002.md#innodb-中-update-内部流程)
+- [两阶段提交](./drafts/mysql.45.01.002.md#两阶段提交)
+- [参数：innodb_flush_log_at_trx_commit 和 sync_binlog](./drafts/mysql.45.01.002.md#参数innodb_flush_log_at_trx_commit-和-sync_binlog)
