@@ -18,6 +18,7 @@ https://time.geekbang.org/column/intro/100020801
   - [05 | 深入浅出索引（下）](#05-深入浅出索引下)
   - [06 | 全局锁和表锁 ：给表加个字段怎么有这么多阻碍？](#06-全局锁和表锁-给表加个字段怎么有这么多阻碍)
   - [07 | 行锁功过：怎么减少行锁对性能的影响？](#07-行锁功过怎么减少行锁对性能的影响)
+  - [08 | 事务到底是隔离的还是不隔离的？](#08-事务到底是隔离的还是不隔离的)
 
 <!-- /code_chunk_output -->
 
@@ -125,3 +126,20 @@ https://time.geekbang.org/column/intro/100020801
   - [主动死锁检测](./drafts/mysql.45.01.007.md#主动死锁检测)
   - [解决由这种热点行更新导致的性能问题](./drafts/mysql.45.01.007.md#解决由这种热点行更新导致的性能问题)
 - [问题：如何删除一个表前 10000 行数据](./drafts/mysql.45.01.007.md#问题如何删除一个表前-10000-行数据)
+
+#### 08 | 事务到底是隔离的还是不隔离的？
+
+[./drafts/mysql.45.01.008.md](./drafts/mysql.45.01.008.md)
+
+- [概述](./drafts/mysql.45.01.008.md#概述)
+  - [例子：事务自己获取到行锁](./drafts/mysql.45.01.008.md#例子事务自己获取到行锁)
+  - [视图概念](./drafts/mysql.45.01.008.md#视图概念)
+- [“快照”在 MVCC 里是怎么工作的](./drafts/mysql.45.01.008.md#快照在-mvcc-里是怎么工作的)
+  - [InnoDB 引擎中的事务ID transaction id](./drafts/mysql.45.01.008.md#innodb-引擎中的事务id-transaction-id)
+  - [事务的一致性视图 read-view](./drafts/mysql.45.01.008.md#事务的一致性视图-read-view)
+  - [解释最开头例子：事务自己获取到行锁](./drafts/mysql.45.01.008.md#解释最开头例子事务自己获取到行锁)
+- [更新逻辑](./drafts/mysql.45.01.008.md#更新逻辑)
+  - [当前读current read](./drafts/mysql.45.01.008.md#当前读current-read)
+  - [一致性读、当前读和行锁](./drafts/mysql.45.01.008.md#一致性读-当前读和行锁)
+- [小结](./drafts/mysql.45.01.008.md#小结)
+- [问题：事务中“字段 c 和 id 值相等的行”无法清零](./drafts/mysql.45.01.008.md#问题事务中字段-c-和-id-值相等的行无法清零)
