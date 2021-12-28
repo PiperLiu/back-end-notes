@@ -21,6 +21,7 @@ https://time.geekbang.org/column/intro/100020801
   - [08 | 事务到底是隔离的还是不隔离的？](#08-事务到底是隔离的还是不隔离的)
 - [实践篇 (37讲)](#实践篇-37讲)
   - [09 | 普通索引和唯一索引，应该怎么选择？](#09-普通索引和唯一索引应该怎么选择)
+  - [10 | MySQL为什么有时候会选错索引？](#10-mysql为什么有时候会选错索引)
 
 <!-- /code_chunk_output -->
 
@@ -163,3 +164,17 @@ https://time.geekbang.org/column/intro/100020801
 - [change buffer 和 redo log](./drafts/mysql.45.01.002.md#change-buffer-和-redo-log)
 - [业务中是否使用唯一索引](./drafts/mysql.45.01.002.md#业务中是否使用唯一索引)
 - [问题：断电是否会丢失 change buffer](./drafts/mysql.45.01.002.md#问题断电是否会丢失-change-buffer)
+
+#### 10 | MySQL为什么有时候会选错索引？
+
+[./drafts/mysql.45.02.002.md](./drafts/mysql.45.02.002.md)
+
+- [概述：选错索引例子（explain与慢日志的使用）](./drafts/mysql.45.02.002.md#概述选错索引例子explain与慢日志的使用)
+- [优化器的逻辑](./drafts/mysql.45.02.002.md#优化器的逻辑)
+  - [索引的基数 cardinality](./drafts/mysql.45.02.002.md#索引的基数-cardinality)
+  - [MySQL 采样统计的方法](./drafts/mysql.45.02.002.md#mysql-采样统计的方法)
+  - [扫描行数预估](./drafts/mysql.45.02.002.md#扫描行数预估)
+  - [用 analyze 修正](./drafts/mysql.45.02.002.md#用-analyze-修正)
+  - [相对复杂语句索引选错案例](./drafts/mysql.45.02.002.md#相对复杂语句索引选错案例)
+- [索引选择异常和处理](./drafts/mysql.45.02.002.md#索引选择异常和处理)
+- [问题：例子中为什么会得到错误的扫描行数](./drafts/mysql.45.02.002.md#问题例子中为什么会得到错误的扫描行数)
