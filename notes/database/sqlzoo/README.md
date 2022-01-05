@@ -1,5 +1,9 @@
 # SQL Tutorial
 
+之前用了用 MySQL ，没有用 GUI 软件（因为 `navicat` 要钱）。命令行觉得有趣，因为其中有很多操作并不直观，比如为啥 `source` 这么慢？为啥设置 `innodb_flush_log_at_trx_commit = 0` 啥的就行了？
+
+必须理解才行。于是咱系统学一学数据库，先从基础操作和基础原理说起。
+
 https://sqlzoo.net/wiki/SQL_Tutorial
 
 

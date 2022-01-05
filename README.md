@@ -23,64 +23,31 @@
 
 <!-- code_chunk_output -->
 
-- [项目结构介绍](#项目结构介绍)
-- [笔记索引](#笔记索引)
-  - [学习心路](#学习心路)
-  - [大数据相关](#大数据相关)
-  - [Linux与基础工程](#linux与基础工程)
-  - [Web框架](#web框架)
+- [目前已学习内容 📕](#目前已学习内容)
+- [项目结构介绍 📻](#项目结构介绍)
 
 <!-- /code_chunk_output -->
 
-## 项目结构介绍
+## 目前已学习内容 📕
+
+💍 Web 框架与网络服务相关：
+- [🧢 Linux 及其配套工具介绍](./notes/linux/acwing/README.md)
+- [👒 Django 入门](./notes/webs/Django/README.md)
+
+📡 大数据与分布式相关：
+- [📺 Spark 实践经验与读书笔记](./notes/bigdata/spark/README.md)
+
+📦 数据库相关：
+- [📫 SQL 基础语法](./notes/database/sqlzoo/README.md)
+- [📪 MySQL 底层、实战中的问题与经验](./notes/database/mysql.45/README.md)
+
+📚 已读书籍：
+- [🍩 Effective C++: 55 Specific Ways to Improve Your Programs and Designs](./books/cpp55/README.md)
+
+## 项目结构介绍 📻
 
 - 我的笔记在 [./notes](./notes)
-
-<!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=4 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
-- [学习心路](#学习心路)
-- [大数据相关](#大数据相关)
-  - [Spark（辅以scala等）](#spark辅以scala等)
-- [Linux与基础工程](#linux与基础工程)
-  - [Linux与部署相关课程](#linux与部署相关课程)
-- [Web框架](#web框架)
-  - [Django和一个网络编程实例](#django和一个网络编程实例)
-
-<!-- /code_chunk_output -->
-
-## 笔记索引
-
-### 学习心路
-学习心路在 [./notes/journey/README.md](./notes/journey/README.md) ，是关于：
-- 阶段性学习总结
-- 记录自己成长轨迹
-
-### 大数据相关
-
-#### Spark（辅以scala等）
-
-笔记在 [./notes/bigdata/spark/README.md](./notes/bigdata/spark/README.md) 。第一阶段以「老师那边布置的开发工作」以及「读书学习」为主。
-
-### Linux与基础工程
-
-笔记在 [./notes/linux/README.md](./notes/linux/README.md) 。
-
-#### Linux与部署相关课程
-
-听了 y 总的课，笔记在 [./notes/linux/acwing/README.md](./notes/linux/acwing/README.md) 。
-
-课程介绍：讲解内容包括Linux常用命令、文件操作、环境安装与配置、shell语法、权限管理、进程管理、vim、git、ssh、tmux、docker、thrift、多线程与多进程、各种编程语言的编译与执行等内容。
-
-### Web框架
-
-笔记在 [./notes/webs/README.md](./notes/webs/README.md) 。
-
-#### Django和一个网络编程实例
-
-笔记在 [./notes/webs/Django/README.md](./notes/webs/Django/README.md) 。
-
-课程内容：
-- `Django Channels：websocket`通信协议
-- 做一个`Django`实战项目
+- 学习心路在 [./notes/journey/README.md](./notes/journey/README.md) ，是关于：
+  - 阶段性学习总结
+  - 记录自己成长轨迹
+- 读书笔记在 [./books/](./books/)
