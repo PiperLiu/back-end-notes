@@ -24,6 +24,7 @@ https://time.geekbang.org/column/intro/100020801
   - [10 | MySQL为什么有时候会选错索引？](#10-mysql为什么有时候会选错索引)
   - [11 | 怎么给字符串字段加索引？](#11-怎么给字符串字段加索引)
   - [12 | 为什么我的MySQL会“抖”一下？](#12-为什么我的mysql会抖一下)
+  - [13 | 为什么表数据删掉一半，表文件大小不变？](#13-为什么表数据删掉一半表文件大小不变)
 
 <!-- /code_chunk_output -->
 
@@ -211,3 +212,18 @@ https://time.geekbang.org/column/intro/100020801
   - [查看脏页比例 Innodb_buffer_pool_pages_dirty](./drafts/mysql.45.02.004.md#查看脏页比例-innodb_buffer_pool_pages_dirty)
   - [SSD 不适用机械硬盘时代的 flush_neighbors](./drafts/mysql.45.02.004.md#ssd-不适用机械硬盘时代的-flush_neighbors)
 - [小结与问题：不小心将 redo log 设小](./drafts/mysql.45.02.004.md#小结与问题不小心将-redo-log-设小)
+
+#### 13 | 为什么表数据删掉一半，表文件大小不变？
+
+[./drafts/mysql.45.02.005.md](./drafts/mysql.45.02.005.md)
+
+- [概述：如何正确回收空间？](./drafts/mysql.45.02.005.md#概述如何正确回收空间)
+- [参数 innodb_file_per_table](./drafts/mysql.45.02.005.md#参数-innodb_file_per_table)
+- [数据删除流程](./drafts/mysql.45.02.005.md#数据删除流程)
+  - [并非“真的”删除，二是留下复用标记](./drafts/mysql.45.02.005.md#并非真的删除二是留下复用标记)
+  - [留下很多“空洞”浪费空间](./drafts/mysql.45.02.005.md#留下很多空洞浪费空间)
+- [重建表](./drafts/mysql.45.02.005.md#重建表)
+  - [alter table A engine=InnoDB](./drafts/mysql.45.02.005.md#alter-table-a-engineinnodb)
+  - [Online DDL](./drafts/mysql.45.02.005.md#online-ddl)
+- [Online 和 inplace](./drafts/mysql.45.02.005.md#online-和-inplace)
+- [问题：想要收缩表空间，结果适得其反](./drafts/mysql.45.02.005.md#问题想要收缩表空间结果适得其反)
