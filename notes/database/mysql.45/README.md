@@ -23,6 +23,7 @@ https://time.geekbang.org/column/intro/100020801
   - [09 | 普通索引和唯一索引，应该怎么选择？](#09-普通索引和唯一索引应该怎么选择)
   - [10 | MySQL为什么有时候会选错索引？](#10-mysql为什么有时候会选错索引)
   - [11 | 怎么给字符串字段加索引？](#11-怎么给字符串字段加索引)
+  - [12 | 为什么我的MySQL会“抖”一下？](#12-为什么我的mysql会抖一下)
 
 <!-- /code_chunk_output -->
 
@@ -196,3 +197,17 @@ https://time.geekbang.org/column/intro/100020801
 - [问题：如何设计学生登入场景邮件索引？](./drafts/mysql.45.02.003.md#问题如何设计学生登入场景邮件索引)
   - [老师的分析](./drafts/mysql.45.02.003.md#老师的分析)
   - [其他同学的思路：不优化/信息论高进制优化](./drafts/mysql.45.02.003.md#其他同学的思路不优化信息论高进制优化)
+
+#### 12 | 为什么我的MySQL会“抖”一下？
+
+[./drafts/mysql.45.02.004.md](./drafts/mysql.45.02.004.md)
+
+- [概述：“抖了一下”](./drafts/mysql.45.02.004.md#概述抖了一下)
+- [你的 SQL 语句为什么变“慢”了](./drafts/mysql.45.02.004.md#你的-sql-语句为什么变慢了)
+  - [“慢”一下可能是在 flush](./drafts/mysql.45.02.004.md#慢一下可能是在-flush)
+  - [什么情况下会 flush ？](./drafts/mysql.45.02.004.md#什么情况下会-flush)
+  - [flush 四种场景对性能的影响](./drafts/mysql.45.02.004.md#flush-四种场景对性能的影响)
+- [InnoDB 刷脏页的控制策略](./drafts/mysql.45.02.004.md#innodb-刷脏页的控制策略)
+  - [查看脏页比例 Innodb_buffer_pool_pages_dirty](./drafts/mysql.45.02.004.md#查看脏页比例-innodb_buffer_pool_pages_dirty)
+  - [SSD 不适用机械硬盘时代的 flush_neighbors](./drafts/mysql.45.02.004.md#ssd-不适用机械硬盘时代的-flush_neighbors)
+- [小结与问题：不小心将 redo log 设小](./drafts/mysql.45.02.004.md#小结与问题不小心将-redo-log-设小)
