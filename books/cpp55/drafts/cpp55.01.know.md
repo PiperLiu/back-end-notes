@@ -505,3 +505,7 @@ Directory& tempDir()
   return td;
 }
 ```
+
+注意上面并不保证多线程安全。
+
+引用书上原话：在程序的单线程启动阶段（single-threaded startup portion）手工调用所有 reference-returning 函数，这可消除与初始化有关的“竞速形式（race conditions）”。
