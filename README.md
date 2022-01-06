@@ -43,7 +43,7 @@
 - [📪 MySQL 底层、实战中的问题与经验](./notes/database/mysql.45/README.md)
 
 📚 已读书籍：
-- [🍩 Effective C++: 55 Specific Ways to Improve Your Programs and Designs](./books/cpp55/README.md)
+- [🍩 Scott Meyers. Effective C++: 55 Specific Ways to Improve Your Programs and Designs. 电子工业出版社. 侯捷译. 第三版](./books/cpp55/README.md)
 
 ## 项目结构介绍 📻
 
