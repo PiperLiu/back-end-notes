@@ -27,6 +27,7 @@ https://time.geekbang.org/column/intro/100020801
   - [11 | 怎么给字符串字段加索引？](#11-怎么给字符串字段加索引)
   - [12 | 为什么我的MySQL会“抖”一下？](#12-为什么我的mysql会抖一下)
   - [13 | 为什么表数据删掉一半，表文件大小不变？](#13-为什么表数据删掉一半表文件大小不变)
+  - [14 | count(*)这么慢，我该怎么办？](#14-count这么慢我该怎么办)
 
 <!-- /code_chunk_output -->
 
@@ -229,3 +230,24 @@ https://time.geekbang.org/column/intro/100020801
   - [Online DDL](./drafts/mysql.45.02.005.md#online-ddl)
 - [Online 和 inplace](./drafts/mysql.45.02.005.md#online-和-inplace)
 - [问题：想要收缩表空间，结果适得其反](./drafts/mysql.45.02.005.md#问题想要收缩表空间结果适得其反)
+
+#### 14 | count(*)这么慢，我该怎么办？
+
+[./drafts/mysql.45.02.006.md](./drafts/mysql.45.02.006.md)
+
+- [概述：count(*) 怎么这么慢？](./drafts/mysql.45.02.006.md#概述count-怎么这么慢)
+- [count(*) 的实现方式](./drafts/mysql.45.02.006.md#count-的实现方式)
+  - [例子：为什么不把 count 存起来？](./drafts/mysql.45.02.006.md#例子为什么不把-count-存起来)
+  - [count(*) 中的优化](./drafts/mysql.45.02.006.md#count-中的优化)
+- [用缓存系统保存计数](./drafts/mysql.45.02.006.md#用缓存系统保存计数)
+  - [使用 Redis 似乎很直观](./drafts/mysql.45.02.006.md#使用-redis-似乎很直观)
+  - [使用 Redis 导致逻辑不精确](./drafts/mysql.45.02.006.md#使用-redis-导致逻辑不精确)
+- [在数据库保存计数](./drafts/mysql.45.02.006.md#在数据库保存计数)
+  - [在数据库保存计数支持崩溃恢复](./drafts/mysql.45.02.006.md#在数据库保存计数支持崩溃恢复)
+  - [在数据库保存计数解决计数不精确](./drafts/mysql.45.02.006.md#在数据库保存计数解决计数不精确)
+- [不同的 count 用法](./drafts/mysql.45.02.006.md#不同的-count-用法)
+  - [count(主键 id)](./drafts/mysql.45.02.006.md#count主键-id)
+  - [count(1)](./drafts/mysql.45.02.006.md#count1)
+  - [count(字段)](./drafts/mysql.45.02.006.md#count字段)
+  - [count(*)](./drafts/mysql.45.02.006.md#count)
+- [问题：先插入操作记录还是先更新计数表？](./drafts/mysql.45.02.006.md#问题先插入操作记录还是先更新计数表)
