@@ -33,6 +33,7 @@
 💍 Web 框架与网络服务相关：
 - [🧢 Linux 及其配套工具介绍](./notes/linux/acwing/README.md)
 - [👒 Django 入门](./notes/webs/Django/README.md)
+- [🎓 C++ 与 Linux 多线程、数据库综合网络服务开发实例](./notes/linux/cppweather/README.md)
 
 📡 大数据与分布式相关：
 - [📺 Spark 实践经验与读书笔记](./notes/bigdata/spark/README.md)
