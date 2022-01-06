@@ -120,7 +120,7 @@ for (sundry <- sundries) {
         case s: String => println("got a String: " + s)
         case f: Double => println("got a Double: " + f)
         case other => println("got something else: " + other)
-}
+    }
 }
 
 // 三 根据顺序匹配

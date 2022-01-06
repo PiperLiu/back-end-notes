@@ -340,9 +340,9 @@ import org.apache.spark.ml.feature.{Bucketizer, QuantileDiscretizer}
 
 一列一列 collect 太慢了，全都 collect 还爆内存，我这里调了配置也没用.
 
-![](../assets/images/20210720collect1.png)
+![](./images/20210720collect1.png)
 
-![](../assets/images/20210720collect2.png)
+![](./images/20210720collect2.png)
 
 既然我的需求横竖都需要对数组进行排序，在操作某一列时，肯定要把这一列都安排到内存里来。
 

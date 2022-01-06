@@ -32,7 +32,7 @@
 
 从数据库角度来看， MapReduce 是 `select + groupBy` ；从算法角度来看，是分治法。
 
-![硅谷之路 BitTiger.io](../assets/images/20210626mapreduce0.png)
+![硅谷之路 BitTiger.io](./images/20210626mapreduce0.png)
 
 Map 本质上就是做拆解， Reduce 本质上就是做组合。
 
@@ -40,10 +40,10 @@ Map 本质上就是做拆解， Reduce 本质上就是做组合。
 
 #### 词频统计和倒排索引
 
-![硅谷之路 BitTiger.io](../assets/images/20210626mapreduce1.png)
+![硅谷之路 BitTiger.io](./images/20210626mapreduce1.png)
 
 词频统计就是统计各个单词出现的次数。
 
-![硅谷之路 BitTiger.io](../assets/images/20210626mapreduce2.png)
+![硅谷之路 BitTiger.io](./images/20210626mapreduce2.png)
 
 倒排索引：统计每个词分别出现在了哪些文章里，这样就可以根据关键词寻找文章。

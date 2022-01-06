@@ -4,25 +4,29 @@
 
 <!-- code_chunk_output -->
 
-- [参考资料](#参考资料)
-  - [参考资料](#参考资料-1)
+- [辅助资料](#辅助资料)
+  - [参考资料](#参考资料)
   - [MapReduce](#mapreduce)
 - [历史、生态概述以及工具基础](#历史-生态概述以及工具基础)
   - [大数据技术生态略写与Spark历史](#大数据技术生态略写与spark历史)
   - [scala语言思想与基础](#scala语言思想与基础)
-  - [关于 Spark 工作日志记录](#关于-spark-工作日志记录)
+- [Spark 核心内容](#spark-核心内容)
+- [Spark 组件](#spark-组件)
+- [Spark 经验总结](#spark-经验总结)
+  - [新手杂记](#新手杂记)
 
 <!-- /code_chunk_output -->
 
 学习 Spark 是建立这个项目的契机：[准备开始系统学习后端：以 Spark 项目为契机](../../journey/drafts/20210625spark.md)
 
-### 参考资料
+### 辅助资料
 
 #### 参考资料
 参考资料见：[./drafts/0001参考资料.md](./drafts/0001参考资料.md)
 
 - [阅读书目](./drafts/0001参考资料.md#阅读书目)
 - [经典论文](./drafts/0001参考资料.md#经典论文)
+- [课程学习](./drafts/0001参考资料.md#课程学习)
 
 #### MapReduce
 [./drafts/0002MapReduce.md](./drafts/0002MapReduce.md)
@@ -58,7 +62,18 @@
   - [注意事项与 Scala 奇技淫巧](./drafts/0102scala语言思想与基础.md#注意事项与-scala-奇技淫巧)
   - [关于数据结构的讨论（List or Array?）](./drafts/0102scala语言思想与基础.md#关于数据结构的讨论list-or-array)
 
-#### 关于 Spark 工作日志记录
+### Spark 核心内容
+
+### Spark 组件
+
+
+
+### Spark 经验总结
+
+#### 新手杂记
+
+下面这个是我比较新手时写的，没太大参考意义。
+
 [./drafts/0103关于Spark工作日志.md](./drafts/0103关于Spark工作日志.md)
 
 - [数据『读写』以及『分列』操作](./drafts/0103关于Spark工作日志.md#数据读写以及分列操作)
