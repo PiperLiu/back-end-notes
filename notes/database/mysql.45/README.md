@@ -28,6 +28,7 @@ https://time.geekbang.org/column/intro/100020801
   - [12 | 为什么我的MySQL会“抖”一下？](#12-为什么我的mysql会抖一下)
   - [13 | 为什么表数据删掉一半，表文件大小不变？](#13-为什么表数据删掉一半表文件大小不变)
   - [14 | count(*)这么慢，我该怎么办？](#14-count这么慢我该怎么办)
+  - [15 | 答疑文章（一）：日志和索引相关问题](#15-答疑文章一日志和索引相关问题)
 
 <!-- /code_chunk_output -->
 
@@ -251,3 +252,20 @@ https://time.geekbang.org/column/intro/100020801
   - [count(字段)](./drafts/mysql.45.02.006.md#count字段)
   - [count(*)](./drafts/mysql.45.02.006.md#count)
 - [问题：先插入操作记录还是先更新计数表？](./drafts/mysql.45.02.006.md#问题先插入操作记录还是先更新计数表)
+
+#### 15 | 答疑文章（一）：日志和索引相关问题
+
+[./drafts/mysql.45.02.007.md](./drafts/mysql.45.02.007.md)
+
+- [日志相关问题](./drafts/mysql.45.02.007.md#日志相关问题)
+  - [追问 1：MySQL 怎么知道 binlog 是完整的?](./drafts/mysql.45.02.007.md#追问-1mysql-怎么知道-binlog-是完整的)
+  - [追问 2：redo log 和 binlog 是怎么关联起来的?](./drafts/mysql.45.02.007.md#追问-2redo-log-和-binlog-是怎么关联起来的)
+  - [追问 3：处于 prepare 阶段的 redo log 加上完整 binlog，重启就能恢复，MySQL 为什么要这么设计?](./drafts/mysql.45.02.007.md#追问-3处于-prepare-阶段的-redo-log-加上完整-binlog重启就能恢复mysql-为什么要这么设计)
+  - [追问 4：如果这样的话，为什么还要两阶段提交呢？干脆先 redo log 写完，再写 binlog。崩溃恢复的时候，必须得两个日志都完整才可以。是不是一样的逻辑？](./drafts/mysql.45.02.007.md#追问-4如果这样的话为什么还要两阶段提交呢干脆先-redo-log-写完再写-binlog崩溃恢复的时候必须得两个日志都完整才可以是不是一样的逻辑)
+  - [追问 5：不引入两个日志，也就没有两阶段提交的必要了。只用 binlog 来支持崩溃恢复，又能支持归档，不就可以了？](./drafts/mysql.45.02.007.md#追问-5不引入两个日志也就没有两阶段提交的必要了只用-binlog-来支持崩溃恢复又能支持归档不就可以了)
+  - [追问 6：那能不能反过来，只用 redo log，不要 binlog？](./drafts/mysql.45.02.007.md#追问-6那能不能反过来只用-redo-log不要-binlog)
+  - [追问 7：redo log 一般设置多大？](./drafts/mysql.45.02.007.md#追问-7redo-log-一般设置多大)
+  - [追问 8：正常运行中的实例，数据写入后的最终落盘，是从 redo log 更新过来的还是从 buffer pool 更新过来的呢？](./drafts/mysql.45.02.007.md#追问-8正常运行中的实例数据写入后的最终落盘是从-redo-log-更新过来的还是从-buffer-pool-更新过来的呢)
+  - [追问 9：redo log buffer 是什么？是先修改内存，还是先写 redo log 文件？](./drafts/mysql.45.02.007.md#追问-9redo-log-buffer-是什么是先修改内存还是先写-redo-log-文件)
+- [业务设计问题](./drafts/mysql.45.02.007.md#业务设计问题)
+- [问题：当 MySQL 去更新一行，但是要修改的值跟原来的值是相同的，这时候 MySQL 会真的去执行一次修改吗？还是看到值相同就直接返回呢？](./drafts/mysql.45.02.007.md#问题当-mysql-去更新一行但是要修改的值跟原来的值是相同的这时候-mysql-会真的去执行一次修改吗还是看到值相同就直接返回呢)
