@@ -10,6 +10,10 @@
 - [历史、生态概述以及工具基础](#历史-生态概述以及工具基础)
   - [大数据技术生态略写与Spark历史](#大数据技术生态略写与spark历史)
   - [scala语言思想与基础](#scala语言思想与基础)
+  - [简单认识 Spark SQL 以及 Hive 、 Parquet 列式存储](#简单认识-spark-sql-以及-hive-parquet-列式存储)
+  - [DataFrame/DataSet 常用操作如多种 join 及其算法](#dataframedataset-常用操作如多种-join-及其算法)
+  - [Spark 自定义函数和开窗函数](#spark-自定义函数和开窗函数)
+  - [Nginx访问日志分析完整实战](#nginx访问日志分析完整实战)
 - [Spark 核心内容](#spark-核心内容)
 - [Spark 组件](#spark-组件)
 - [Spark 经验总结](#spark-经验总结)
@@ -22,7 +26,7 @@
 ### 辅助资料
 
 #### 参考资料
-参考资料见：[./drafts/0001参考资料.md](./drafts/0001参考资料.md)
+[./drafts/0001参考资料.md](./drafts/0001参考资料.md)
 
 - [阅读书目](./drafts/0001参考资料.md#阅读书目)
 - [经典论文](./drafts/0001参考资料.md#经典论文)
@@ -61,6 +65,29 @@
 - [基本数据结构](./drafts/0102scala语言思想与基础.md#基本数据结构)
   - [注意事项与 Scala 奇技淫巧](./drafts/0102scala语言思想与基础.md#注意事项与-scala-奇技淫巧)
   - [关于数据结构的讨论（List or Array?）](./drafts/0102scala语言思想与基础.md#关于数据结构的讨论list-or-array)
+
+#### 简单认识 Spark SQL 以及 Hive 、 Parquet 列式存储
+
+[./drafts/0201sparksql_hive_parquet.md](./drafts/0201sparksql_hive_parquet.md)
+
+- [Spark SQL 与 Hive](./drafts/0201sparksql_hive_parquet.md#spark-sql-与-hive)
+  - [Spark SQL 是什么](./drafts/0201sparksql_hive_parquet.md#spark-sql-是什么)
+  - [Spark SQL 的入口以及支持 Hive](./drafts/0201sparksql_hive_parquet.md#spark-sql-的入口以及支持-hive)
+  - [Spark SQL 与 Hive 区别](./drafts/0201sparksql_hive_parquet.md#spark-sql-与-hive-区别)
+- [Spark SQL 运行原理](./drafts/0201sparksql_hive_parquet.md#spark-sql-运行原理)
+  - [逻辑计划](./drafts/0201sparksql_hive_parquet.md#逻辑计划)
+  - [物理计划](./drafts/0201sparksql_hive_parquet.md#物理计划)
+  - [Catalyst 优化器](./drafts/0201sparksql_hive_parquet.md#catalyst-优化器)
+- [DataFrame 与 DataSet](./drafts/0201sparksql_hive_parquet.md#dataframe-与-dataset)
+  - [RDD 、 DataFrame 与 DataSet](./drafts/0201sparksql_hive_parquet.md#rdd-dataframe-与-dataset)
+  - [实例：创建 DataFrame 与 DataSet](./drafts/0201sparksql_hive_parquet.md#实例创建-dataframe-与-dataset)
+- [Parquet 列式存储](./drafts/0201sparksql_hive_parquet.md#parquet-列式存储)
+
+#### DataFrame/DataSet 常用操作如多种 join 及其算法
+
+#### Spark 自定义函数和开窗函数
+
+#### Nginx访问日志分析完整实战
 
 ### Spark 核心内容
 
