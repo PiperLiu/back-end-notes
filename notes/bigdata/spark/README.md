@@ -85,6 +85,22 @@
 
 #### DataFrame/DataSet 常用操作如多种 join 及其算法
 
+[./drafts/0202sparksql_join.md](./drafts/0202sparksql_join.md)
+
+- [查找和过滤](./drafts/0202sparksql_join.md#查找和过滤)
+  - [select 与 col](./drafts/0202sparksql_join.md#select-与-col)
+  - [条件查询（注意col使用===与=!=）以及逻辑运算方法](./drafts/0202sparksql_join.md#条件查询注意col使用与以及逻辑运算方法)
+- [聚合操作： groupby 和 agg](./drafts/0202sparksql_join.md#聚合操作-groupby-和-agg)
+- [列的增删与空值处理](./drafts/0202sparksql_join.md#列的增删与空值处理)
+  - [新增自增序号列 monotonically_increasing_id 等](./drafts/0202sparksql_join.md#新增自增序号列-monotonically_increasing_id-等)
+  - [行转列，透视 pivot ，空值判断 isNull](./drafts/0202sparksql_join.md#行转列透视-pivot-空值判断-isnull)
+- [多表操作 Join](./drafts/0202sparksql_join.md#多表操作-join)
+  - [Hash join 算法](./drafts/0202sparksql_join.md#hash-join-算法)
+  - [Broadcast Hash Join](./drafts/0202sparksql_join.md#broadcast-hash-join)
+  - [Shuffle Hash Join](./drafts/0202sparksql_join.md#shuffle-hash-join)
+  - [Sort Merge Join](./drafts/0202sparksql_join.md#sort-merge-join)
+  - [Spark SQL 支持的 Join](./drafts/0202sparksql_join.md#spark-sql-支持的-join)
+
 #### Spark 自定义函数和开窗函数
 
 #### Nginx访问日志分析完整实战
