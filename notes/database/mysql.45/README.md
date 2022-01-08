@@ -29,6 +29,7 @@ https://time.geekbang.org/column/intro/100020801
   - [13 | 为什么表数据删掉一半，表文件大小不变？](#13-为什么表数据删掉一半表文件大小不变)
   - [14 | count(*)这么慢，我该怎么办？](#14-count这么慢我该怎么办)
   - [15 | 答疑文章（一）：日志和索引相关问题](#15-答疑文章一日志和索引相关问题)
+  - [16 | “order by”是怎么工作的？](#16-order-by是怎么工作的)
 
 <!-- /code_chunk_output -->
 
@@ -269,3 +270,14 @@ https://time.geekbang.org/column/intro/100020801
   - [追问 9：redo log buffer 是什么？是先修改内存，还是先写 redo log 文件？](./drafts/mysql.45.02.007.md#追问-9redo-log-buffer-是什么是先修改内存还是先写-redo-log-文件)
 - [业务设计问题](./drafts/mysql.45.02.007.md#业务设计问题)
 - [问题：当 MySQL 去更新一行，但是要修改的值跟原来的值是相同的，这时候 MySQL 会真的去执行一次修改吗？还是看到值相同就直接返回呢？](./drafts/mysql.45.02.007.md#问题当-mysql-去更新一行但是要修改的值跟原来的值是相同的这时候-mysql-会真的去执行一次修改吗还是看到值相同就直接返回呢)
+
+#### 16 | “order by”是怎么工作的？
+
+[./drafts/mysql.45.02.008.md](./drafts/mysql.45.02.008.md)
+
+- [概述：字段排序需求](./drafts/mysql.45.02.008.md#概述字段排序需求)
+- [全字段排序](./drafts/mysql.45.02.008.md#全字段排序)
+  - [sort_buffer_size 与是否使用外部排序](./drafts/mysql.45.02.008.md#sort_buffer_size-与是否使用外部排序)
+- [rowid 排序](./drafts/mysql.45.02.008.md#rowid-排序)
+- [全字段排序 VS rowid 排序](./drafts/mysql.45.02.008.md#全字段排序-vs-rowid-排序)
+- [问题：where city in ('杭州',"苏州") order by name 如何设计？](./drafts/mysql.45.02.008.md#问题where-city-in-杭州苏州-order-by-name-如何设计)
