@@ -30,6 +30,7 @@ https://time.geekbang.org/column/intro/100020801
   - [14 | count(*)这么慢，我该怎么办？](#14-count这么慢我该怎么办)
   - [15 | 答疑文章（一）：日志和索引相关问题](#15-答疑文章一日志和索引相关问题)
   - [16 | “order by”是怎么工作的？](#16-order-by是怎么工作的)
+  - [17 | 如何正确地显示随机消息？](#17-如何正确地显示随机消息)
 
 <!-- /code_chunk_output -->
 
@@ -281,3 +282,15 @@ https://time.geekbang.org/column/intro/100020801
 - [rowid 排序](./drafts/mysql.45.02.008.md#rowid-排序)
 - [全字段排序 VS rowid 排序](./drafts/mysql.45.02.008.md#全字段排序-vs-rowid-排序)
 - [问题：where city in ('杭州',"苏州") order by name 如何设计？](./drafts/mysql.45.02.008.md#问题where-city-in-杭州苏州-order-by-name-如何设计)
+
+#### 17 | 如何正确地显示随机消息？
+
+[./drafts/mysql.45.02.009.md](./drafts/mysql.45.02.009.md)
+
+- [概述：单词表变大，随机选择变慢怎么办？](./drafts/mysql.45.02.009.md#概述单词表变大随机选择变慢怎么办)
+- [内存临时表](./drafts/mysql.45.02.009.md#内存临时表)
+  - [MySQL 用什么绝对一行数据](./drafts/mysql.45.02.009.md#mysql-用什么绝对一行数据)
+- [磁盘临时表](./drafts/mysql.45.02.009.md#磁盘临时表)
+  - [优先队列算法](./drafts/mysql.45.02.009.md#优先队列算法)
+- [随机排序方法](./drafts/mysql.45.02.009.md#随机排序方法)
+- [问题：如何继续优化？](./drafts/mysql.45.02.009.md#问题如何继续优化)
