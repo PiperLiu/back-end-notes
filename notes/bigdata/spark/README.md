@@ -114,6 +114,19 @@
 
 #### Spark SQL 应用：Nginx访问日志分析完整实战
 
+[./drafts/0204sparksql_flume_nginx.md](./drafts/0204sparksql_flume_nginx.md)
+
+- [场景介绍与配置](./drafts/0204sparksql_flume_nginx.md#场景介绍与配置)
+  - [Hadoop (Hdfs, Yarn) 高可用 Hive Flume Zookeeper](./drafts/0204sparksql_flume_nginx.md#hadoop-hdfs-yarn-高可用-hive-flume-zookeeper)
+  - [jps 与 ps 检查](./drafts/0204sparksql_flume_nginx.md#jps-与-ps-检查)
+- [对埋点数据第一次清洗（使用 flume）](./drafts/0204sparksql_flume_nginx.md#对埋点数据第一次清洗使用-flume)
+- [第二次清洗：解析数据并且按天存储到 Hive 仓库](./drafts/0204sparksql_flume_nginx.md#第二次清洗解析数据并且按天存储到-hive-仓库)
+- [用 c3p0 将分析结果批量写入 MySQL ，用 Spark 分析](./drafts/0204sparksql_flume_nginx.md#用-c3p0-将分析结果批量写入-mysql-用-spark-分析)
+  - [MysqlPoolManager 连接池工具类](./drafts/0204sparksql_flume_nginx.md#mysqlpoolmanager-连接池工具类)
+  - [MysqlUtil 操作工具类（拼接语句并执行 SQL 事务）](./drafts/0204sparksql_flume_nginx.md#mysqlutil-操作工具类拼接语句并执行-sql-事务)
+  - [Main 函数](./drafts/0204sparksql_flume_nginx.md#main-函数)
+- [性能监控（降低 Shuffle 数值）](./drafts/0204sparksql_flume_nginx.md#性能监控降低-shuffle-数值)
+
 ### Spark 核心内容
 
 ### Spark 组件
