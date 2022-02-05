@@ -12,6 +12,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 
 - [1 | 让自己习惯 C++](#1-让自己习惯-c)
 - [2 | 构造/析构/赋值运算](#2-构造析构赋值运算)
+- [3 | 资源管理](#3-资源管理)
 
 <!-- /code_chunk_output -->
 
@@ -66,3 +67,19 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [12 | 复制对象时勿忘其每一个成份](./drafts/cpp55.02.constructors.destructors.assignment.md#12-复制对象时勿忘其每一个成份)
   - [Copying 函数应该确保复制所有成份](./drafts/cpp55.02.constructors.destructors.assignment.md#copying-函数应该确保复制所有成份)
   - [不要用 copying 函数实现另一个 copying 函数](./drafts/cpp55.02.constructors.destructors.assignment.md#不要用-copying-函数实现另一个-copying-函数)
+
+### 3 | 资源管理
+
+[./drafts/cpp55.03.resource.management.md](./drafts/cpp55.03.resource.management.md)
+
+- [13 | 以对象管理资源](./drafts/cpp55.03.resource.management.md#13-以对象管理资源)
+  - [智能指针 std::auto_ptr](./drafts/cpp55.03.resource.management.md#智能指针-stdauto_ptr)
+  - [RCSP 的 shared_ptr 解决 auto_ptr 唯一所有权问题](./drafts/cpp55.03.resource.management.md#rcsp-的-shared_ptr-解决-auto_ptr-唯一所有权问题)
+- [14 | 在资源管理类中小心 copying 行为](./drafts/cpp55.03.resource.management.md#14-在资源管理类中小心-copying-行为)
+  - [资源取得时机便是初始化时机](./drafts/cpp55.03.resource.management.md#资源取得时机便是初始化时机)
+  - [mutex 为例： RAII 复制行为](./drafts/cpp55.03.resource.management.md#mutex-为例-raii-复制行为)
+- [15 | 在资源管理类中提供对原始资源的访问](./drafts/cpp55.03.resource.management.md#15-在资源管理类中提供对原始资源的访问)
+  - [智能指针重载了指针取值操作符](./drafts/cpp55.03.resource.management.md#智能指针重载了指针取值操作符)
+  - [重载隐式转换函数](./drafts/cpp55.03.resource.management.md#重载隐式转换函数)
+- [16 | 成对使用 new 和 delete 时要采取相同形式](./drafts/cpp55.03.resource.management.md#16-成对使用-new-和-delete-时要采取相同形式)
+- [17 | 以独立语句将 newed 对象置入智能指针](./drafts/cpp55.03.resource.management.md#17-以独立语句将-newed-对象置入智能指针)
