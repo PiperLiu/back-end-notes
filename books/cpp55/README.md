@@ -46,7 +46,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [05 | 了解 C++ 默默编写并调用哪些函数](./drafts/cpp55.02.constructors.destructors.assignment.md#05-了解-c-默默编写并调用哪些函数)
   - [C++ 默认实现了构造函数等内容](./drafts/cpp55.02.constructors.destructors.assignment.md#c-默认实现了构造函数等内容)
   - [更好地理解 static](./drafts/cpp55.02.constructors.destructors.assignment.md#更好地理解-static)
-- [06 若不想使用编译器自动生成的函数，就该明确拒绝](./drafts/cpp55.02.constructors.destructors.assignment.md#06-若不想使用编译器自动生成的函数就该明确拒绝)
+- [06 | 若不想使用编译器自动生成的函数，就该明确拒绝](./drafts/cpp55.02.constructors.destructors.assignment.md#06-若不想使用编译器自动生成的函数就该明确拒绝)
   - [将 copy 构造函数或操作符设为 private 以防止拷贝对象](./drafts/cpp55.02.constructors.destructors.assignment.md#将-copy-构造函数或操作符设为-private-以防止拷贝对象)
   - [函数声明不写参数名称是可以的](./drafts/cpp55.02.constructors.destructors.assignment.md#函数声明不写参数名称是可以的)
 - [07 | 为多态基类声明 virtual 析构函数](./drafts/cpp55.02.constructors.destructors.assignment.md#07-为多态基类声明-virtual-析构函数)

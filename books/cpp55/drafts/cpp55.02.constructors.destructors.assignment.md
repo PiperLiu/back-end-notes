@@ -9,7 +9,7 @@ Constructors, Destructors, and Assignment Operators
 - [05 | 了解 C++ 默默编写并调用哪些函数](#05-了解-c-默默编写并调用哪些函数)
   - [C++ 默认实现了构造函数等内容](#c-默认实现了构造函数等内容)
   - [更好地理解 static](#更好地理解-static)
-- [06 若不想使用编译器自动生成的函数，就该明确拒绝](#06-若不想使用编译器自动生成的函数就该明确拒绝)
+- [06 | 若不想使用编译器自动生成的函数，就该明确拒绝](#06-若不想使用编译器自动生成的函数就该明确拒绝)
   - [将 copy 构造函数或操作符设为 private 以防止拷贝对象](#将-copy-构造函数或操作符设为-private-以防止拷贝对象)
   - [函数声明不写参数名称是可以的](#函数声明不写参数名称是可以的)
 - [07 | 为多态基类声明 virtual 析构函数](#07-为多态基类声明-virtual-析构函数)
@@ -61,7 +61,7 @@ public:
 
 编译器默认实现的函数都干了什么呢？构造函数和析构函数不讲，主要是让程序能跑得通； copy 构造函数和 copy assignment 操作符，编译器创建的版本只是单纯地将来源对象地每一个 non-static 成员变量拷贝到目标对象。
 
-### 06 若不想使用编译器自动生成的函数，就该明确拒绝
+### 06 | 若不想使用编译器自动生成的函数，就该明确拒绝
 
 Explicitly disallow the use of compiler-generated functions you do not want.
 
@@ -320,6 +320,8 @@ private:
 
 ### 10 | 令 operator= 返回一个 reference to *this
 
+Have assignment operators return a reference to *this.
+
 #### 不仅适用于=，适用于所有赋值相关运算，是一个协议，合理的协议
 
 ```cpp
@@ -356,6 +358,8 @@ x = (y = (z = 15));
 ```
 
 ### 11 | 在 operator= 中处理“自我赋值”
+
+Handle assignment to self in operator=.
 
 #### 自我赋值可能带来的错误
 
