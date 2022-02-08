@@ -13,6 +13,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [1 | 让自己习惯 C++](#1-让自己习惯-c)
 - [2 | 构造/析构/赋值运算](#2-构造析构赋值运算)
 - [3 | 资源管理](#3-资源管理)
+- [4 | 设计与声明](#4-设计与声明)
 
 <!-- /code_chunk_output -->
 
@@ -83,3 +84,23 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
   - [重载隐式转换函数](./drafts/cpp55.03.resource.management.md#重载隐式转换函数)
 - [16 | 成对使用 new 和 delete 时要采取相同形式](./drafts/cpp55.03.resource.management.md#16-成对使用-new-和-delete-时要采取相同形式)
 - [17 | 以独立语句将 newed 对象置入智能指针](./drafts/cpp55.03.resource.management.md#17-以独立语句将-newed-对象置入智能指针)
+
+### 4 | 设计与声明
+
+[./drafts/cpp55.04.designs.declarations.md](./drafts/cpp55.04.designs.declarations.md)
+
+- [18 | 让接口容易被正确使用，不易被误用](./drafts/cpp55.04.designs.declarations.md#18-让接口容易被正确使用不易被误用)
+- [19 | 设计 class 犹如设计 type](./drafts/cpp55.04.designs.declarations.md#19-设计-class-犹如设计-type)
+- [20 | 宁以 pass-by-reference-to-const 替换 pass-by-value](./drafts/cpp55.04.designs.declarations.md#20-宁以-pass-by-reference-to-const-替换-pass-by-value)
+  - [传引用可以防止参数被切割](./drafts/cpp55.04.designs.declarations.md#传引用可以防止参数被切割)
+- [21 | 必须返回对象时，别妄想返回其 reference](./drafts/cpp55.04.designs.declarations.md#21-必须返回对象时别妄想返回其-reference)
+  - [函数创建新对象之 stack-based 与 heap-based 的问题](./drafts/cpp55.04.designs.declarations.md#函数创建新对象之-stack-based-与-heap-based-的问题)
+- [22 | 将成员变量声明为 private](./drafts/cpp55.04.designs.declarations.md#22-将成员变量声明为-private)
+- [23 | 宁以 non-member 、 non-friend 替换 member 函数](./drafts/cpp55.04.designs.declarations.md#23-宁以-non-member-non-friend-替换-member-函数)
+  - [使用命名空间函数替代成员函数](./drafts/cpp55.04.designs.declarations.md#使用命名空间函数替代成员函数)
+- [24 | 若所有参数皆需类型转换，请为此次采用 non-member 函数](./drafts/cpp55.04.designs.declarations.md#24-若所有参数皆需类型转换请为此次采用-non-member-函数)
+  - [成员函数中的函数难以对外部变量转换类型](./drafts/cpp55.04.designs.declarations.md#成员函数中的函数难以对外部变量转换类型)
+- [25 | 考虑写出一个不抛出异常的 swap 函数](./drafts/cpp55.04.designs.declarations.md#25-考虑写出一个不抛出异常的-swap-函数)
+  - [典型的 std::swap 可能浪费性能](./drafts/cpp55.04.designs.declarations.md#典型的-stdswap-可能浪费性能)
+  - [全特化 total template specialization](./drafts/cpp55.04.designs.declarations.md#全特化-total-template-specialization)
+  - [偏特化 paritally specialize 与 swap class template 而非 classes](./drafts/cpp55.04.designs.declarations.md#偏特化-paritally-specialize-与-swap-class-template-而非-classes)
