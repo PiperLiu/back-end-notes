@@ -14,6 +14,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [2 | 构造/析构/赋值运算](#2-构造析构赋值运算)
 - [3 | 资源管理](#3-资源管理)
 - [4 | 设计与声明](#4-设计与声明)
+- [5 | 实现](#5-实现)
 
 <!-- /code_chunk_output -->
 
@@ -104,3 +105,20 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
   - [典型的 std::swap 可能浪费性能](./drafts/cpp55.04.designs.declarations.md#典型的-stdswap-可能浪费性能)
   - [全特化 total template specialization](./drafts/cpp55.04.designs.declarations.md#全特化-total-template-specialization)
   - [偏特化 paritally specialize 与 swap class template 而非 classes](./drafts/cpp55.04.designs.declarations.md#偏特化-paritally-specialize-与-swap-class-template-而非-classes)
+
+### 5 | 实现
+
+[./drafts/cpp55.05.implementations.md](./drafts/cpp55.05.implementations.md)
+
+- [26 | 尽可能延后变量定义式的出现时间](./drafts/cpp55.05.implementations.md)#26-尽可能延后变量定义式的出现时间)
+- [27 | 尽量少做转型动作](./drafts/cpp55.05.implementations.md)#27-尽量少做转型动作)
+  - [四种新式转型动作](./drafts/cpp55.05.implementations.md)#四种新式转型动作)
+  - [在子类中乱用转型案例及纠错](./drafts/cpp55.05.implementations.md)#在子类中乱用转型案例及纠错)
+  - [在容器迭代中乱用转型案例及纠错](./drafts/cpp55.05.implementations.md)#在容器迭代中乱用转型案例及纠错)
+- [28 | 避免返回 handles 指向对象内部成份](./drafts/cpp55.05.implementations.md)#28-避免返回-handles-指向对象内部成份)
+- [29 | 为“异常安全”而努力是值得的](./drafts/cpp55.05.implementations.md)#29-为异常安全而努力是值得的)
+  - [什么是 copy-and-swap 策略？](./drafts/cpp55.05.implementations.md)#什么是-copy-and-swap-策略)
+- [30 | 透彻了解 inlining 的里里外外](./drafts/cpp55.05.implementations.md)#30-透彻了解-inlining-的里里外外)
+- [31 | 将文件间的编译依存关系降至最低](./drafts/cpp55.05.implementations.md)#31-将文件间的编译依存关系降至最低)
+  - [Handle classes / pimpl idiom](./drafts/cpp55.05.implementations.md)#handle-classes-pimpl-idiom)
+  - [Interface classes 与 factory method](./drafts/cpp55.05.implementations.md)#interface-classes-与-factory-method)
