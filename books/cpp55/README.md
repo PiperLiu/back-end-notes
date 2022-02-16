@@ -15,6 +15,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [3 | 资源管理](#3-资源管理)
 - [4 | 设计与声明](#4-设计与声明)
 - [5 | 实现](#5-实现)
+- [6 | 继承与面型对象设计](#6-继承与面型对象设计)
 
 <!-- /code_chunk_output -->
 
@@ -122,3 +123,8 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [31 | 将文件间的编译依存关系降至最低](./drafts/cpp55.05.implementations.md)#31-将文件间的编译依存关系降至最低)
   - [Handle classes / pimpl idiom](./drafts/cpp55.05.implementations.md)#handle-classes-pimpl-idiom)
   - [Interface classes 与 factory method](./drafts/cpp55.05.implementations.md)#interface-classes-与-factory-method)
+
+### 6 | 继承与面型对象设计
+
+[./drafts/cpp55.06.inheritance.md](./drafts/cpp55.06.inheritance.md)
+

@@ -300,6 +300,42 @@ Understand the ins and outs of inlining.
 
 不要乱用 inline ，比如过度使用 inline 可能造成过强的编译依赖；非 inline 函数可以让客户端在很多情况下重新连接，而非再次编译。
 
+参考[inline function members inside a class](https://stackoverflow.com/questions/9370493/inline-function-members-inside-a-class/9370539)：
+
+只有两种方法，让编译器提供 inline 函数：
+
+（1）在头文件内，在声明类的时候提供成员方法的定义。
+
+```cpp
+class Human {
+
+public:
+
+    Human(const char* name);
+    Human();
+
+    // is implicit inline
+    void lookAt(const char* name) const {
+        std::cout << "I'm looking at " << name << std::endl;
+
+    }
+
+private:
+    char _name[30]; 
+
+};
+```
+
+（2）在头文件内，明确指出 inline 函数。
+
+```cpp
+    // is explicit inline 
+    inline void lookAt(const char* name) const {
+        std::cout << "I'm looking at " << name << std::endl;
+
+    }
+```
+
 ### 31 | 将文件间的编译依存关系降至最低
 
 Minimize compilation dependencies between files.
