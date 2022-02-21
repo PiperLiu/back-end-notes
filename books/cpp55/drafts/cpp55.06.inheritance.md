@@ -26,6 +26,8 @@ Inheritance and Object-Oriented Design
   - [为什么宁用符合也不用 private 继承](#为什么宁用符合也不用-private-继承)
   - [什么时候用 private ？ EBO empty base optimization](#什么时候用-private-ebo-empty-base-optimization)
 - [40 | 明智而审慎地使用多重继承](#40-明智而审慎地使用多重继承)
+  - [多重继承可能导致歧义](#多重继承可能导致歧义)
+  - [virtual 继承](#virtual-继承)
 
 <!-- /code_chunk_output -->
 
@@ -526,4 +528,87 @@ private:
 ### 40 | 明智而审慎地使用多重继承
 
 Use multiple inheritance judiciously.
+
+多重继承可以体现在接口与实现方面。
+
+```mermaid
+classDiagram
+IPerson <-- CPerson
+PersonInfo <-- CPerson : private
+```
+
+```cpp
+class CPerson:
+  public IPerson,  // 接口
+  private PersonInfo  // 实现
+{ ... };
+
+```
+
+#### 多重继承可能导致歧义
+
+```cpp
+class B {
+public:
+  void a();
+};
+class E {
+private:
+  bool a() const;
+};
+class M:
+  public B,
+  public E
+{ ... };
+M m;
+m.a();  // 歧义！不知道是那个 a
+```
+
+如果不歧义？
+
+```cpp
+m.B::a();
+```
+
+#### virtual 继承
+
+```mermaid
+classDiagram
+File <-- InputFile
+File <-- OutputFile
+InputFile <-- IOFile
+OutputFile <-- IOFile
+```
+
+```cpp
+class File { ... };
+class InputFile: public File { ... };
+class OutputFile: public File { ... };
+class IOFile: public InputFile,
+              public OutputFile
+{ ... };
+```
+
+如上， File 中的数据将被在 IOFile 中复制两次。
+
+解决方法就是使用 virtual 继承，如下。
+
+```mermaid
+classDiagram
+File <-- InputFile: {virtual}
+File <-- OutputFile: {virtual}
+InputFile <-- IOFile
+OutputFile <-- IOFile
+```
+
+```cpp
+class File { ... };
+class InputFile: virtual public File { ... };
+class OutputFile: virtual public File { ... };
+class IOFile: public InputFile,
+              public OutputFile
+{ ... };
+```
+
+按理说，任何 public 都应该是 virtual public 继承，但是你能要在速度上付出代价。
 
