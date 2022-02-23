@@ -16,6 +16,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [4 | 设计与声明](#4-设计与声明)
 - [5 | 实现](#5-实现)
 - [6 | 继承与面型对象设计](#6-继承与面型对象设计)
+- [7 | 模板与泛型编程](#7-模板与泛型编程)
 
 <!-- /code_chunk_output -->
 
@@ -150,3 +151,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [40 | 明智而审慎地使用多重继承](./drafts/cpp55.06.inheritance.md#40-明智而审慎地使用多重继承)
   - [多重继承可能导致歧义](./drafts/cpp55.06.inheritance.md#多重继承可能导致歧义)
   - [virtual 继承](./drafts/cpp55.06.inheritance.md#virtual-继承)
+
+### 7 | 模板与泛型编程
+
+[./drafts/cpp55.07.templates.generic.md](./drafts/cpp55.07.templates.generic.md)
