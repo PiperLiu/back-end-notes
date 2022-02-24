@@ -155,3 +155,22 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 ### 7 | 模板与泛型编程
 
 [./drafts/cpp55.07.templates.generic.md](./drafts/cpp55.07.templates.generic.md)
+
+- [41 | 了解隐式接口和编译期多态](./drafts/cpp55.07.templates.generic.md#41-了解隐式接口和编译期多态)
+  - [显示接口 explicit interface 和隐式接口 valid expressions](./drafts/cpp55.07.templates.generic.md#显示接口-explicit-interface-和隐式接口-valid-expressions)
+- [42 | 了解 typename 的双重意义](./drafts/cpp55.07.templates.generic.md#42-了解-typename-的双重意义)
+  - [typename 告诉编译器从属名称 dependent name 也是个类型](./drafts/cpp55.07.templates.generic.md#typename-告诉编译器从属名称-dependent-name-也是个类型)
+  - [不能使用 typename 之处](./drafts/cpp55.07.templates.generic.md#不能使用-typename-之处)
+- [43 | 学习处理模板化基类内的名称](./drafts/cpp55.07.templates.generic.md#43-学习处理模板化基类内的名称)
+  - [防止“拒绝在模板化基类”中寻找继承的名称三种方法](./drafts/cpp55.07.templates.generic.md#防止拒绝在模板化基类中寻找继承的名称三种方法)
+- [44 | 将与参数无关的代码抽离 templates](./drafts/cpp55.07.templates.generic.md#44-将与参数无关的代码抽离-templates)
+- [45 | 运用成员函数模板接受所有兼容类型](./drafts/cpp55.07.templates.generic.md#45-运用成员函数模板接受所有兼容类型)
+  - [必须同时声明泛化 copy 构造函数和“正常的” copy 构造函数](./drafts/cpp55.07.templates.generic.md#必须同时声明泛化-copy-构造函数和正常的-copy-构造函数)
+- [46 | 需要类型转换时请为模板定义非成员函数](./drafts/cpp55.07.templates.generic.md#46-需要类型转换时请为模板定义非成员函数)
+  - [template 在实参推导过程中不将隐式类型转换纳入考虑](./drafts/cpp55.07.templates.generic.md#template-在实参推导过程中不将隐式类型转换纳入考虑)
+  - [应用 friend 函数让成员函数成为非成员函数](./drafts/cpp55.07.templates.generic.md#应用-friend-函数让成员函数成为非成员函数)
+- [47 | 请使用 traits classes 表现类型信息](./drafts/cpp55.07.templates.generic.md#47-请使用-traits-classes-表现类型信息)
+  - [STL 迭代器分类](./drafts/cpp55.07.templates.generic.md#stl-迭代器分类)
+  - [Traits 是一个 C++ 协议](./drafts/cpp55.07.templates.generic.md#traits-是一个-c-协议)
+- [48 | 认识 template 元编程](./drafts/cpp55.07.templates.generic.md#48-认识-template-元编程)
+  - [使用 TMP 计算阶乘](./drafts/cpp55.07.templates.generic.md#使用-tmp-计算阶乘)
