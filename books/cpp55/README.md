@@ -17,6 +17,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [5 | 实现](#5-实现)
 - [6 | 继承与面型对象设计](#6-继承与面型对象设计)
 - [7 | 模板与泛型编程](#7-模板与泛型编程)
+- [8 | 定制 new 和 delete](#8-定制-new-和-delete)
 
 <!-- /code_chunk_output -->
 
@@ -174,3 +175,19 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
   - [Traits 是一个 C++ 协议](./drafts/cpp55.07.templates.generic.md#traits-是一个-c-协议)
 - [48 | 认识 template 元编程](./drafts/cpp55.07.templates.generic.md#48-认识-template-元编程)
   - [使用 TMP 计算阶乘](./drafts/cpp55.07.templates.generic.md#使用-tmp-计算阶乘)
+
+### 8 | 定制 new 和 delete
+
+[./drafts/cpp55.08.new.md](./drafts/cpp55.08.new.md)
+
+- [49 | 了解 new-handler 的行为](./drafts/cpp55.08.new.md#49-了解-new-handler-的行为)
+  - [new 的错误处理函数 new-handler](./drafts/cpp55.08.new.md#new-的错误处理函数-new-handler)
+  - [设计专属的 set_new_handler](./drafts/cpp55.08.new.md#设计专属的-set_new_handler)
+  - [设计模板化的 new_handler](./drafts/cpp55.08.new.md#设计模板化的-new_handler)
+  - [nothrow 形式：分配失败返回 null](./drafts/cpp55.08.new.md#nothrow-形式分配失败返回-null)
+- [50 | 了解 new 和 delete 的合理替换时机](./drafts/cpp55.08.new.md#50-了解-new-和-delete-的合理替换时机)
+- [51 | 编写 new 和 delete 时需固守常规](./drafts/cpp55.08.new.md#51-编写-new-和-delete-时需固守常规)
+  - [即便客户要求 0 bytes ， new 也得返回一个合法指针](./drafts/cpp55.08.new.md#即便客户要求-0-bytes-new-也得返回一个合法指针)
+- [52 | 写了 placement new 也要写 placement delete](./drafts/cpp55.08.new.md#52-写了-placement-new-也要写-placement-delete)
+  - [考虑 placement new 异常的情况](./drafts/cpp55.08.new.md#考虑-placement-new-异常的情况)
+  - [placement new 会覆盖正常的 new](./drafts/cpp55.08.new.md#placement-new-会覆盖正常的-new)
