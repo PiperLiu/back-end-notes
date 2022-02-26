@@ -18,6 +18,7 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [6 | 继承与面型对象设计](#6-继承与面型对象设计)
 - [7 | 模板与泛型编程](#7-模板与泛型编程)
 - [8 | 定制 new 和 delete](#8-定制-new-和-delete)
+- [9 | 杂项讨论](#9-杂项讨论)
 
 <!-- /code_chunk_output -->
 
@@ -191,3 +192,11 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 - [52 | 写了 placement new 也要写 placement delete](./drafts/cpp55.08.new.md#52-写了-placement-new-也要写-placement-delete)
   - [考虑 placement new 异常的情况](./drafts/cpp55.08.new.md#考虑-placement-new-异常的情况)
   - [placement new 会覆盖正常的 new](./drafts/cpp55.08.new.md#placement-new-会覆盖正常的-new)
+
+### 9 | 杂项讨论
+
+[./drafts/cpp55.09.miscellany.md](./drafts/cpp55.09.miscellany.md)
+
+- [53 | 不要轻忽编译器的警告](./drafts/cpp55.09.miscellany.md#53-不要轻忽编译器的警告)
+- [54 | 让自己熟悉包括 TR1 在内的标准程序库](./drafts/cpp55.09.miscellany.md#54-让自己熟悉包括-tr1-在内的标准程序库)
+- [55 | 让自己熟悉 Boost](./drafts/cpp55.09.miscellany.md#55-让自己熟悉-boost)
