@@ -147,7 +147,8 @@ public:
 class ModelB: public Airplane {
 public:
   virtual void fly(const Airport& destination)
-  { // ModelX's special implementation }
+  { // ModelX's special implementation
+  }
   ...
 };
 ```
@@ -173,7 +174,8 @@ public:
 class ModelB: public Airplane {
 public:
   virtual void fly(const Airport& destination)
-  { // ModelX's special implementation }
+  { // ModelX's special implementation
+  }
   ...
 };
 ```

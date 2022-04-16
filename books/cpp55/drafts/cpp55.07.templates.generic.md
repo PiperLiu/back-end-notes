@@ -460,12 +460,6 @@ struct iterator_traits<IterT*>
 
 ```cpp
 template<typename IterT, typename DistT>
-void advance(IterT& iter, DistT d)
-{
-    doAdvance(iter, d,
-              typename iterator_traits<IterT>::iterator_category;
-};
-template<typename IterT, typename DistT>
 void doAdvance(IterT& iter, DistT d,
                random_access_iterator_tag)
 {
