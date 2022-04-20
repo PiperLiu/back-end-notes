@@ -114,18 +114,18 @@ C++ 11 是十分有必要学习的，快速把本书过完吧，然后再学 `ST
 
 [./drafts/cpp55.05.implementations.md](./drafts/cpp55.05.implementations.md)
 
-- [26 | 尽可能延后变量定义式的出现时间](./drafts/cpp55.05.implementations.md)#26-尽可能延后变量定义式的出现时间)
-- [27 | 尽量少做转型动作](./drafts/cpp55.05.implementations.md)#27-尽量少做转型动作)
-  - [四种新式转型动作](./drafts/cpp55.05.implementations.md)#四种新式转型动作)
-  - [在子类中乱用转型案例及纠错](./drafts/cpp55.05.implementations.md)#在子类中乱用转型案例及纠错)
-  - [在容器迭代中乱用转型案例及纠错](./drafts/cpp55.05.implementations.md)#在容器迭代中乱用转型案例及纠错)
-- [28 | 避免返回 handles 指向对象内部成份](./drafts/cpp55.05.implementations.md)#28-避免返回-handles-指向对象内部成份)
-- [29 | 为“异常安全”而努力是值得的](./drafts/cpp55.05.implementations.md)#29-为异常安全而努力是值得的)
-  - [什么是 copy-and-swap 策略？](./drafts/cpp55.05.implementations.md)#什么是-copy-and-swap-策略)
-- [30 | 透彻了解 inlining 的里里外外](./drafts/cpp55.05.implementations.md)#30-透彻了解-inlining-的里里外外)
-- [31 | 将文件间的编译依存关系降至最低](./drafts/cpp55.05.implementations.md)#31-将文件间的编译依存关系降至最低)
-  - [Handle classes / pimpl idiom](./drafts/cpp55.05.implementations.md)#handle-classes-pimpl-idiom)
-  - [Interface classes 与 factory method](./drafts/cpp55.05.implementations.md)#interface-classes-与-factory-method)
+- [26 | 尽可能延后变量定义式的出现时间](./drafts/cpp55.05.implementations.md#26-尽可能延后变量定义式的出现时间)
+- [27 | 尽量少做转型动作](./drafts/cpp55.05.implementations.md#27-尽量少做转型动作)
+  - [四种新式转型动作](./drafts/cpp55.05.implementations.md#四种新式转型动作)
+  - [在子类中乱用转型案例及纠错](./drafts/cpp55.05.implementations.md#在子类中乱用转型案例及纠错)
+  - [在容器迭代中乱用转型案例及纠错](./drafts/cpp55.05.implementations.md#在容器迭代中乱用转型案例及纠错)
+- [28 | 避免返回 handles 指向对象内部成份](./drafts/cpp55.05.implementations.md#28-避免返回-handles-指向对象内部成份)
+- [29 | 为“异常安全”而努力是值得的](./drafts/cpp55.05.implementations.md#29-为异常安全而努力是值得的)
+  - [什么是 copy-and-swap 策略？](./drafts/cpp55.05.implementations.md#什么是-copy-and-swap-策略)
+- [30 | 透彻了解 inlining 的里里外外](./drafts/cpp55.05.implementations.md#30-透彻了解-inlining-的里里外外)
+- [31 | 将文件间的编译依存关系降至最低](./drafts/cpp55.05.implementations.md#31-将文件间的编译依存关系降至最低)
+  - [Handle classes / pimpl idiom](./drafts/cpp55.05.implementations.md#handle-classes-pimpl-idiom)
+  - [Interface classes 与 factory method](./drafts/cpp55.05.implementations.md#interface-classes-与-factory-method)
 
 ### 6 | 继承与面型对象设计
 
