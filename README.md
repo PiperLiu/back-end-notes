@@ -37,6 +37,7 @@
 
 📡 大数据与分布式相关：
 - [📺 Spark 实践经验与读书笔记](./notes/bigdata/spark/README.md)
+- [📸 GO 基础语法](./notes/golang/a-tour-of-Go/README.md)
 
 📦 数据库相关：
 - [📫 SQL 基础语法](./notes/database/sqlzoo/README.md)

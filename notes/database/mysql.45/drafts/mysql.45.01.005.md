@@ -140,7 +140,7 @@ mysql> select * from tuser where name like '张%' and age=10 and ismale=1;
 
 ![](./images/2021122403.png)
 
-![](./images/2021122403.png)
+![](./images/2021122404.png)
 
 上图中，每一个虚线箭头表示回表一次。无索引下推执行流程中，在 `(name,age)` 索引里面老师特意去掉了 `age` 的值，这个过程 InnoDB 并不会去看 age 的值，只是按顺序把 `name 第一个字是’张’` 的记录一条条取出来回表。因此，需要回表 `4` 次。
 

@@ -235,6 +235,6 @@ Hash Join 阶段：在每个 executor 上执行 Hash Join
 df_1.join(
   df_2,
   df_1("uid") === df_2("u_id"),
-  "left_outer:
+  "left_outer"
 )
 ```
