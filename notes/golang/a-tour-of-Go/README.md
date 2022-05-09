@@ -14,6 +14,7 @@ https://go.dev/tour/list
 - [Basics](#basics)
   - [Packages, variables, and functions](#packages-variables-and-functions)
   - [Flow control statements: for, if, else, switch and defer](#flow-control-statements-for-if-else-switch-and-defer)
+  - [More types: structs, slices, and maps](#more-types-structs-slices-and-maps)
 
 <!-- /code_chunk_output -->
 
@@ -52,3 +53,26 @@ https://go.dev/tour/list
   - [Defer, Panic, and Recover](./drafts/gotour.1.2.md#defer-panic-and-recover)
   - [Panic and Recover](./drafts/gotour.1.2.md#panic-and-recover)
 
+### More types: structs, slices, and maps
+
+[./drafts/gotour.1.3.md](./drafts/gotour.1.3.md)
+- [Pointers](./drafts/gotour.1.3.md#pointers)
+- [Structs](./drafts/gotour.1.3.md#structs)
+- [Pointers to structs （取址不像 C 无需写箭头）](./drafts/gotour.1.3.md#pointers-to-structs-取址不像-c-无需写箭头)
+- [Struct Literals](./drafts/gotour.1.3.md#struct-literals)
+- [Arrays](./drafts/gotour.1.3.md#arrays)
+- [Slices](./drafts/gotour.1.3.md#slices)
+  - [Slices are like references to arrays](./drafts/gotour.1.3.md#slices-are-like-references-to-arrays)
+  - [Slice literals](./drafts/gotour.1.3.md#slice-literals)
+  - [Slice length and capacity](./drafts/gotour.1.3.md#slice-length-and-capacity)
+  - [nil 判断是否为无数据（无数据不代表空切片）](./drafts/gotour.1.3.md#nil-判断是否为无数据无数据不代表空切片)
+  - [Creating a slice with make](./drafts/gotour.1.3.md#creating-a-slice-with-make)
+  - [Slices of slices](./drafts/gotour.1.3.md#slices-of-slices)
+  - [Appending to a slice](./drafts/gotour.1.3.md#appending-to-a-slice)
+  - [深入 Slices: usage and internals](./drafts/gotour.1.3.md#深入-slices-usage-and-internals)
+- [Range](./drafts/gotour.1.3.md#range)
+- [Maps](./drafts/gotour.1.3.md#maps)
+  - [Map literals](./drafts/gotour.1.3.md#map-literals)
+  - [Mutating Maps](./drafts/gotour.1.3.md#mutating-maps)
+- [Function values](./drafts/gotour.1.3.md#function-values)
+- [Function closures](./drafts/gotour.1.3.md#function-closures)
