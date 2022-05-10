@@ -45,6 +45,7 @@
 
 📚 已读书籍：
 - [🍩 Scott Meyers. Effective C++: 55 Specific Ways to Improve Your Programs and Designs. 电子工业出版社. 侯捷译. 第三版](./books/cpp55/README.md)
+- [🍪 Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14. 中国电力出版社. 高博译. 第一版](./books/cppmodern42/README.md)
 
 ## 项目结构介绍 📻
 
