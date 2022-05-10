@@ -15,6 +15,9 @@ https://go.dev/tour/list
   - [Packages, variables, and functions](#packages-variables-and-functions)
   - [Flow control statements: for, if, else, switch and defer](#flow-control-statements-for-if-else-switch-and-defer)
   - [More types: structs, slices, and maps](#more-types-structs-slices-and-maps)
+- [Methods and interfaces](#methods-and-interfaces)
+- [Generics](#generics)
+- [Concurrency](#concurrency)
 
 <!-- /code_chunk_output -->
 
@@ -76,3 +79,39 @@ https://go.dev/tour/list
   - [Mutating Maps](./drafts/gotour.1.3.md#mutating-maps)
 - [Function values](./drafts/gotour.1.3.md#function-values)
 - [Function closures](./drafts/gotour.1.3.md#function-closures)
+
+## Methods and interfaces
+
+[./drafts/gotour.2.1.md](./drafts/gotour.2.1.md)
+- [Methods](./drafts/gotour.2.1.md#methods)
+  - [关于 type](./drafts/gotour.2.1.md#关于-type)
+  - [Pointer receivers （拷贝一个还是传引用）](./drafts/gotour.2.1.md#pointer-receivers-拷贝一个还是传引用)
+  - [Pointers and functions](./drafts/gotour.2.1.md#pointers-and-functions)
+  - [Methods and pointer indirection](./drafts/gotour.2.1.md#methods-and-pointer-indirection)
+- [Interfaces](./drafts/gotour.2.1.md#interfaces)
+  - [Interfaces are implemented implicitly](./drafts/gotour.2.1.md#interfaces-are-implemented-implicitly)
+  - [Interface values with nil underlying values](./drafts/gotour.2.1.md#interface-values-with-nil-underlying-values)
+  - [The empty interface](./drafts/gotour.2.1.md#the-empty-interface)
+- [Type assertions](./drafts/gotour.2.1.md#type-assertions)
+  - [使用括号两种返回值](./drafts/gotour.2.1.md#使用括号两种返回值)
+  - [Type switches](./drafts/gotour.2.1.md#type-switches)
+- [Stringers](./drafts/gotour.2.1.md#stringers)
+- [Errors](./drafts/gotour.2.1.md#errors)
+- [Readers](./drafts/gotour.2.1.md#readers)
+
+## Generics
+
+[./drafts/gotour.3.1.md](./drafts/gotour.3.1.md)
+- [Type parameters](./drafts/gotour.3.1.md#type-parameters)
+- [Generic types](./drafts/gotour.3.1.md#generic-types)
+
+## Concurrency
+
+[./drafts/gotour.4.1.md](./drafts/gotour.4.1.md)
+- [Goroutines](./drafts/gotour.4.1.md#goroutines)
+- [Channelss](./drafts/gotour.4.1.md#channelss)
+  - [Buffered Channels](./drafts/gotour.4.1.md#buffered-channels)
+  - [Range and Close](./drafts/gotour.4.1.md#range-and-close)
+  - [Select](./drafts/gotour.4.1.md#select)
+  - [Default Selection](./drafts/gotour.4.1.md#default-selection)
+- [sync.Mutex](./drafts/gotour.4.1.md#syncmutex)
