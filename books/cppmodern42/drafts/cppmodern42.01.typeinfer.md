@@ -14,6 +14,13 @@
   - [C++ 11 支持统一初始化 uniform initialization （大括号）](#c-11-支持统一初始化-uniform-initialization-大括号)
   - [auto 型别推导就是模板推导，只有一个例外](#auto-型别推导就是模板推导只有一个例外)
   - [C++ 14 运行 auto 作为返回值，但使用的是模板推导](#c-14-运行-auto-作为返回值但使用的是模板推导)
+- [3 | 理解 decltype](#3-理解-decltype)
+  - [C++ 11 返回值型别尾序语法 trailing return type syntax](#c-11-返回值型别尾序语法-trailing-return-type-syntax)
+  - [decltype(auto) 不会抹去型别信息](#decltypeauto-不会抹去型别信息)
+  - [考虑万能引用的 decltype(auto)](#考虑万能引用的-decltypeauto)
+  - [decltype 特殊情况](#decltype-特殊情况)
+- [4 | 掌握查看型别推导结果的方法](#4-掌握查看型别推导结果的方法)
+  - [Boost.TypeIndex](#boosttypeindex)
 
 <!-- /code_chunk_output -->
 
@@ -255,4 +262,146 @@ std::vector<int> v;
 auto resetV =  // C++ 14
     [&v](const auto& newValue) { v = newValue; };
 resetV({ 1, 2, 3 });  // 错误，无法为 {1, 2, 3} 完成型别推导
+```
+
+### 3 | 理解 decltype
+
+#### C++ 11 返回值型别尾序语法 trailing return type syntax
+
+```cpp
+template<typename Container, typename Index>
+auto authAndAccess(Container& c, Index i)
+    -> decltype(c[i])
+{
+    authenticateUser();
+    return c[i];
+}
+```
+
+上面的 `auto` 和型别推导没有任何关系，最后 `->` 才确认了函数返回值类型。
+
+#### decltype(auto) 不会抹去型别信息
+
+如下是个反面例子。
+
+```cpp
+template<typename Container, typename Index>
+// 注意，这里 Container& 中本身含有引用
+// 因此 c[i] 会被推导为 Container[i] 而非 &Container[i]
+auto authAndAccess(Container& c, Index i)
+{
+    authenticateUser();
+    return c[i];
+}
+
+std::deque<int> d;
+authAndAccess(d, 5) = 10;  // 报错
+```
+
+如上为什么报错？因为 `authAndAccess(d, 5)` 返回 `int` 而非 `int&` 。 `int` 是一个左值，不可以被赋值。
+
+如何解决呢？ C++ 14 用 `decltype(auto)` 来代替。
+
+```cpp
+template<typename Container, typename Index>
+decltype(auto) authAndAccess(Container& c, Index i)
+{
+    authenticateUser();
+    return c[i];
+}
+```
+
+关于 `decltype(auto)` 有如下特性。
+
+```cpp
+Widget w;
+const Widget& cw = w;
+auto myWidget1 = cw;  // Widget
+(decltype(auto))  // const Widget&
+```
+
+#### 考虑万能引用的 decltype(auto)
+
+但有时用户可能就是想传入非常量左值。因此最终版本的代码如下。
+
+```cpp
+// C++ 14
+template<typename Container, typename Index>
+decltype(auto) authAndAccess(Container&& c, Index i)
+{
+    authenticateUser();
+    return std::forward<Container>(c)[i];
+}
+
+// C++ 11
+template<typename Container, typename Index>
+auto authAndAccess(Container&& c, Index i)
+    -> decltype(std::forward<Container>(c)[i])
+{
+    authenticateUser();
+    return std::forward<Container>(c)[i];
+}
+```
+
+#### decltype 特殊情况
+
+decltype 应用于一个名字之上，就会得出该名字的声明型别。 **名字是左值表达式，但如果仅有一个名字， decltype 的行为保持不变。不过，如果是比仅有名字更复杂的左值表达式的话， decltype 就保证得出的型别总是左值引用。**
+
+```cpp
+int x = 0;
+
+decltype(x);    // int
+decltype((x));  // int&
+```
+
+这可能引发一些问题。
+
+```cpp
+decltype(auto) f1()
+{
+    int x = 0;
+    return x;  // f1 int(void)
+}
+
+decltype(auto) f2()
+{
+    int x = 0;
+    return (x);  // f2 int&(void)
+}
+```
+
+这里其实很危险，因为 f2 返回了一个 局部变量的引用。
+
+### 4 | 掌握查看型别推导结果的方法
+
+如果非要运行时输出的话，不推荐 `std::type_info::name` 。
+
+```cpp
+std::out << typeid(x).name() << '\n';
+std::out << typeid(y).name() << '\n';
+```
+
+这个实际上是编译器紧密相关的。另外结果并不准确，犹如模板传参的规则。
+
+#### Boost.TypeIndex
+
+如果非要在运行时查看，使用 Boost 是一个好的选择。
+
+```cpp
+#include <boost/type_index.hpp>
+
+template<typename T>
+void f(const T& param)
+{
+    using std::cout;
+    using boost::typeindex::type_id_with_cvr;
+
+    cout << "T     = "
+         << type_id_with_cvr<T>().pretty_name()
+         << '\n';
+
+    cout << "param = "
+         << type_id_with_cvr<decltype(param)>().pretty_name()
+         << '\n';
+}
 ```
