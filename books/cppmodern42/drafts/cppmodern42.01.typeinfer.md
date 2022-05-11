@@ -5,6 +5,15 @@
 <!-- code_chunk_output -->
 
 - [1 | 理解模板型别推导](#1-理解模板型别推导)
+  - [ParamType 是个指针或引用，但不是个万能引用](#paramtype-是个指针或引用但不是个万能引用)
+  - [ParamType 是个万能引用](#paramtype-是个万能引用)
+  - [ParamType 既非指针也非引用](#paramtype-既非指针也非引用)
+  - [数组实参](#数组实参)
+- [函数实参](#函数实参)
+- [2 | 理解 auto 型别推导](#2-理解-auto-型别推导)
+  - [C++ 11 支持统一初始化 uniform initialization （大括号）](#c-11-支持统一初始化-uniform-initialization-大括号)
+  - [auto 型别推导就是模板推导，只有一个例外](#auto-型别推导就是模板推导只有一个例外)
+  - [C++ 14 运行 auto 作为返回值，但使用的是模板推导](#c-14-运行-auto-作为返回值但使用的是模板推导)
 
 <!-- /code_chunk_output -->
 
@@ -180,4 +189,70 @@ void f2(T& param);
 
 f1(someFunc);  // param 型别是 void (*)(int, double)
 f2(someFunc);  // param 型别是 void (&)(int, double)
+```
+
+### 2 | 理解 auto 型别推导
+
+#### C++ 11 支持统一初始化 uniform initialization （大括号）
+
+```cpp
+int x1 = 27;
+int x2(27);
+// 如下是 C++ 11 新增
+int x3{27};
+int x4 = {27};
+```
+
+#### auto 型别推导就是模板推导，只有一个例外
+
+所有推导皆与模板推导一致，只有 `std::initilizer_list<int>` 不同。
+
+```cpp
+auto x1 = 27;  // int
+auto x2(27);   // int
+auto x3 = {27};  // std::initializer_list<int>
+auto x4{27};     // std::initializer_list<int>
+```
+
+下面是一些无法推导或者与模板行为不符的情况。
+
+```cpp
+auto x5 = { 1, 2, 3.0 };  // 错误
+                          // 因为无法推导出 std::initializer_list<T> 中的 T
+```
+
+如下代码不能通过编译。
+
+```cpp
+template<typename T>
+void f(T param);
+
+f({ 11, 23, 9 });  // 错误，推导不出 T
+
+auto x = { 11, 23, 9 };  // 这个可以推导出 std::initializer_list<int> 哦
+```
+
+如下代码则可以通过编译。
+
+```cpp
+template<typename T>
+void f(std::initializer_list<T> initList);
+
+f({ 11, 23, 9 });  // 没有问题， T 被推导为 int
+```
+
+#### C++ 14 运行 auto 作为返回值，但使用的是模板推导
+
+C++ 14 中运行 auto 作为返回值，也允许在 lambda 式中形参为 auto 。但是注意这里 auto 的推导是模板推导，无法处理 `std::initializer_list<T>` 。
+
+```cpp
+auto createInitList()
+{
+    return { 1, 2, 3 };  // 错误，无法推导型别
+}
+
+std::vector<int> v;
+auto resetV =  // C++ 14
+    [&v](const auto& newValue) { v = newValue; };
+resetV({ 1, 2, 3 });  // 错误，无法为 {1, 2, 3} 完成型别推导
 ```
