@@ -41,3 +41,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
   - [auto 对 std::function 声明的优化（更好地应用闭包）](./drafts/cppmodern42.02.auto.md#auto-对-stdfunction-声明的优化更好地应用闭包)
   - [auto 性能优化实例（unordered_map）](./drafts/cppmodern42.02.auto.md#auto-性能优化实例unordered_map)
 - [6 | 当 auto 推到的型别不符合要求时，使用带显式型别的初始化物习惯用法](./drafts/cppmodern42.02.auto.md#6-当-auto-推到的型别不符合要求时使用带显式型别的初始化物习惯用法)
+
+### 3 | 转向现代 C++
+
+[]()
