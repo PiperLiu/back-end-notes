@@ -50,6 +50,21 @@ import "math"
 
 But it is good style to use the factored import statement.
 
+补充一点：What does the '.' (dot or period) in a Go import statement do?
+
+[Here's an analogy for those coming from Python:](https://stackoverflow.com/a/6481157/17707800)
+- Go's `import "os"` is roughly equivalent to Python's `import os`
+- Go's `import . "os"` is roughly equivalent to Python's `from os import *`
+
+```go
+package main
+import ( "bufio"; ."fmt"; "os" )
+func main() {
+	in := bufio.NewReader(os.Stdin)
+	Println(in)
+}
+```
+
 ### 函数 Functions
 
 #### share a type, multiple results
