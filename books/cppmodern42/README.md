@@ -9,6 +9,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 <!-- code_chunk_output -->
 
 - [1 | 型别推导](#1-型别推导)
+- [2 | auto](#2-auto)
 
 <!-- /code_chunk_output -->
 
@@ -32,3 +33,11 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
   - [decltype 特殊情况](./drafts/cppmodern42.01.typeinfer.md#decltype-特殊情况)
 - [4 | 掌握查看型别推导结果的方法](./drafts/cppmodern42.01.typeinfer.md#4-掌握查看型别推导结果的方法)
   - [Boost.TypeIndex](./drafts/cppmodern42.01.typeinfer.md#boosttypeindex)
+
+### 2 | auto
+
+[./drafts/cppmodern42.02.auto.md](./drafts/cppmodern42.02.auto.md)
+- [5 | 优先选用 auto ，而非显式型别声明](./drafts/cppmodern42.02.auto.md#5-优先选用-auto-而非显式型别声明)
+  - [auto 对 std::function 声明的优化（更好地应用闭包）](./drafts/cppmodern42.02.auto.md#auto-对-stdfunction-声明的优化更好地应用闭包)
+  - [auto 性能优化实例（unordered_map）](./drafts/cppmodern42.02.auto.md#auto-性能优化实例unordered_map)
+- [6 | 当 auto 推到的型别不符合要求时，使用带显式型别的初始化物习惯用法](./drafts/cppmodern42.02.auto.md#6-当-auto-推到的型别不符合要求时使用带显式型别的初始化物习惯用法)
