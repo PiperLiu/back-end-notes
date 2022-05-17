@@ -10,6 +10,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 
 - [1 | 型别推导](#1-型别推导)
 - [2 | auto](#2-auto)
+- [3 | 转向现代 C++](#3-转向现代-c)
 
 <!-- /code_chunk_output -->
 
@@ -44,4 +45,29 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 
 ### 3 | 转向现代 C++
 
-[]()
+[./drafts/cppmodern42.03.feats.md](./drafts/cppmodern42.03.feats.md)
+- [7 | 在创建对象时注意区分 () 和 {}](./drafts/cppmodern42.03.feats.md#7-在创建对象时注意区分-和)
+  - [使用大括号的调用构造函数（喜忧参半）](./drafts/cppmodern42.03.feats.md#使用大括号的调用构造函数喜忧参半)
+  - [关于 std::vector 接口设计的败笔（与可变模板配合）](./drafts/cppmodern42.03.feats.md#关于-stdvector-接口设计的败笔与可变模板配合)
+- [8 | 优先选用 nullptr ，而非 0 或 NULL](./drafts/cppmodern42.03.feats.md#8-优先选用-nullptr-而非-0-或-null)
+- [9 | 优先选用别名声明，而非 typedef](./drafts/cppmodern42.03.feats.md#9-优先选用别名声明而非-typedef)
+  - [别名模板 alias template](./drafts/cppmodern42.03.feats.md#别名模板-alias-template)
+- [10 | 优先选用限定作用域的枚举型别，而非不限定作用域的枚举型别](./drafts/cppmodern42.03.feats.md#10-优先选用限定作用域的枚举型别而非不限定作用域的枚举型别)
+  - [enum class 的前置声明](./drafts/cppmodern42.03.feats.md#enum-class-的前置声明)
+- [11 | 优先选用删除函数，而非 private 未定义函数](./drafts/cppmodern42.03.feats.md#11-优先选用删除函数而非-private-未定义函数)
+  - [通过删除函数拒绝型别与（指针）模板特化](./drafts/cppmodern42.03.feats.md#通过删除函数拒绝型别与指针模板特化)
+- [12 | 为意在改写的函数添加 override 声明](./drafts/cppmodern42.03.feats.md#12-为意在改写的函数添加-override-声明)
+  - [引用饰词（reference qualifier）](./drafts/cppmodern42.03.feats.md#引用饰词reference-qualifier)
+  - [加上 override 的必要性](./drafts/cppmodern42.03.feats.md#加上-override-的必要性)
+- [13 | 优先选用 const_iterator ，而非 iterator](./drafts/cppmodern42.03.feats.md#13-优先选用-const_iterator-而非-iterator)
+- [14 | 只要函数不会发射异常，就为其加上 noexcept 声明](./drafts/cppmodern42.03.feats.md#14-只要函数不会发射异常就为其加上-noexcept-声明)
+  - [关于 throw() 和 noexcept 发射异常以及调用栈开解 stack unwinding](./drafts/cppmodern42.03.feats.md#关于-throw-和-noexcept-发射异常以及调用栈开解-stack-unwinding)
+  - [大多数函数都是异常中立的（exception-neutral），那么什么时候用 noexcept](./drafts/cppmodern42.03.feats.md#大多数函数都是异常中立的exception-neutral那么什么时候用-noexcept)
+- [只要有可能使用 constexpr ，就是用它](./drafts/cppmodern42.03.feats.md#只要有可能使用-constexpr-就是用它)
+  - [constexpr 函数可在编译器计算](./drafts/cppmodern42.03.feats.md#constexpr-函数可在编译器计算)
+- [16 | 保证 const 成员函数的线程安全性](./drafts/cppmodern42.03.feats.md#16-保证-const-成员函数的线程安全性)
+  - [只移型别（move-only type）的 mutex 保证线程安全](./drafts/cppmodern42.03.feats.md#只移型别move-only-type的-mutex-保证线程安全)
+  - [std::atomic 取代互斥量的例子](./drafts/cppmodern42.03.feats.md#stdatomic-取代互斥量的例子)
+- [17 | 理解特种成员函数的生成机制](./drafts/cppmodern42.03.feats.md#17-理解特种成员函数的生成机制)
+  - [移动构造函数和移动赋值运算符](./drafts/cppmodern42.03.feats.md#移动构造函数和移动赋值运算符)
+  - [=default关键字](./drafts/cppmodern42.03.feats.md#default关键字)
