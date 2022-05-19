@@ -11,6 +11,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [1 | 型别推导](#1-型别推导)
 - [2 | auto](#2-auto)
 - [3 | 转向现代 C++](#3-转向现代-c)
+- [4 | 智能指针](#4-智能指针)
 
 <!-- /code_chunk_output -->
 
@@ -71,3 +72,24 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [17 | 理解特种成员函数的生成机制](./drafts/cppmodern42.03.feats.md#17-理解特种成员函数的生成机制)
   - [移动构造函数和移动赋值运算符](./drafts/cppmodern42.03.feats.md#移动构造函数和移动赋值运算符)
   - [=default关键字](./drafts/cppmodern42.03.feats.md#default关键字)
+
+### 4 | 智能指针
+
+[./drafts/cppmodern42.04.sptr.md](./drafts/cppmodern42.04.sptr.md)
+- [18 | 使用 std::unique_ptr 管理具备专属所有权的资源](./drafts/cppmodern42.04.sptr.md#18-使用-stdunique_ptr-管理具备专属所有权的资源)
+  - [只移型别 unique_ptr 应用：工厂函数返回型别](./drafts/cppmodern42.04.sptr.md#只移型别-unique_ptr-应用工厂函数返回型别)
+  - [析构型别是 unique_ptr 型别的一部分，影响 unique_ptr 尺寸](./drafts/cppmodern42.04.sptr.md#析构型别是-unique_ptr-型别的一部分影响-unique_ptr-尺寸)
+  - [std::unique_ptr 数组不常用；可隐式转为 std::shared_ptr](./drafts/cppmodern42.04.sptr.md#stdunique_ptr-数组不常用可隐式转为-stdshared_ptr)
+- [19 | 使用 std::shared_ptr 管理具备共享所有权的资源](./drafts/cppmodern42.04.sptr.md#19-使用-stdshared_ptr-管理具备共享所有权的资源)
+  - [std::shared_ptr 结构（与 std::unique_ptr 不同，析构器不是型别一部分）](./drafts/cppmodern42.04.sptr.md#stdshared_ptr-结构与-stdunique_ptr-不同析构器不是型别一部分)
+  - [std::shared_ptr 控制块的讨论](./drafts/cppmodern42.04.sptr.md#stdshared_ptr-控制块的讨论)
+  - [enable_shared_from_this 和奇妙递归模板模式 The Curiously Recurring Template Pattern, CRTP](./drafts/cppmodern42.04.sptr.md#enable_shared_from_this-和奇妙递归模板模式-the-curiously-recurring-template-pattern-crtp)
+- [20 | 对于类似 std::shared_ptr 但有可能空悬的指针使用 std::weak_ptr](./drafts/cppmodern42.04.sptr.md#20-对于类似-stdshared_ptr-但有可能空悬的指针使用-stdweak_ptr)
+  - [API 如 expired() 和 lock() 等](./drafts/cppmodern42.04.sptr.md#api-如-expired-和-lock-等)
+  - [std::weak_ptr 用例与观察者设计模式 Observer design pattern](./drafts/cppmodern42.04.sptr.md#stdweak_ptr-用例与观察者设计模式-observer-design-pattern)
+- [21 | 优先选用 std::make_unique 和 std::make_shared ，而非直接使用 new](./drafts/cppmodern42.04.sptr.md#21-优先选用-stdmake_unique-和-stdmake_shared-而非直接使用-new)
+  - [make 系列好处：异常安全性，速度更快（动态分配内存次数少)](./drafts/cppmodern42.04.sptr.md#make-系列好处异常安全性速度更快动态分配内存次数少)
+  - [不能使用 make 系列的情形（使用其的劣势）](./drafts/cppmodern42.04.sptr.md#不能使用-make-系列的情形使用其的劣势)
+- [22 | 使用 Pimpl 习惯用法时，将特殊成员函数的定义放到实现文件中](./drafts/cppmodern42.04.sptr.md#22-使用-pimpl-习惯用法时将特殊成员函数的定义放到实现文件中)
+  - [非完整型别与 pImpl 的样例](./drafts/cppmodern42.04.sptr.md#非完整型别与-pimpl-的样例)
+  - [unique_ptr 实现 pImpl 挑战](./drafts/cppmodern42.04.sptr.md#unique_ptr-实现-pimpl-挑战)
