@@ -10,6 +10,7 @@
 - [8 | 优先选用 nullptr ，而非 0 或 NULL](#8-优先选用-nullptr-而非-0-或-null)
 - [9 | 优先选用别名声明，而非 typedef](#9-优先选用别名声明而非-typedef)
   - [别名模板 alias template](#别名模板-alias-template)
+  - [关于 remove_reference 与 remove_reference_t](#关于-remove_reference-与-remove_reference_t)
 - [10 | 优先选用限定作用域的枚举型别，而非不限定作用域的枚举型别](#10-优先选用限定作用域的枚举型别而非不限定作用域的枚举型别)
   - [enum class 的前置声明](#enum-class-的前置声明)
 - [11 | 优先选用删除函数，而非 private 未定义函数](#11-优先选用删除函数而非-private-未定义函数)
@@ -129,6 +130,29 @@ struct MyAllocaList {
     typedef std::<T, MyAlloc<T>> type;
 };
 MyAllocaList<int>::type myList;  // 用户代码
+```
+
+#### 关于 remove_reference 与 remove_reference_t
+
+尽管 C++ 11 已经可以抛弃 `::type` 的写法，但是因为一些历史原因其 `remove_reference` 还是勇了 C++ 98 的 `typedef` 写法。直到 C++ 14 才引入更为先进的 `using` API 。
+
+```cpp
+std::remove_const<T>::type  // C++ 11 const T -> T
+std::remove_const_t<T>      // C++ 14 等价物
+
+std::remove_reference<T>::type  // C++ 11 T&/T&& -> T
+std::remove_reference_t<T>      // C++ 14 等价物
+
+std::add_lvalue_reference<T>::type  // C++ 11 T -> T&
+std::add_lvalue_reference_t<T>      // C++ 14 等价物
+```
+
+此外，这里再记录一点书上没有的。一种可能的 C++ 11 中 `remove_reference` 如下。
+
+```cpp
+template<class T> struct remove_reference      { typedef T type; };
+template<class T> struct remove_reference<T&>  { typedef T type; };
+template<class T> struct remove_reference<T&&> { typedef T type; };
 ```
 
 ### 10 | 优先选用限定作用域的枚举型别，而非不限定作用域的枚举型别

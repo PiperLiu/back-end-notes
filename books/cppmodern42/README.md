@@ -12,6 +12,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [2 | auto](#2-auto)
 - [3 | 转向现代 C++](#3-转向现代-c)
 - [4 | 智能指针](#4-智能指针)
+- [5 | 右值引用、移动语义和完美转发](#5-右值引用-移动语义和完美转发)
 
 <!-- /code_chunk_output -->
 
@@ -53,6 +54,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [8 | 优先选用 nullptr ，而非 0 或 NULL](./drafts/cppmodern42.03.feats.md#8-优先选用-nullptr-而非-0-或-null)
 - [9 | 优先选用别名声明，而非 typedef](./drafts/cppmodern42.03.feats.md#9-优先选用别名声明而非-typedef)
   - [别名模板 alias template](./drafts/cppmodern42.03.feats.md#别名模板-alias-template)
+  - [关于 remove_reference 与 remove_reference_t](./drafts/cppmodern42.03.feats.md#关于-remove_reference-与-remove_reference_t)
 - [10 | 优先选用限定作用域的枚举型别，而非不限定作用域的枚举型别](./drafts/cppmodern42.03.feats.md#10-优先选用限定作用域的枚举型别而非不限定作用域的枚举型别)
   - [enum class 的前置声明](./drafts/cppmodern42.03.feats.md#enum-class-的前置声明)
 - [11 | 优先选用删除函数，而非 private 未定义函数](./drafts/cppmodern42.03.feats.md#11-优先选用删除函数而非-private-未定义函数)
@@ -93,3 +95,6 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [22 | 使用 Pimpl 习惯用法时，将特殊成员函数的定义放到实现文件中](./drafts/cppmodern42.04.sptr.md#22-使用-pimpl-习惯用法时将特殊成员函数的定义放到实现文件中)
   - [非完整型别与 pImpl 的样例](./drafts/cppmodern42.04.sptr.md#非完整型别与-pimpl-的样例)
   - [unique_ptr 实现 pImpl 挑战](./drafts/cppmodern42.04.sptr.md#unique_ptr-实现-pimpl-挑战)
+
+### 5 | 右值引用、移动语义和完美转发
+
