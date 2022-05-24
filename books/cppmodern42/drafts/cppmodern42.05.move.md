@@ -11,6 +11,13 @@
   - [是万能引用（转发引用）的情形](#是万能引用转发引用的情形)
   - [是右值引用的情形](#是右值引用的情形)
   - [vector 中的案例与 auto&& 都是万能引用](#vector-中的案例与-auto-都是万能引用)
+- [25 | 针对右值引用实施 std::move ，针对万能引用实施 std::forward](#25-针对右值引用实施-stdmove-针对万能引用实施-stdforward)
+  - [针对右值引用实施 std::move](#针对右值引用实施-stdmove)
+  - [针对万能引用实施 std::forward（为何不用 move）](#针对万能引用实施-stdforward为何不用-move)
+  - [返回值优化 return value optimization, RVO](#返回值优化-return-value-optimization-rvo)
+- [26 | 避免依万能引用型别进行重载](#26-避免依万能引用型别进行重载)
+  - [万能引用与完美转发提高效率的例子](#万能引用与完美转发提高效率的例子)
+  - [不要重载万能引用（万能引用匹配的贪婪性，优先匹配非模板函数）](#不要重载万能引用万能引用匹配的贪婪性优先匹配非模板函数)
 
 <!-- /code_chunk_output -->
 
@@ -183,3 +190,214 @@ auto timeFuncInvocation =
         // 计时器停止，记录花费时间
     }
 ```
+
+### 25 | 针对右值引用实施 std::move ，针对万能引用实施 std::forward
+
+#### 针对右值引用实施 std::move
+
+针对右值引用实施 `std::move` 实际上是右值引用被发明的缘由。
+
+```cpp
+class Widget {
+public:
+    Widget(Widget&& rhs)
+    : name(std::move(rhs.name)),
+      p(std::move(rhs.p))
+    {}
+private:
+    std::string name;
+    std::shared_ptr<SomeDataStructure> p;
+};
+```
+
+此外再看一个例子。
+
+```cpp
+// 按值返回
+Matrix
+operator+(Matrix&& lhs, const Matrix& rhs)
+{
+    lhs += rhs;
+    return std::move(lhs);  // 将 lhs 移入返回值
+}  // 如果直接 return lhs ，则会将左值 lhs 拷贝到返回值存储位置
+```
+
+#### 针对万能引用实施 std::forward（为何不用 move）
+
+```cpp
+template<typename T>
+Fraction
+reduceAndCopy(T&& f)
+{
+    frac.reduce();
+    // 对于右值，是移入返回值
+    // 对于左值，是复制入返回值
+    return std::forward<T>(f);
+}
+```
+
+如下是一个万能引用配上 `std::move` 的糟糕例子。
+
+```cpp
+class Widget {
+public:
+    template<typename T>
+    void setName(T&& newName)
+    { name = std::move(newName); }  // 很糟糕
+private:
+    std::string name;
+    std::shared_ptr<SomeDataStructure> p;
+};
+
+std::string getWidgetName();  // 工厂函数
+
+Widget w;
+auto n = getWidgetName();  // n 是个局部变量
+w.setName(n);  // n 移入了 w ！ n 的值将变得未知
+```
+
+好，那么不用万能引用，为常量左值和右值实现出不同的重载就可以用 move 了。
+
+```cpp
+class Widget {
+public:
+    void setName(const std::string& newName)
+    { name = newName; }  // 从常量左值取得赋值
+    void setName(std::string&& newName)
+    { name = std::move(newName); }  // 从右值取得赋值
+};
+```
+
+好，来看一个例子： `w.setName("Adela Novak");` 。如果没有万能转发，没有万能引用，那么会执行以下内容：一次 `std::string` 构造函数（以创建临时对象），一次 `std::string` 的移动赋值运算符（以移动 `newName` 到 `w.name` ），还有一次 `std::string` 的析构函数（以销毁临时对象）。
+
+但是如果使用万能引用呢？ `void setName(T&& newName) { name = std::foward<T>(newName); }` 将会把字面值 `"Adela Novak"` 移入 `w.name` ，只会仅调用一次 `std::string` 赋值运算符，不会创建一个临时对象。
+
+#### 返回值优化 return value optimization, RVO
+
+```cpp
+Widget makeWidget()
+{
+    Widget w;  // 局部变量
+    return w;  // 不要写成 std::move(w) ！
+}
+```
+
+明明是局部变量，为什么不需要写成 `std::move(w)` 呢？移动岂不是比复制对象效率更高？
+
+实际上，标准化委员已经想到了， `makeWidget` 的“复制”版本可以通过直接在为函数返回值分配的内存上创建局部变量 `w` 来避免复制之，这就是“返回值优化” return value optimization, RVO 。 **这是 C++ 标准一问世就有的。**
+
+RVO 要满足两个条件：
+- 局部对象型别和函数返回值型别相同
+- 返回的就是局部对象本身
+
+因此在可以 RVO 时不要使用 `std::move` ，这反而可能限制了编译器的优化项。
+
+### 26 | 避免依万能引用型别进行重载
+
+#### 万能引用与完美转发提高效率的例子
+
+如下是一个正确但是低效的实现。
+
+```cpp
+std::multiset<std::string> names;
+
+void logAndAdd(const std::string& name)
+{
+    auto now = std::chrono::system_clock::now();
+    log(now, "logAndAdd");
+    names.emplace(name);
+}
+
+std::string petName("Darla");
+logAndAdd(petName);  // 传递左值 std::string
+logAndAdd(std::string("Persephone"));  // 传递右值 std::string
+logAndAdd("Patty Dog");  // 传递字符串字面量
+```
+
+为什么说上面的实现是低效率的呢？
+- 第一个调用中传入左值，将在 `emplace` 中复制一份进入集合
+- 第二个调用中传入右值，但是 `name` 自身是个左值，因此本可以通过移动进入集合，但是最后还是复制进去了
+- 第三个调用中传入字符字面量，按理说直接在 `emplace` 中构造就行，都不用移动，但是因为形参要求传入左值，所以甚至得构造一个临时变量
+
+所以高效版本如下。
+
+```cpp
+templace<typename T>
+void logAndAdd(T&& name)
+{
+    auto now = std::chrono::system_clock::now();
+    log(now, "logAndAdd");
+    names.emplace(std::forward<T>(name));
+}
+```
+
+这样效率就达到极致了。
+
+#### 不要重载万能引用（万能引用匹配的贪婪性，优先匹配非模板函数）
+
+还是上面的例子，如果我们重载 `logAndAdd` 的 `int` 参数类型如下。
+
+```cpp
+std::string nameFromIdx(int idx);
+
+void logAndAdd(int idx)
+{
+    auto now = std::chrono::system_clock::now();
+    log(now, "logAndAdd");
+    names.emplace(nameFromIdx(idx));
+}
+
+logAndAdd(22);  // 没问题
+
+short nameIdx;
+logAndAdd(nameIdx);  // 编译错误
+```
+
+如上，我们有两个函数 `void logAndAdd(T&& name)` 和 `void logAndAdd(int idx)` ，但是 `logAndAdd(int idx)` 只能匹配 `int` 参数，如果是 `short` 则会去匹配 `void logAndAdd(T&& name)` ，这就是万能引用的贪婪性。而 `names.emplace(int)` 会报错，因为没有接收 `int` 的 `string` 构造函数。
+
+另外，对于常量性、编译器自己生产的特种函数也是同理。
+
+```cpp
+class Person {
+public:
+    template<typename T>
+    explicit Person(T&& n)
+    : name(std::forward<T>(n)) {}  // 完美转发构造函数
+
+    explicit Person(int idx);
+
+    Person(const Person& rhs);  // 编译器生成的复制构造函数
+    Person(Person&& rhs);  // 编译器生成的移动构造函数
+}
+
+Person p("Nancy");
+auto cloneOf(p);  // 注意，这里调用的是完美转发函数，编译无法通过！
+```
+
+注意， `auto cloneOf(p);` 中的 `p` 因为并没有 `const` ，所以调用的是 `explicit Person(T&& n)` ，而 `name` 无法把 `Person` 对象作为构造函数参数，因此编译报错。再详细一点，如果有 `auto cloneOf(p);` 这句话，将导致编译器生成如下代码。
+
+```cpp
+class Person {
+public:
+    explicit Person(Person& n)  // 完美转发生成的模板实例化代码
+    : name(std::forward<Person&>(n)) {}
+
+    explicit Person(int idx);
+
+    Person(const Person& rhs);  // 编译器生成的复制构造函数
+    Person(Person&& rhs);  // 编译器生成的移动构造函数
+}
+```
+
+那么，把常量性加上变为 `const Person cp("Nancy");` 就，调用的就是复制构造函数了。
+
+```cpp
+// 编译器生成的代码如下
+class Person {
+public:
+    explicit Person(const Person& n);  // 模板实例化的构造函数
+    Person(const Person& rhs);  // 编译器生成的复制构造函数
+}
+```
+
+最终， `auto cloneOf(cp);` 将调用复制构造函数，而非模板实例化的函数。这是因为 C++ 的重载决议规则： **一个模板实例化函数和一个非函数模板（一个“常规”函数），具备相等的匹配程度，则优先选用常规函数。**

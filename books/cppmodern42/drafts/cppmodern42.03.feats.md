@@ -22,7 +22,7 @@
 - [14 | 只要函数不会发射异常，就为其加上 noexcept 声明](#14-只要函数不会发射异常就为其加上-noexcept-声明)
   - [关于 throw() 和 noexcept 发射异常以及调用栈开解 stack unwinding](#关于-throw-和-noexcept-发射异常以及调用栈开解-stack-unwinding)
   - [大多数函数都是异常中立的（exception-neutral），那么什么时候用 noexcept](#大多数函数都是异常中立的exception-neutral那么什么时候用-noexcept)
-- [只要有可能使用 constexpr ，就是用它](#只要有可能使用-constexpr-就是用它)
+  - [只要有可能使用 constexpr ，就是用它](#只要有可能使用-constexpr-就是用它)
   - [constexpr 函数可在编译器计算](#constexpr-函数可在编译器计算)
 - [16 | 保证 const 成员函数的线程安全性](#16-保证-const-成员函数的线程安全性)
   - [只移型别（move-only type）的 mutex 保证线程安全](#只移型别move-only-type的-mutex-保证线程安全)
@@ -422,7 +422,7 @@ int f(int x) noexcept; // f 不会发射异常： C++ 11 风格
 
 但是问题是，如果你准备移动 `vector` 中 5 个元素，在移动第 3 个元素时候出现异常了，而原始的 `vector` 已经修改，这时不可以把之前移动过的异常移动回来（因为移动本身就可能会造成异常）。因此，我们必须保证，移动这个事是 `noexcept` 的。
 
-### 只要有可能使用 constexpr ，就是用它
+#### 只要有可能使用 constexpr ，就是用它
 
 与 `const` 不同， `constexpr` 是真真正正的常量。
 
