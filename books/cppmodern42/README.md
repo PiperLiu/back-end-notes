@@ -13,6 +13,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [3 | 转向现代 C++](#3-转向现代-c)
 - [4 | 智能指针](#4-智能指针)
 - [5 | 右值引用、移动语义和完美转发](#5-右值引用-移动语义和完美转发)
+- [6 | lambda 表达式](#6-lambda-表达式)
 
 <!-- /code_chunk_output -->
 
@@ -132,3 +133,19 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
   - [仅有声明的整形 static const 成员变量](./drafts/cppmodern42.05.move.md#仅有声明的整形-static-const-成员变量)
   - [重载的函数名字和模板名字](./drafts/cppmodern42.05.move.md#重载的函数名字和模板名字)
   - [位域](./drafts/cppmodern42.05.move.md#位域)
+
+### 6 | lambda 表达式
+
+[./drafts/cppmodern42.06.lambda.md](./drafts/cppmodern42.06.lambda.md)
+- [31 | 避免默认的捕获模式](./drafts/cppmodern42.06.lambda.md#31-避免默认的捕获模式)
+  - [善用引用捕获与值捕获防止空悬](./drafts/cppmodern42.06.lambda.md#善用引用捕获与值捕获防止空悬)
+  - [捕获只能针对作用域内可见的非静态局部变量（包括形参），成员变量则要考虑函数 this](./drafts/cppmodern42.06.lambda.md#捕获只能针对作用域内可见的非静态局部变量包括形参成员变量则要考虑函数-this)
+- [32 | 使用初始化捕获将对象移入闭包](./drafts/cppmodern42.06.lambda.md#32-使用初始化捕获将对象移入闭包)
+  - [C++ 11 中通过重载类括号运算符，“将对象移入闭包”](./drafts/cppmodern42.06.lambda.md#c-11-中通过重载类括号运算符将对象移入闭包)
+  - [C++ 11 中通过 std::bind ，“将对象移入闭包”](./drafts/cppmodern42.06.lambda.md#c-11-中通过-stdbind-将对象移入闭包)
+- [33 | 对 auto&& 型别的形参使用 decltype ，以 std::forward 之](./drafts/cppmodern42.06.lambda.md#33-对-auto-型别的形参使用-decltype-以-stdforward-之)
+  - [编译器眼中的闭包类](./drafts/cppmodern42.06.lambda.md#编译器眼中的闭包类)
+- [34 | 优先选用 lambda 式，而非 std::bind](./drafts/cppmodern42.06.lambda.md#34-优先选用-lambda-式而非-stdbind)
+  - [一些 lambda 有 bind 实例对比](./drafts/cppmodern42.06.lambda.md#一些-lambda-有-bind-实例对比)
+  - [bind 中参数按值存储； bind 常用到大量模板函数辅助 std::ref 等](./drafts/cppmodern42.06.lambda.md#bind-中参数按值存储-bind-常用到大量模板函数辅助-stdref-等)
+  - [使用 bind 的情况： C++ 11 中移动捕获与多态函数对象](./drafts/cppmodern42.06.lambda.md#使用-bind-的情况-c-11-中移动捕获与多态函数对象)
