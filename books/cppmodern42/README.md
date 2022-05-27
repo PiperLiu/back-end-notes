@@ -14,6 +14,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [4 | 智能指针](#4-智能指针)
 - [5 | 右值引用、移动语义和完美转发](#5-右值引用-移动语义和完美转发)
 - [6 | lambda 表达式](#6-lambda-表达式)
+- [7 | 并发 API](#7-并发-api)
 
 <!-- /code_chunk_output -->
 
@@ -149,3 +150,6 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
   - [一些 lambda 有 bind 实例对比](./drafts/cppmodern42.06.lambda.md#一些-lambda-有-bind-实例对比)
   - [bind 中参数按值存储； bind 常用到大量模板函数辅助 std::ref 等](./drafts/cppmodern42.06.lambda.md#bind-中参数按值存储-bind-常用到大量模板函数辅助-stdref-等)
   - [使用 bind 的情况： C++ 11 中移动捕获与多态函数对象](./drafts/cppmodern42.06.lambda.md#使用-bind-的情况-c-11-中移动捕获与多态函数对象)
+
+### 7 | 并发 API
+
