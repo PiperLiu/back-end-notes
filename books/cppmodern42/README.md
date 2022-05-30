@@ -15,6 +15,7 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 - [5 | 右值引用、移动语义和完美转发](#5-右值引用-移动语义和完美转发)
 - [6 | lambda 表达式](#6-lambda-表达式)
 - [7 | 并发 API](#7-并发-api)
+- [8 | 微调](#8-微调)
 
 <!-- /code_chunk_output -->
 
@@ -177,3 +178,12 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
   - [C++ 的 volatile 与并发无关，与 Java 或 C./drafts/cppmodern42.07.concurrency.md# 不同](#c-的-volatile-与并发无关与-java-或-c-不同)
   - [atomic 防止代码重排，并禁用了复制或移动构造函数，应使用 load 与 store](./drafts/cppmodern42.07.concurrency.md#atomic-防止代码重排并禁用了复制或移动构造函数应使用-load-与-store)
 
+### 8 | 微调
+
+[./drafts/cppmodern42.07.microadjust.md](./drafts/cppmodern42.07.microadjust.md)
+- [41 | 针对可复制的形参，在移动成本低并且一定会被复制的前提下，考虑将其按值传递](./drafts/cppmodern42.07.microadjust.md#41-针对可复制的形参在移动成本低并且一定会被复制的前提下考虑将其按值传递)
+  - [与 C++ 98 不同， C++ 11 中传入右值，则移动构造](./drafts/cppmodern42.07.microadjust.md#与-c-98-不同-c-11-中传入右值则移动构造)
+- [42 | 考虑置入而非插入](./drafts/cppmodern42.07.microadjust.md#42-考虑置入而非插入)
+  - [考虑使用完美转发的置入往往效率更高](./drafts/cppmodern42.07.microadjust.md#考虑使用完美转发的置入往往效率更高)
+  - [资源管理时使用置入需谨慎考虑](./drafts/cppmodern42.07.microadjust.md#资源管理时使用置入需谨慎考虑)
+  - [与 explicit 构造函数联系需谨慎，以正则 std::regex 为例](./drafts/cppmodern42.07.microadjust.md#与-explicit-构造函数联系需谨慎以正则-stdregex-为例)
