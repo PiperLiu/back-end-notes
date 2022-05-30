@@ -18,6 +18,14 @@
   - [期值 future 和 promise 间存在一个共享状态](#期值-future-和-promise-间存在一个共享状态)
   - [期值析构函数行为的常规与例外](#期值析构函数行为的常规与例外)
   - [使用 packaged_task 也可以创建共享状态与期值，并且析构行为是常规的](#使用-packaged_task-也可以创建共享状态与期值并且析构行为是常规的)
+- [39 | 考虑针对一次性事件通信使用以 void 为模板型别实参的期值](#39-考虑针对一次性事件通信使用以-void-为模板型别实参的期值)
+  - [使用条件变量进行线程通信，用 lambda 解决代码异味 code smell](#使用条件变量进行线程通信用-lambda-解决代码异味-code-smell)
+  - [使用共享布尔标志位来控制线程通信](#使用共享布尔标志位来控制线程通信)
+  - [通过 promise 和 future 实现一次通信](#通过-promise-和-future-实现一次通信)
+  - [通过 promise 让线程暂停一次](#通过-promise-让线程暂停一次)
+- [40 | 对并发使用 std::atomic ，对特种内存使用 volatile](#40-对并发使用-stdatomic-对特种内存使用-volatile)
+  - [C++ 的 volatile 与并发无关，与 Java 或 C# 不同](#c-的-volatile-与并发无关与-java-或-c-不同)
+  - [atomic 防止代码重排，并禁用了复制或移动构造函数，应使用 load 与 store](#atomic-防止代码重排并禁用了复制或移动构造函数应使用-load-与-store)
 
 <!-- /code_chunk_output -->
 
@@ -402,5 +410,268 @@ int main ()
     // ...
     // t 析构
 }
+```
 
 注意，此时 `fut` 析构都会仅仅析构自己而已，并不会让 `th` 阻塞（隐式 `join` ）。这样设计的合理之处在于，我们并不需要从期值的角度考虑异步任务是否需要隐式 `join` 或 `detach` ，因为这个难题被留给了 `thread` 对象。
+
+### 39 | 考虑针对一次性事件通信使用以 void 为模板型别实参的期值
+
+这节中，我们管负责 `notify` 的、或者说生产者叫做“检测任务”，管负责执行的、 `wait` 的消费者线程叫做“反应任务”。
+
+#### 使用条件变量进行线程通信，用 lambda 解决代码异味 code smell
+
+```cpp
+...
+{
+    // unique_lock 比 lock_guard 成本更高
+    // 但是比 lock_guard 更灵活，比如
+    // unique_lock 可以设置 try_to_lock 参数等
+    std::unique_lock<std::mutex> lk(m);  // 为互斥量加锁
+    cv.wait(lk);  // 等待通知到来
+    // ... 针对事件作出反应（m 被 lock）
+}   // 临界区结束，通过 lk 析构为 m 解锁
+```
+
+上面是反应任务的代码，要注意，上面的实现存在一些代码异味 code smell ：即代码能够运作，但是有些东西似乎也不太对劲。
+- 在本例中，异味源于互斥体，但是检测和反应任务之间似乎不太需要这种介质，毕竟反应任务并没有想要跟检测任务抢某个变量的读写权（但是，使用条件变量必须配合互斥量）
+
+此外，还有两个问题更加致命：
+- 如果检测任务在反应任务调用 wait 之前就通知了条件变量，则反应任务将失去响应
+- 反应任务的 wait 语句无法应对虚假唤醒（即没有通知条件变量，但针对该条件变量的代码也可能被唤醒）
+
+针对虚假唤醒，我们可以使用 lambda 表达式来加一层检验，如下。
+
+```cpp
+cv.wait(lk,
+        []{ return 事件是否确已发生 ; });
+```
+
+#### 使用共享布尔标志位来控制线程通信
+
+一个不适用条件变量的方法是使用布尔标志位。
+
+```cpp
+/**
+ * 检测任务
+ */
+std::atomic<bool> flag(false);
+...
+flag = true;  // 检测事件通知反应任务
+
+/**
+ * 反应任务
+ */
+...  // 准备反应
+while(!flag);  // 等待事件
+...  // 针对事件作出反应
+```
+
+如上，很明显看出， `while(!flag);` 成本过于高昂。一直在轮询。
+
+因此，一个综合的通信方法如下。
+
+```cpp
+/**
+ * 检测任务
+ */
+std::condition_variable cv;
+std::mutex m;
+
+// 因为现在有了 mutex
+// 所以不需要 atomic 了
+bool flag = false;
+...
+{
+    std::lock_guard<std::mutex> g(m);
+    flag = true;
+}
+cv.notify_one();
+
+/**
+ * 反应任务
+ */
+...  // 准备反应
+{
+    std::unique_lock<std::mutex> lk(m);
+    cv.wait(lk,
+            []{ return flag; });
+    ...  // 针对事件作出反应（m 被 lock）
+}
+...  // m 已解锁
+```
+
+#### 通过 promise 和 future 实现一次通信
+
+通过期值和信道，有一种更加简单的实现方法，但坏处是只能实现一次通信。
+
+检测任务有一个 `std::promise` 型别对象（即，信道的写入端），反应任务有对应的期值。当检测任务发现它正在查找的事件已经发生时，它会设置 `std::promise` 型别对象（向信道写入）。与此同时，反应任务调用 `wait` 以等待它的期值。该 `wait` 调用会阻塞反应任务，直至 `std::promise` 型别对象被设置。
+
+注意， `std::promise` 和期值（ `std::future` 和 `std::shared_future` ）都是需要型别的形参模板。形参表示要通过信道发送数据的型别。在本例中，并没有要发送的数据，所以用 `void` 。
+
+```cpp
+std::promise<void> p;
+
+/**
+ * 检测任务
+ */
+p.set_value();  // 通知反应任务
+
+/**
+ * 反应任务
+ */
+p.get_future().wait();  // 等待事件
+```
+
+注意， `std::promise` 和 `std::future` 之前是共享状态，需要在堆上动态分配内存。
+
+#### 通过 promise 让线程暂停一次
+
+```cpp
+std::promise<void> p;
+
+void react();  // 反应任务函数
+
+void detect()
+{
+    std::thread t([]
+                  {
+                      p.get_future().wait();  // 暂停 t
+                      // 直到期值被设置
+                      react();
+                  });
+    ...  // 检测任务，做一些 react 之前的准备活动
+    p.set_value();
+    ...  // 其他工作
+    t.join();
+}
+```
+
+注意，这里不可以直接替换成我们之前实现过的 `ThreadRAII` 如下。
+
+```cpp
+void detect()
+{
+    ThreadRAII tr(
+        std::thread([]
+                    {
+                        p.get_future().wait();  // 暂停 t
+                        react();
+                    }),
+        ThreadRAII::DtorAction::Join
+    );
+    ...  // 检测任务，做一些 react 之前的准备活动
+    // 注意！如果这里发生异常，则 set_value 不会被调用
+    // 则 tr 析构永远不会完成
+    p.set_value();
+    ...  // 其他工作
+}
+```
+
+此外，可以针对多个反应任务实施先暂停再取消暂停的功能。
+
+```cpp
+std::promise<void> p;
+
+void detect()
+{
+    // sf 是 std::shared_future<void>
+    auto sf = p.get_future().share();
+
+    std::vector<std::thread> vt;
+
+    for (int i = 0; i < threadsToRun; ++ i) {
+        vt.emplace_back([sf]  // 注意，这里是 sf 副本
+                        {
+                            sf.wait();  // 暂停 t
+                            react();
+                        });
+    }
+
+    // ... 若此处抛出异常，则 detect 会失去响应
+
+    p.set_value();  // 取消所有线程的暂停
+
+    for (auto& t : vt) {
+        t.join();
+    }
+}
+```
+
+### 40 | 对并发使用 std::atomic ，对特种内存使用 volatile
+
+#### C++ 的 volatile 与并发无关，与 Java 或 C# 不同
+
+在 Java 中 `volatile` 似乎可以控制变量可见性、防止代码重排，但是 C++ 只是告诉编译器不要优化变量。
+
+C++ 的 `volatile` 往深了说，就是告诉编译器，正在处理的内存不具备常规行为。
+
+```cpp
+int x;
+auto y = x;
+y = x;
+x = 10;
+x = 20;
+```
+
+会被编译器优化如下。
+
+```cpp
+auto y = x;
+x = 20;
+```
+
+但是如果 `x` 在一些特种内存上，比如 `x` 对应硬件检测的温度，则上代码不可以进行优化。
+
+```cpp
+auto y = x;
+// 硬件会修改 x 的值（如温度检测）
+y = x;
+
+x = 10;
+// 硬件会发射 x 的值（如无线电发射）
+x = 20;
+```
+
+因此，我们把 `x` 声明如下，告诉编译器不要优化
+
+```cpp
+volatile int x;
+
+// 参考条款 2 ，这里 y 是 int 而非 volatile int
+auto y = x;
+```
+
+#### atomic 防止代码重排，并禁用了复制或移动构造函数，应使用 load 与 store
+
+```cpp
+a = b;
+x = y;
+// 可能被编译器编译如下
+x = y;
+a = b;
+```
+
+代码重拍对于并行任务来说十分危险，因此可以使用 `atomic` 如下。
+
+```cpp
+std::atomic<bool> valAvailable(false);
+
+auto imptValue = computeImportantValue();
+
+valAvailable = true;  /// 通知其他任务值可用
+```
+
+另外， `atomic` 也需要保证 read-modify-write, RMW 操作的原子性。
+
+此外还应注意， `atomic` 为了保证原子性，因此不支持复制构造、移动构造、移动赋值运算符。
+
+```cpp
+std::atomic<int> x;
+
+auto y = x;  // 错误！（因为 y 会被推导为 atomic<int>）
+y = x;       // 错误！
+
+// 一个好的方法如下
+std::atomic<int> y(x.load());
+y.store(x.load());
+```

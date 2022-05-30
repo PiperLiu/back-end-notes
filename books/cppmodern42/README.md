@@ -153,3 +153,27 @@ Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++1
 
 ### 7 | 并发 API
 
+[./drafts/cppmodern42.07.concurrency.md](./drafts/cppmodern42.07.concurrency.md)
+- [35 | 优先选用基于任务而非基于线程的程序设计](./drafts/cppmodern42.07.concurrency.md#35-优先选用基于任务而非基于线程的程序设计)
+  - [三个层面的线程以及线程超订 oversubscription](./drafts/cppmodern42.07.concurrency.md#三个层面的线程以及线程超订-oversubscription)
+  - [基于任务相比基于线程的好处](./drafts/cppmodern42.07.concurrency.md#基于任务相比基于线程的好处)
+- [36 | 如果异步是必要的，则指定 std::launch::async](./drafts/cppmodern42.07.concurrency.md#36-如果异步是必要的则指定-stdlaunchasync)
+  - [std::async 默认启动策略](./drafts/cppmodern42.07.concurrency.md#stdasync-默认启动策略)
+  - [std::async 状态判断与封装一个默认异步的 async 模板函数（配合 std::result_of<>::type ）](./drafts/cppmodern42.07.concurrency.md#stdasync-状态判断与封装一个默认异步的-async-模板函数配合-stdresult_oftype)
+- [37 | 使 std::thread 型别对象在所有路径皆不可联结](./drafts/cppmodern42.07.concurrency.md#37-使-stdthread-型别对象在所有路径皆不可联结)
+  - [可联结 joinable 与不可联结](./drafts/cppmodern42.07.concurrency.md#可联结-joinable-与不可联结)
+  - [为什么 std::thread 对象 joinable 时，析构将导致程序终止](./drafts/cppmodern42.07.concurrency.md#为什么-stdthread-对象-joinable-时析构将导致程序终止)
+- [38 | 对变化多端的线程句柄析构函数行为保持关注](./drafts/cppmodern42.07.concurrency.md#38-对变化多端的线程句柄析构函数行为保持关注)
+  - [关于期值 future 、 promise 、 packaged_task](./drafts/cppmodern42.07.concurrency.md#关于期值-future-promise-packaged_task)
+  - [期值 future 和 promise 间存在一个共享状态](./drafts/cppmodern42.07.concurrency.md#期值-future-和-promise-间存在一个共享状态)
+  - [期值析构函数行为的常规与例外](./drafts/cppmodern42.07.concurrency.md#期值析构函数行为的常规与例外)
+  - [使用 packaged_task 也可以创建共享状态与期值，并且析构行为是常规的](./drafts/cppmodern42.07.concurrency.md#使用-packaged_task-也可以创建共享状态与期值并且析构行为是常规的)
+- [39 | 考虑针对一次性事件通信使用以 void 为模板型别实参的期值](./drafts/cppmodern42.07.concurrency.md#39-考虑针对一次性事件通信使用以-void-为模板型别实参的期值)
+  - [使用条件变量进行线程通信，用 lambda 解决代码异味 code smell](./drafts/cppmodern42.07.concurrency.md#使用条件变量进行线程通信用-lambda-解决代码异味-code-smell)
+  - [使用共享布尔标志位来控制线程通信](./drafts/cppmodern42.07.concurrency.md#使用共享布尔标志位来控制线程通信)
+  - [通过 promise 和 future 实现一次通信](./drafts/cppmodern42.07.concurrency.md#通过-promise-和-future-实现一次通信)
+  - [通过 promise 让线程暂停一次](./drafts/cppmodern42.07.concurrency.md#通过-promise-让线程暂停一次)
+- [40 | 对并发使用 std::atomic ，对特种内存使用 volatile](./drafts/cppmodern42.07.concurrency.md#40-对并发使用-stdatomic-对特种内存使用-volatile)
+  - [C++ 的 volatile 与并发无关，与 Java 或 C./drafts/cppmodern42.07.concurrency.md# 不同](#c-的-volatile-与并发无关与-java-或-c-不同)
+  - [atomic 防止代码重排，并禁用了复制或移动构造函数，应使用 load 与 store](./drafts/cppmodern42.07.concurrency.md#atomic-防止代码重排并禁用了复制或移动构造函数应使用-load-与-store)
+
