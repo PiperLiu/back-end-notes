@@ -28,14 +28,14 @@ struct task_struct {
 - `TASK_INTERRUPTIBLE`：进程可以被中断，进程正在被挂起或者睡眠
 - `TASK_UNINTERRUPTIBLE`：进程不可被中断，接收到信号时并不能退出这个等待状态
 - `TASK_STOPPED`：进程已经被暂停，进程正在被挂起或者睡眠
-- `TASK_ZOMBIE`：进程已经被终止，但是父进程还没有使用 `wait` 系统调用返回相应信息，因此内核不能丢弃相关信息
+- `TASK_ZOMBIE`：进程已经被终止，但是父进程还没有使用 `wait` 函数返回相应信息，因此内核不能丢弃相关信息
 
 Linux 中有几个特殊的进程标识符所对应的进程：
 - `0` ：对应的是交换进程 swapper ，用于执行多进程的调用
 - `1` ：对应的是初始化进程 init ，对应的文件是 `/sbin/init` ，负责 Linux 的启动工作
 - `2` ：可能对应页守护进程 pagedaemon ，用于虚拟存储系统的分页操作
 
-获取进程标识符和用户的系统调用如下。
+获取进程标识符和用户的函数如下。
 
 ```c
 #include <sys/types.h>
@@ -103,7 +103,7 @@ int main(int argc, char *argv[ ], char *envp[ ])
 - `_exit` 直接使进程停止运行，清除其使用的内存空间
 - `exit` 是对 `_exit` 进行包装，在退出前执行一些工作，比如把缓冲区未写入的数据写入磁盘
 
-此外还可以利用系统调用添加 `exit` 的回调函数，见例子 [exam714atexit.c](../sample/chapter7/exam714atexit.c) 。
+此外还可以利用函数 `atexit` 添加 `exit` 的回调函数，见例子 [exam714atexit.c](../sample/chapter7/exam714atexit.c) 。
 
 ```c
 #include <stdio.h>

@@ -50,6 +50,14 @@
 
 ### 第 8 章 Linux 的信号
 
+[./drafts/linuxc.03.signal.md](./drafts/linuxc.03.signal.md)
+- [Linux 信号/软中断执行过程](./drafts/linuxc.03.signal.md#linux-信号软中断执行过程)
+- [注册信号 singal, sigaction](./drafts/linuxc.03.signal.md#注册信号-singal-sigaction)
+- [发送信号 kill, raise, sigqueue](./drafts/linuxc.03.signal.md#发送信号-kill-raise-sigqueue)
+- [定时信号 alarm, 退出信号 abort](./drafts/linuxc.03.signal.md#定时信号-alarm-退出信号-abort)
+- [Linux 信号集 sigemptyset, sigfillset, sigaddset, sigdelset, sigismember](./drafts/linuxc.03.signal.md#linux-信号集-sigemptyset-sigfillset-sigaddset-sigdelset-sigismember)
+- [信号阻塞和挂起 sigprocmask, sigsuspend 、信号的精确定时 setitimer 以及避免在信号处理中调用不可重入函数](./drafts/linuxc.03.signal.md#信号阻塞和挂起-sigprocmask-sigsuspend-信号的精确定时-setitimer-以及避免在信号处理中调用不可重入函数)
+
 ### 第 9 章 Linux 的进程同步机制——管道和 IPC
 
 ### 第 10 章 Linux 的线程

@@ -100,7 +100,7 @@ int fsetpos(FILE *stream, const fpos_t *pos);
 
 缓冲方式的信息保存在 `FILE *fp; fp->_IO_file_flags` 中。
 
-可以使用如下系统调用设置缓冲区大小。
+可以使用如下函数设置缓冲区大小。
 
 ```c
 #include <stdio.h>
