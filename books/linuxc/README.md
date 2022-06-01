@@ -29,9 +29,24 @@
 
 ### 第 6 章 Linux 的流
 
+总体上给我感觉就是实践中很常见的“文件读写”。毕竟工作中都不会直接 `open` ，而是采用带有缓冲区的 `fopen` 系列。
+
 [./drafts/linuxc.01.stream.md](./drafts/linuxc.01.stream.md)
+- [流可以理解为由系统分配的内存缓冲区](./drafts/linuxc.01.stream.md#流可以理解为由系统分配的内存缓冲区)
+- [流的基础操作（读写、按行读写、按二进制读写）](./drafts/linuxc.01.stream.md#流的基础操作读写-按行读写-按二进制读写)
+- [流的定位](./drafts/linuxc.01.stream.md#流的定位)
+- [流的缓冲管理](./drafts/linuxc.01.stream.md#流的缓冲管理)
+- [流的格式化输出](./drafts/linuxc.01.stream.md#流的格式化输出)
 
 ### 第 7 章 Linux 的进程
+
+最大的收获莫过于认识了会话 session 与前台进程组。
+
+[./drafts/linuxc.02.process.md](./drafts/linuxc.02.process.md)
+- [进程的状态、描述符、标识符](./drafts/linuxc.02.process.md#进程的状态-描述符-标识符)
+- [进程的操作： fork, exec, vfork, _exit, atexit](./drafts/linuxc.02.process.md#进程的操作-fork-exec-vfork-_exit-atexit)
+- [Linux 的进程组和会话（前台进程组）](./drafts/linuxc.02.process.md#linux-的进程组和会话前台进程组)
+- [更改进程用户、 system 、 acct 、 time](./drafts/linuxc.02.process.md#更改进程用户-system-acct-time)
 
 ### 第 8 章 Linux 的信号
 
