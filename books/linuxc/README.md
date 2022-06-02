@@ -60,6 +60,14 @@
 
 ### 第 9 章 Linux 的进程同步机制——管道和 IPC
 
+[./drafts/linuxc.04.ipc.md](./drafts/linuxc.04.ipc.md)
+- [Linux 的管道](./drafts/linuxc.04.ipc.md#linux-的管道)
+- [Linux 的命名管道/先进先出队列 tee 命令](./drafts/linuxc.04.ipc.md#linux-的命名管道先进先出队列-tee-命令)
+- [System V IPC 以及 ftok, ipcs 命令](./drafts/linuxc.04.ipc.md#system-v-ipc-以及-ftok-ipcs-命令)
+- [Linux 的消息队列](./drafts/linuxc.04.ipc.md#linux-的消息队列)
+- [Linux 的信号量](./drafts/linuxc.04.ipc.md#linux-的信号量)
+- [Linux 的共享内存](./drafts/linuxc.04.ipc.md#linux-的共享内存)
+
 ### 第 10 章 Linux 的线程
 
 ### 第 11 章 Linux 的网络编程
