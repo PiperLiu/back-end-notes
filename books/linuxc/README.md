@@ -70,4 +70,11 @@
 
 ### 第 10 章 Linux 的线程
 
+[./drafts/linuxc.05.thread.md](./drafts/linuxc.05.thread.md)
+- [Linux 的线程/轻量级进程 Light Weight Process](./drafts/linuxc.05.thread.md#linux-的线程轻量级进程-light-weight-process)
+- [Linux 的线程操作](./drafts/linuxc.05.thread.md#linux-的线程操作)
+- [Linux 的线程属性](./drafts/linuxc.05.thread.md#linux-的线程属性)
+- [Linux 的线程私有数据](./drafts/linuxc.05.thread.md#linux-的线程私有数据)
+- [Linux 的线程同步（互斥锁与条件变量）](./drafts/linuxc.05.thread.md#linux-的线程同步互斥锁与条件变量)
+
 ### 第 11 章 Linux 的网络编程
