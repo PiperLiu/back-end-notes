@@ -8,6 +8,8 @@
 
 书中提供的代码我放在 [./sample/](./sample/) 。
 
+2022年6月4日略读完了我想读的内容，很可惜的是除了在“网络编程”的 NTP 协议里出现了个 `select` ，剩下的地方并没有出现我想要看到的多路复用技术。但起码明确了 TCP 这类协议已经由 Linux 内核负责了，我们只需要处理其提供的 API 比如 `bind`, `listen`, `accept`, `connect`, `send`, `recv` 等等就可以了。
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
@@ -78,3 +80,8 @@
 - [Linux 的线程同步（互斥锁与条件变量）](./drafts/linuxc.05.thread.md#linux-的线程同步互斥锁与条件变量)
 
 ### 第 11 章 Linux 的网络编程
+
+[./drafts/linuxc.06.network.md](./drafts/linuxc.06.network.md)
+- [Linux 的网络基础操作函数（大小端调整、字节操作函数、IP地址转换函数、域名转换函数）](./drafts/linuxc.06.network.md#linux-的网络基础操作函数大小端调整-字节操作函数-ip地址转换函数-域名转换函数)
+- [Linux 的网络套接字 scoket 操作函数](./drafts/linuxc.06.network.md#linux-的网络套接字-scoket-操作函数)
+- [Linux 的 TCP 编程与 UDP 编程](./drafts/linuxc.06.network.md#linux-的-tcp-编程与-udp-编程)
