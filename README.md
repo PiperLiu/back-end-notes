@@ -47,6 +47,7 @@
 - [🍩 Scott Meyers. Effective C++: 55 Specific Ways to Improve Your Programs and Designs. 电子工业出版社. 侯捷译. 第三版](./books/cpp55/README.md)
 - [🍪 Scott Meyers. Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14. 中国电力出版社. 高博译. 第一版](./books/cppmodern42/README.md)
 - [🎂 程国钢. 张玉兰. Linux C 编程从基础到实践. 清华大学出版社. 第一版](./books/linuxc/README.md)
+- [🍰 陈硕. Linux 多线程服务端编程：使用 muduo C++ 网络库. 电子工业出版社. 第一版](./books/muduo/README.md)
 
 ## 项目结构介绍 📻
 
