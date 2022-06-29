@@ -21,6 +21,10 @@
 
 [./drafts/00.01.k8s.practise.md](./drafts/00.01.k8s.practise.md)
 
+#### k8s 的权限控制 psp 与 opa(gatekeeper)
+
+[./drafts/00.02.k8s.pspvsopa.md](./drafts/00.02.k8s.pspvsopa.md)
+
 ### 认识 k8s
 
 #### 认识 k3s ：基本高可用架构以及在 multipass 里模拟场景
