@@ -52,6 +52,7 @@
 - [🎂 程国钢. 张玉兰. Linux C 编程从基础到实践. 清华大学出版社. 第一版](./books/linuxc/README.md)
 - [🍰 陈硕. Linux 多线程服务端编程：使用 muduo C++ 网络库. 电子工业出版社. 第一版](./books/muduo/README.md)
 - [🍮 Marko Luksa. Kubernetes in Action 中文版. 电子工业出版社. 七牛容器云团队译. 第一版](./books/k8sinaction/README.md)
+- [🧆 Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子工业出版社. 第一版](./books/go/README.md)
 
 ## 项目结构介绍 📻
 
