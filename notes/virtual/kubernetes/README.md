@@ -1,5 +1,7 @@
 # Kubernetes 相关笔记
 
+本来想通过 k3s 先入门，但是随后发现直接读 k8s in action 更好， k8s 书也买来读了，读书笔记也在[本仓库](../../../books/k8sinaction/README.md) 。 k3s 其实找到了个不错的教程，但是精力原因也不再接着学了。
+
 相关资料：
 - https://kubernetes.io/docs/home/
 - 官网在线的 minikube playground https://kubernetes.io/docs/tutorials/hello-minikube/

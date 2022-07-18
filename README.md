@@ -7,18 +7,6 @@
   <a href="https://github.com/PiperLiu/ACMOI_Journey"><img src="https://img.shields.io/badge/算法笔记-github-green.svg" alt="github"></a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/PiperLiu/Reinforcement-Learning-practice-zh"><img src="https://img.shields.io/badge/强化学习笔记-github-azure.svg" alt="github"></a>
-  <a href="https://github.com/PiperLiu/GAMES-notes"><img src="https://img.shields.io/badge/图形学笔记-github-coffee.svg" alt="github"></a>
-  <a href="https://github.com/PiperLiu/math_codes_economics_management"><img src="https://img.shields.io/badge/管理数学笔记-github-purple.svg" alt="github"></a>
-</p>
-
-<p align="center">
-  <a href="https://blog.csdn.net/weixin_42815609"><img src="https://img.shields.io/badge/博客-CSDN-red.svg" alt="https://www.csdn.net/"></a>
-  <a href="./doc/images/扫码_搜索联合传播样式-微信标准绿版.png"><img src="https://img.shields.io/badge/微信公众号-WeiXin-verdigris.svg" alt="weixin"></a>
-  <a href="https://www.zhihu.com/people/zai-deng-yici-ji-hui"><img src="https://img.shields.io/badge/知乎-ZhiHu-blue.svg" alt="https://www.zhihu.com/"></a>
-</p>
-
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=3 orderedList=false} -->
 
 <!-- code_chunk_output -->
@@ -41,6 +29,7 @@
 
 🥽 虚拟化相关：
 - [🐳 Docker 实践经验与笔记](./notes/virtual/docker/README.md)
+- [🚢 Kubernetes 相关笔记](./notes/virtual/kubernetes/README.md)
 
 📦 数据库相关：
 - [📫 SQL 基础语法](./notes/database/sqlzoo/README.md)
