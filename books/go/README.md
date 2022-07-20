@@ -15,11 +15,12 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 
 <!-- code_chunk_output -->
 
-- [Tutorial](#tutorial)
+- [1. Tutorial](#1-tutorial)
+- [2. Program Structure](#2-program-structure)
 
 <!-- /code_chunk_output -->
 
-### Tutorial
+### 1. Tutorial
 
 [./drafts/go.01.tutorial.md](./drafts/go.01.tutorial.md)
 
@@ -31,3 +32,23 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [1.6 Fetching URLs Concurrently](./drafts/go.01.tutorial.md#16-fetching-urls-concurrently)
 - [1.7 A Web Server](./drafts/go.01.tutorial.md#17-a-web-server)
 - [1.8 Loose Ends](./drafts/go.01.tutorial.md#18-loose-ends)
+
+### 2. Program Structure
+
+[./drafts/go.02.program-structure.md](./drafts/go.02.program-structure.md)
+
+- [2.1 Names](./drafts/go.02.program-structure.md#21-names)
+- [2.2 Declarations](./drafts/go.02.program-structure.md#22-declarations)
+- [2.3 Variables](./drafts/go.02.program-structure.md#23-variables)
+  - [2.3.1 Short Variable Declarations](./drafts/go.02.program-structure.md#231-short-variable-declarations)
+  - [2.3.2 Pointers](./drafts/go.02.program-structure.md#232-pointers)
+  - [2.3.3 The new Function](./drafts/go.02.program-structure.md#233-the-new-function)
+  - [2.3.4 Lifetime of Variables](./drafts/go.02.program-structure.md#234-lifetime-of-variables)
+- [2.4 Assignments](./drafts/go.02.program-structure.md#24-assignments)
+  - [2.4.1 Tuple Assignment](./drafts/go.02.program-structure.md#241-tuple-assignment)
+  - [2.4.2 Assignability](./drafts/go.02.program-structure.md#242-assignability)
+- [2.5 Type Declarations](./drafts/go.02.program-structure.md#25-type-declarations)
+- [2.6 Packages and Files](./drafts/go.02.program-structure.md#26-packages-and-files)
+  - [2.6.1 Imports](./drafts/go.02.program-structure.md#261-imports)
+  - [2.6.2 Package Initialization](./drafts/go.02.program-structure.md#262-package-initialization)
+- [2.7 Scope](./drafts/go.02.program-structure.md#27-scope)
