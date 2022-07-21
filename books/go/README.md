@@ -18,6 +18,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [1. Tutorial](#1-tutorial)
 - [2. Program Structure](#2-program-structure)
 - [3. Basic Data Types](#3-basic-data-types)
+- [4. Composite Types](#4-composite-types)
 
 <!-- /code_chunk_output -->
 
@@ -71,3 +72,19 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [3.6 Constants](./drafts/go.03.basic-data-types.md#36-constants)
   - [3.6.1 The Constant Generator iota](./drafts/go.03.basic-data-types.md#361-the-constant-generator-iota)
   - [3.6.2 Untyped Constants](./drafts/go.03.basic-data-types.md#362-untyped-constants)
+
+### 4. Composite Types
+
+[./drafts/go.04.composite-types.md](./drafts/go.04.composite-types.md)
+
+- [4.1 Arrays](./drafts/go.04.composite-types.md#41-arrays)
+- [4.2 Slices](./drafts/go.04.composite-types.md#42-slices)
+  - [4.2.1 The append Function](./drafts/go.04.composite-types.md#421-the-append-function)
+  - [4.2.2 In-Place Slice Techniques](./drafts/go.04.composite-types.md#422-in-place-slice-techniques)
+- [4.3 Maps](./drafts/go.04.composite-types.md#43-maps)
+- [4.4 Structs](./drafts/go.04.composite-types.md#44-structs)
+  - [4.4.1 Struct Literals](./drafts/go.04.composite-types.md#441-struct-literals)
+  - [4.4.2 Comparing Structs](./drafts/go.04.composite-types.md#442-comparing-structs)
+  - [4.4.3 Struct Embedding and Anonymous Fields](./drafts/go.04.composite-types.md#443-struct-embedding-and-anonymous-fields)
+- [4.5 JSON](./drafts/go.04.composite-types.md#45-json)
+- [4.6 Text and HTML Templates](./drafts/go.04.composite-types.md#46-text-and-html-templates)
