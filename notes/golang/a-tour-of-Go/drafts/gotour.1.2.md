@@ -317,7 +317,7 @@ func c() (i int) {
 	// return 实际上首先是对 i 赋值，然后执行 ret
 	// defer 在 ret 指令前被调用，也就是 i ++ ，因此最终的 i 值是 1
     defer func() { i++ }()
-    return 1
+    return 0
 }
 
 func main() {

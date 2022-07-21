@@ -19,6 +19,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [2. Program Structure](#2-program-structure)
 - [3. Basic Data Types](#3-basic-data-types)
 - [4. Composite Types](#4-composite-types)
+- [5. Functions](#5-functions)
 
 <!-- /code_chunk_output -->
 
@@ -88,3 +89,21 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
   - [4.4.3 Struct Embedding and Anonymous Fields](./drafts/go.04.composite-types.md#443-struct-embedding-and-anonymous-fields)
 - [4.5 JSON](./drafts/go.04.composite-types.md#45-json)
 - [4.6 Text and HTML Templates](./drafts/go.04.composite-types.md#46-text-and-html-templates)
+
+### 5. Functions
+
+[./drafts/go.05.functions.md](./drafts/go.05.functions.md)
+
+- [5.1 Function Declarations](./drafts/go.05.functions.md#51-function-declarations)
+- [5.2 Recursion](./drafts/go.05.functions.md#52-recursion)
+- [5.3 Multiple Return Values](./drafts/go.05.functions.md#53-multiple-return-values)
+- [5.4 Errors](./drafts/go.05.functions.md#54-errors)
+  - [5.4.1 Error-Handling Strategies](./drafts/go.05.functions.md#541-error-handling-strategies)
+  - [5.4.2 End of File (EOF)](./drafts/go.05.functions.md#542-end-of-file-eof)
+- [5.5 Function Values](./drafts/go.05.functions.md#55-function-values)
+- [5.6 Anonymous Functions](./drafts/go.05.functions.md#56-anonymous-functions)
+  - [5.6.1 Caveat: Capturing Iteration Variables （重要：闭包捕获循环变量的坑）](./drafts/go.05.functions.md#561-caveat-capturing-iteration-variables-重要闭包捕获循环变量的坑)
+- [5.7 Variadic Functions](./drafts/go.05.functions.md#57-variadic-functions)
+- [5.8 Deferred Function Calls](./drafts/go.05.functions.md#58-deferred-function-calls)
+- [5.9 Panic](./drafts/go.05.functions.md#59-panic)
+- [5.10 Recover](./drafts/go.05.functions.md#510-recover)

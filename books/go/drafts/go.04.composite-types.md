@@ -1,7 +1,5 @@
 # 4. Composite Types
 
-"It's all bits at the bottom"
-
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
