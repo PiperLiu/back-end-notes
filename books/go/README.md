@@ -17,6 +17,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 
 - [1. Tutorial](#1-tutorial)
 - [2. Program Structure](#2-program-structure)
+- [3. Basic Data Types](#3-basic-data-types)
 
 <!-- /code_chunk_output -->
 
@@ -52,3 +53,21 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
   - [2.6.1 Imports](./drafts/go.02.program-structure.md#261-imports)
   - [2.6.2 Package Initialization](./drafts/go.02.program-structure.md#262-package-initialization)
 - [2.7 Scope](./drafts/go.02.program-structure.md#27-scope)
+
+### 3. Basic Data Types
+
+[./drafs/go.03.basic-data-types.md](./drafts/go.03.basic-data-types.md)
+
+- [3.1 Integers](./drafts/go.03.basic-data-types.md#31-integers)
+- [3.2 Floating-Point Numbers](./drafts/go.03.basic-data-types.md#32-floating-point-numbers)
+- [3.3 Complex Numbers](./drafts/go.03.basic-data-types.md#33-complex-numbers)
+- [3.4 Booleans](./drafts/go.03.basic-data-types.md#34-booleans)
+- [3.5 Strings （博弈：可变性与内存共享）](./drafts/go.03.basic-data-types.md#35-strings-博弈可变性与内存共享)
+  - [3.5.1 String Literals](./drafts/go.03.basic-data-types.md#351-string-literals)
+  - [3.5.2 Unicode （引出 rune ）](./drafts/go.03.basic-data-types.md#352-unicode-引出-rune)
+  - [3.5.3 UTF-8](./drafts/go.03.basic-data-types.md#353-utf-8)
+  - [3.5.4 Strings and Byte Slices](./drafts/go.03.basic-data-types.md#354-strings-and-byte-slices)
+  - [3.5.5 Conversions between Strings and Numbers](./drafts/go.03.basic-data-types.md#355-conversions-between-strings-and-numbers)
+- [3.6 Constants](./drafts/go.03.basic-data-types.md#36-constants)
+  - [3.6.1 The Constant Generator iota](./drafts/go.03.basic-data-types.md#361-the-constant-generator-iota)
+  - [3.6.2 Untyped Constants](./drafts/go.03.basic-data-types.md#362-untyped-constants)
