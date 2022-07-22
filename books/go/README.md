@@ -20,6 +20,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [3. Basic Data Types](#3-basic-data-types)
 - [4. Composite Types](#4-composite-types)
 - [5. Functions](#5-functions)
+- [6. Methods](#6-methods)
 
 <!-- /code_chunk_output -->
 
@@ -107,3 +108,15 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [5.8 Deferred Function Calls](./drafts/go.05.functions.md#58-deferred-function-calls)
 - [5.9 Panic](./drafts/go.05.functions.md#59-panic)
 - [5.10 Recover](./drafts/go.05.functions.md#510-recover)
+
+### 6. Methods
+
+[./drafts/go.06.methods.md](./drafts/go.06.methods.md)
+
+- [6.1 Method Declarations](./drafts/go.06.methods.md#61-method-declarations)
+- [6.2 Methods with a Pointer Receiver](./drafts/go.06.methods.md#62-methods-with-a-pointer-receiver)
+  - [6.2.1 Nil is Valid Receiver Value](./drafts/go.06.methods.md#621-nil-is-valid-receiver-value)
+- [6.3 Composing Types by Struct Embedding](./drafts/go.06.methods.md#63-composing-types-by-struct-embedding)
+- [6.4 Method Values and Expressions](./drafts/go.06.methods.md#64-method-values-and-expressions)
+- [6.5 Example: Bit Vector Type](./drafts/go.06.methods.md#65-example-bit-vector-type)
+- [6.6 Encapsulation](./drafts/go.06.methods.md#66-encapsulation)
