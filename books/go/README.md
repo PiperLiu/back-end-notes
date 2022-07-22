@@ -21,6 +21,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [4. Composite Types](#4-composite-types)
 - [5. Functions](#5-functions)
 - [6. Methods](#6-methods)
+- [7. Interface](#7-interface)
 
 <!-- /code_chunk_output -->
 
@@ -120,3 +121,24 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [6.4 Method Values and Expressions](./drafts/go.06.methods.md#64-method-values-and-expressions)
 - [6.5 Example: Bit Vector Type](./drafts/go.06.methods.md#65-example-bit-vector-type)
 - [6.6 Encapsulation](./drafts/go.06.methods.md#66-encapsulation)
+
+### 7. Interface
+
+[./drafts/go.07.interfaces.md](./drafts/go.07.interfaces.md)
+
+- [7.1 Interfaces as Contracts](./drafts/go.07.interfaces.md#71-interfaces-as-contracts)
+- [7.2 Interface Types](./drafts/go.07.interfaces.md#72-interface-types)
+- [7.3 Interface Satisfaction](./drafts/go.07.interfaces.md#73-interface-satisfaction)
+- [7.4 Parsing Flags with flag.Value](./drafts/go.07.interfaces.md#74-parsing-flags-with-flagvalue)
+- [7.5 Interface Values](./drafts/go.07.interfaces.md#75-interface-values)
+  - [7.5.1 Caveat: An Interface Containing a Nil Pointer Is Non-Nil](./drafts/go.07.interfaces.md#751-caveat-an-interface-containing-a-nil-pointer-is-non-nil)
+- [7.6 Sorting with sort.Interface](./drafts/go.07.interfaces.md#76-sorting-with-sortinterface)
+- [7.7 The http.Handler Interface](./drafts/go.07.interfaces.md#77-the-httphandler-interface)
+- [7.8 The error Interface](./drafts/go.07.interfaces.md#78-the-error-interface)
+- [7.9 Example: Expression Evaluator （很实用：手写 ast 以及 eval ）](./drafts/go.07.interfaces.md#79-example-expression-evaluator-很实用手写-ast-以及-eval)
+- [7.10 Type Assertions](./drafts/go.07.interfaces.md#710-type-assertions)
+- [7.11 Discriminating Errors with Type Assertions](./drafts/go.07.interfaces.md#711-discriminating-errors-with-type-assertions)
+- [7.12 Querying Behaviors with Interface Type Assertions](./drafts/go.07.interfaces.md#712-querying-behaviors-with-interface-type-assertions)
+- [7.13 Type Switches （使用 x.(type) ）](./drafts/go.07.interfaces.md#713-type-switches-使用-xtype)
+- [7.14 Example: Token-Based XML Decoding](./drafts/go.07.interfaces.md#714-example-token-based-xml-decoding)
+- [7.15 A Few Words of Advice](./drafts/go.07.interfaces.md#715-a-few-words-of-advice)
