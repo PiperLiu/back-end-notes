@@ -39,6 +39,36 @@ x = <-ch // a recevie expression in an assignment statement
 <-ch     // a receive statement; result is discarded
 ```
 
+还看到一种说法， `<-chan` 和 `chan<-` 分别表示只读和只写。一般用于参数传递才有意义，参考 [Go 只读/只写channel](https://www.cnblogs.com/baiyuxiong/p/4545028.html) 。
+
+```go
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    c := make(chan int)
+    go send(c)
+    go recv(c)
+    time.Sleep(3 * time.Second)
+}
+//只能向chan里写数据
+func send(c chan<- int) {
+    for i := 0; i < 10; i++ {
+        c <- i
+    }
+}
+//只能取channel中的数据
+func recv(c <-chan int) {
+    for i := range c {
+        fmt.Println(i)
+    }
+}
+```
+
 #### 8.4.1 Unbuffered Channels
 
 #### 8.4.2 Pipelines
