@@ -22,6 +22,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [5. Functions](#5-functions)
 - [6. Methods](#6-methods)
 - [7. Interface](#7-interface)
+- [8. Goroutines and Channels](#8-goroutines-and-channels)
 
 <!-- /code_chunk_output -->
 
@@ -142,3 +143,22 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [7.13 Type Switches （使用 x.(type) ）](./drafts/go.07.interfaces.md#713-type-switches-使用-xtype)
 - [7.14 Example: Token-Based XML Decoding](./drafts/go.07.interfaces.md#714-example-token-based-xml-decoding)
 - [7.15 A Few Words of Advice](./drafts/go.07.interfaces.md#715-a-few-words-of-advice)
+
+### 8. Goroutines and Channels
+
+[./drafts/go.08.goroutines-and-channels.md](./drafts/go.08.goroutines-and-channels.md)
+
+- [8.1 Goroutines](./drafts/go.08.goroutines-and-channels.md#81-goroutines)
+- [8.2 Example: Concurrent Clock Server](./drafts/go.08.goroutines-and-channels.md#82-example-concurrent-clock-server)
+- [8.3 Example: Concurrent Echo Server](./drafts/go.08.goroutines-and-channels.md#83-example-concurrent-echo-server)
+- [8.4 Channels](./drafts/go.08.goroutines-and-channels.md#84-channels)
+  - [8.4.1 Unbuffered Channels](./drafts/go.08.goroutines-and-channels.md#841-unbuffered-channels)
+  - [8.4.2 Pipelines](./drafts/go.08.goroutines-and-channels.md#842-pipelines)
+  - [8.4.3 Unidirectional Channel Types](./drafts/go.08.goroutines-and-channels.md#843-unidirectional-channel-types)
+  - [8.4.4 Buffered Channels](./drafts/go.08.goroutines-and-channels.md#844-buffered-channels)
+- [8.5 Looping in Parallel](./drafts/go.08.goroutines-and-channels.md#85-looping-in-parallel)
+- [8.6 Example: Concurrent Web Crawler](./drafts/go.08.goroutines-and-channels.md#86-example-concurrent-web-crawler)
+- [8.7 Multiplexing with select](./drafts/go.08.goroutines-and-channels.md#87-multiplexing-with-select)
+- [8.8 Example: Concurrent Directory Traversal](./drafts/go.08.goroutines-and-channels.md#88-example-concurrent-directory-traversal)
+- [8.9 Cancellation](./drafts/go.08.goroutines-and-channels.md#89-cancellation)
+- [8.10 Example: Chat Server](./drafts/go.08.goroutines-and-channels.md#810-example-chat-server)
