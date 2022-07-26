@@ -23,6 +23,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [6. Methods](#6-methods)
 - [7. Interface](#7-interface)
 - [8. Goroutines and Channels](#8-goroutines-and-channels)
+- [9. Concurrency with Shared Variables](#9-concurrency-with-shared-variables)
 
 <!-- /code_chunk_output -->
 
@@ -162,3 +163,20 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [8.8 Example: Concurrent Directory Traversal](./drafts/go.08.goroutines-and-channels.md#88-example-concurrent-directory-traversal)
 - [8.9 Cancellation](./drafts/go.08.goroutines-and-channels.md#89-cancellation)
 - [8.10 Example: Chat Server](./drafts/go.08.goroutines-and-channels.md#810-example-chat-server)
+
+### 9. Concurrency with Shared Variables
+
+[./drafts/go.09.concurrency-with-shared-variables.md](./drafts/go.09.concurrency-with-shared-variables.md)
+
+- [9.1 Race Conditions](./drafts/go.09.concurrency-with-shared-variables.md#91-race-conditions)
+- [9.2 Mutual Exclusion: sync.Mutex](./drafts/go.09.concurrency-with-shared-variables.md#92-mutual-exclusion-syncmutex)
+- [9.3 Read/Write Mutexes: sync.RWMutex](./drafts/go.09.concurrency-with-shared-variables.md#93-readwrite-mutexes-syncrwmutex)
+- [9.4 Memory Synchronization](./drafts/go.09.concurrency-with-shared-variables.md#94-memory-synchronization)
+- [9.5 Lazy Initialization: sync.Once](./drafts/go.09.concurrency-with-shared-variables.md#95-lazy-initialization-synconce)
+- [9.6 The Race Detector](./drafts/go.09.concurrency-with-shared-variables.md#96-the-race-detector)
+- [9.7 Example: Concurrent Non-Blocking Cache （一个键值对一个锁？不，人均 entry 做 chan broadcast ）](./drafts/go.09.concurrency-with-shared-variables.md#97-example-concurrent-non-blocking-cache-一个键值对一个锁不人均-entry-做-chan-broadcast)
+- [9.8 Goroutines and Threads （重要）](./drafts/go.09.concurrency-with-shared-variables.md#98-goroutines-and-threads-重要)
+  - [9.8.1 Growable Stacks](./drafts/go.09.concurrency-with-shared-variables.md#981-growable-stacks)
+  - [9.8.2 Goroutine Scheduling](./drafts/go.09.concurrency-with-shared-variables.md#982-goroutine-scheduling)
+  - [9.8.3 GOMAXPROCS](./drafts/go.09.concurrency-with-shared-variables.md#983-gomaxprocs)
+  - [9.8.4 Goroutines Have No Identity](./drafts/go.09.concurrency-with-shared-variables.md#984-goroutines-have-no-identity)
