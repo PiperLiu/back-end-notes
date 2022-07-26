@@ -24,6 +24,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [7. Interface](#7-interface)
 - [8. Goroutines and Channels](#8-goroutines-and-channels)
 - [9. Concurrency with Shared Variables](#9-concurrency-with-shared-variables)
+- [10. Packages and the Go Tool](#10-packages-and-the-go-tool)
 
 <!-- /code_chunk_output -->
 
@@ -180,3 +181,21 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
   - [9.8.2 Goroutine Scheduling](./drafts/go.09.concurrency-with-shared-variables.md#982-goroutine-scheduling)
   - [9.8.3 GOMAXPROCS](./drafts/go.09.concurrency-with-shared-variables.md#983-gomaxprocs)
   - [9.8.4 Goroutines Have No Identity](./drafts/go.09.concurrency-with-shared-variables.md#984-goroutines-have-no-identity)
+
+### 10. Packages and the Go Tool
+
+[./drafts/go.10.packages-and-the-go-tool.md](./drafts/go.10.packages-and-the-go-tool.md)
+
+- [10.1 Introduction](./drafts/go.10.packages-and-the-go-tool.md#101-introduction)
+- [10.2 Import Paths](./drafts/go.10.packages-and-the-go-tool.md#102-import-paths)
+- [10.3 The Package Declaration](./drafts/go.10.packages-and-the-go-tool.md#103-the-package-declaration)
+- [10.4 Import Declarations](./drafts/go.10.packages-and-the-go-tool.md#104-import-declarations)
+- [10.5 Blank Imports](./drafts/go.10.packages-and-the-go-tool.md#105-blank-imports)
+- [10.6 Packages and Naming](./drafts/go.10.packages-and-the-go-tool.md#106-packages-and-naming)
+- [10.7 The Go Tool](./drafts/go.10.packages-and-the-go-tool.md#107-the-go-tool)
+  - [10.7.1 Workspace Organization](./drafts/go.10.packages-and-the-go-tool.md#1071-workspace-organization)
+  - [10.7.2 Downloading Packages](./drafts/go.10.packages-and-the-go-tool.md#1072-downloading-packages)
+  - [10.7.3 Building Packages](./drafts/go.10.packages-and-the-go-tool.md#1073-building-packages)
+  - [10.7.4 Documenting Packages](./drafts/go.10.packages-and-the-go-tool.md#1074-documenting-packages)
+  - [10.7.5 Internal Packages](./drafts/go.10.packages-and-the-go-tool.md#1075-internal-packages)
+  - [10.7.6 Querying packages](./drafts/go.10.packages-and-the-go-tool.md#1076-querying-packages)
