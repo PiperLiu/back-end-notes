@@ -25,6 +25,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [8. Goroutines and Channels](#8-goroutines-and-channels)
 - [9. Concurrency with Shared Variables](#9-concurrency-with-shared-variables)
 - [10. Packages and the Go Tool](#10-packages-and-the-go-tool)
+- [11. Testing](#11-testing)
 
 <!-- /code_chunk_output -->
 
@@ -199,3 +200,20 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
   - [10.7.4 Documenting Packages](./drafts/go.10.packages-and-the-go-tool.md#1074-documenting-packages)
   - [10.7.5 Internal Packages](./drafts/go.10.packages-and-the-go-tool.md#1075-internal-packages)
   - [10.7.6 Querying packages](./drafts/go.10.packages-and-the-go-tool.md#1076-querying-packages)
+
+### 11. Testing
+
+[./drafts/go.11.testing.md](./drafts/go.11.testing.md)
+
+- [11.1 The go test Tool](./drafts/go.11.testing.md#111-the-go-test-tool)
+- [11.2 Test Functions](./drafts/go.11.testing.md#112-test-functions)
+  - [11.2.1 Randomized Testing](./drafts/go.11.testing.md#1121-randomized-testing)
+  - [11.2.2 Testing a Command](./drafts/go.11.testing.md#1122-testing-a-command)
+  - [11.2.3 White-Box Testing](./drafts/go.11.testing.md#1123-white-box-testing)
+  - [11.2.4 External Test Packages](./drafts/go.11.testing.md#1124-external-test-packages)
+  - [11.2.5 Writing Effective Tests](./drafts/go.11.testing.md#1125-writing-effective-tests)
+  - [11.2.6 Avoiding Brittle Tests](./drafts/go.11.testing.md#1126-avoiding-brittle-tests)
+- [11.3 Coverage](./drafts/go.11.testing.md#113-coverage)
+- [11.4 Benchmark Functions](./drafts/go.11.testing.md#114-benchmark-functions)
+- [11.5 Profiling](./drafts/go.11.testing.md#115-profiling)
+- [11.6 Example Functions](./drafts/go.11.testing.md#116-example-functions)
