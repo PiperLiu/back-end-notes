@@ -26,6 +26,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [9. Concurrency with Shared Variables](#9-concurrency-with-shared-variables)
 - [10. Packages and the Go Tool](#10-packages-and-the-go-tool)
 - [11. Testing](#11-testing)
+- [12. Reflection](#12-reflection)
 
 <!-- /code_chunk_output -->
 
@@ -217,3 +218,17 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [11.4 Benchmark Functions](./drafts/go.11.testing.md#114-benchmark-functions)
 - [11.5 Profiling](./drafts/go.11.testing.md#115-profiling)
 - [11.6 Example Functions](./drafts/go.11.testing.md#116-example-functions)
+
+### 12. Reflection
+
+[./drafts/go.12.reflection.md](./drafts/go.12.reflection.md)
+
+- [12.1 Why Reflection （检测是否已存在 Stringer 方法）](./drafts/go.12.reflection.md#121-why-reflection-检测是否已存在-stringer-方法)
+- [12.2 reflect.Type and reflect.Value](./drafts/go.12.reflection.md#122-reflecttype-and-reflectvalue)
+- [12.3 Display, a Recursive Value Printer](./drafts/go.12.reflection.md#123-display-a-recursive-value-printer)
+- [12.4 Example: Encoding S-Expressions](./drafts/go.12.reflection.md#124-example-encoding-s-expressions)
+- [12.5 Setting Variables with reflect.Value](./drafts/go.12.reflection.md#125-setting-variables-with-reflectvalue)
+- [12.6 Example: Decoding S-Expressions](./drafts/go.12.reflection.md#126-example-decoding-s-expressions)
+- [12.7 Accessing Struct Field Tags](./drafts/go.12.reflection.md#127-accessing-struct-field-tags)
+- [12.8 Displaying the Methods of a Type](./drafts/go.12.reflection.md#128-displaying-the-methods-of-a-type)
+- [12.9 A Word of Caution](./drafts/go.12.reflection.md#129-a-word-of-caution)
