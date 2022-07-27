@@ -11,6 +11,8 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - 本书的代码 https://github.com/adonovan/gopl.io/
 - 本书的网站 http://www.gopl.io/
 
+2022年7月27日一周时间读完了，收获还是不少的。
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
@@ -27,6 +29,7 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [10. Packages and the Go Tool](#10-packages-and-the-go-tool)
 - [11. Testing](#11-testing)
 - [12. Reflection](#12-reflection)
+- [13. Low-Level Programming](#13-low-level-programming)
 
 <!-- /code_chunk_output -->
 
@@ -232,3 +235,13 @@ Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子
 - [12.7 Accessing Struct Field Tags](./drafts/go.12.reflection.md#127-accessing-struct-field-tags)
 - [12.8 Displaying the Methods of a Type](./drafts/go.12.reflection.md#128-displaying-the-methods-of-a-type)
 - [12.9 A Word of Caution](./drafts/go.12.reflection.md#129-a-word-of-caution)
+
+### 13. Low-Level Programming
+
+[./drafts/go.13.low-level-programming.md](./drafts/go.13.low-level-programming.md)
+
+- [13.1 unsafe.Sizeof, Alignof, and Offsetof](./drafts/go.13.low-level-programming.md#131-unsafesizeof-alignof-and-offsetof)
+- [13.2 unsafe.Pointer](./drafts/go.13.low-level-programming.md#132-unsafepointer)
+- [13.3 Example: Deep Equivalence](./drafts/go.13.low-level-programming.md#133-example-deep-equivalence)
+- [13.4 Calling C Code with cgo](./drafts/go.13.low-level-programming.md#134-calling-c-code-with-cgo)
+- [13.5 Another Word of Caution](./drafts/go.13.low-level-programming.md#135-another-word-of-caution)
