@@ -6,6 +6,10 @@ Marko Luksa. Kubernetes in Action 中文版. 电子工业出版社. 七牛容器
 
 这就好比，你学语文，总不能去读字典来学吧？总要有一本由浅入深的教材吧？再不济，得读读故事书来学语文，是吧。
 
+![](./drafts/images/k8s.cover.jpg)
+
+![](./drafts/images/k8s.11.12.jpg)
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
