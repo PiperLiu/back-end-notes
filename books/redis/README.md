@@ -6,6 +6,8 @@
 
 ![](./images/20220823.jpg)
 
+本书官网见 [http://redisbook.com/](http://redisbook.com/) 。
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
@@ -17,9 +19,13 @@
 
 ### 第 1 章 引言
 
+介绍了本书各章节的内容及关系。
+
 ## 第一部分 数据结构与对象
 
 ### 第 2 章 简单动态字符串
+
+[./drafts/ch.02.md](./drafts/ch.02.md)
 
 ## 第二部分 单机数据库的实现
 
