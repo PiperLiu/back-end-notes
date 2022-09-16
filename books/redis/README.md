@@ -37,6 +37,9 @@
 - [2.3 SDS API](./drafts/ch.02.md#23-sds-api)
 - [2.4 重点回顾](./drafts/ch.02.md#24-重点回顾)
 - [2.5 参考资料](./drafts/ch.02.md#25-参考资料)
+- [sds 源码阅读（重要）](./drafts/ch.02.md#sds-源码阅读重要)
+  - [c 语言丰富的宏预处理](./drafts/ch.02.md#c-语言丰富的宏预处理)
+  - [c 语言结构体中数组指针不占用 struct size](./drafts/ch.02.md#c-语言结构体中数组指针不占用-struct-size)
 
 ## 第二部分 单机数据库的实现
 
