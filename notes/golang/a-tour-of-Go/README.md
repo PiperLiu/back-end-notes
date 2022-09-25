@@ -18,6 +18,8 @@ https://go.dev/tour/list
 - [Methods and interfaces](#methods-and-interfaces)
 - [Generics](#generics)
 - [Concurrency](#concurrency)
+- [补充记录](#补充记录)
+  - [go 中 select 优先级](#go-中-select-优先级)
 
 <!-- /code_chunk_output -->
 
@@ -115,3 +117,9 @@ https://go.dev/tour/list
   - [Select](./drafts/gotour.4.1.md#select)
   - [Default Selection](./drafts/gotour.4.1.md#default-selection)
 - [sync.Mutex](./drafts/gotour.4.1.md#syncmutex)
+
+## 补充记录
+
+### go 中 select 优先级
+
+[./drafts/go.etc.001.md](./drafts/go.etc.001.md)
