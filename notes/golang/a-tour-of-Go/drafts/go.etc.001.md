@@ -96,27 +96,28 @@ func main() {
 }
 
 func makeBucketEffect(name int, dataCh chan int) (func(), chan struct{}) {
-	ch := make(chan struct{}, 0)
+	ch := make(chan struct{}, 2)  // set 2 for not block in core
 	bucketFunc := func() {
 		for {
 			// https://www.cnblogs.com/xiao-xue-di/p/14439516.html
 			select {
 			case <-ch: // higher priority
-				fmt.Println(name, "core task", time.Now().Format("2006 0102 15:04:05.000"))
+				fmt.Println("->", name, "core task", time.Now().Format("2006 0102 15:04:05.000"))
 			case data := <-dataCh:
 			priority:
 				for {
 					select {
 					case <-ch:
-						fmt.Println(name, "core task", time.Now().Format("2006 0102 15:04:05.000"))
+						fmt.Println("->", name, "core task", time.Now().Format("2006 0102 15:04:05.000"))
 					default:
 						break priority
 					}
 				}
 				// deal data
 				r := rand.Intn(100) + 100
+				fmt.Println(name, "start dealing with", data)
 				time.Sleep(time.Duration(r * int(time.Millisecond)))
-				fmt.Println(name, data)
+				fmt.Println(name, "done dealing with", data)
 			}
 		}
 	}
@@ -126,8 +127,8 @@ func makeBucketEffect(name int, dataCh chan int) (func(), chan struct{}) {
 func core(chList []chan struct{}) {
 	for {
 		time.Sleep(time.Millisecond * 500)
-		fmt.Println("core send", time.Now().Format("2006 0102 15:04:05.000"))
-		for _, ch := range chList {
+		for i, ch := range chList {
+			fmt.Println("<- core send", i, time.Now().Format("2006 0102 15:04:05.000"))
 			ch <- struct{}{}
 		}
 	}

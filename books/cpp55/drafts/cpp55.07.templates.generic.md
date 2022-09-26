@@ -403,7 +403,7 @@ void advance(IterT& iter, DistT d)
 
 #### Traits 是一个 C++ 协议
 
-在这里，我们要应用 traits 实现 advance 函数。其要求之一是： **对内置（built-in）类型和用户自定义（uer-defined）类型的表现一样好。**
+在这里，我们要应用 traits 实现 advance 函数。其要求之一是： **对内置（built-in）类型和用户自定义（user-defined）类型的表现一样好。**
 
 本例中，如何实现 traits 呢？
 

@@ -520,7 +520,7 @@ private:
 };
 ```
 
-值得注意的是：**std::mutex 是一个只移型别（move-only type），因此加入 mutex 让 Polynomial 市区了可复制性。**
+值得注意的是：**std::mutex 是一个只移型别（move-only type），因此加入 mutex 让 Polynomial 失去了可复制性。**
 
 #### std::atomic 取代互斥量的例子
 
