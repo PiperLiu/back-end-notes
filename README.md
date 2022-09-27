@@ -43,6 +43,7 @@
 - [🍮 Marko Luksa. Kubernetes in Action 中文版. 电子工业出版社. 七牛容器云团队译. 第一版](./books/k8sinaction/README.md)
 - [🧆 Alan A.A.Donovan. Brian W.Kemighan. Go 语言程序设计（英文版）. 电子工业出版社. 第一版](./books/go/README.md)
 - [🍯 黄健宏. Redis 设计与实现. 机械工业出版社. 第一版](./books/redis/README.md)
+- [🍧 左书祺. Go 语言设计与实现. 人民邮电出版社. 第一版](./books/go.1.15/README.md)
 
 ## 项目结构介绍 📻
 
