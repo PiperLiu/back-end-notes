@@ -127,7 +127,7 @@ static inline void hi_sdssetalloc(hisds s, size_t newlen) {
 
 问：
 1. 为什么要有多种数据类型？ **因为比如小字符串的 `len` 只需要 `uint8_t` 类型就好**
-2. 为什么 `hisds` 是 `typedef char *hisds;` ？这样我们的元数据（字符串）可以服用所有 c 语言标准库中的函数（`string.h` http://www.gnu.org/software/libc） 此外可以通过 `hisds[-1]` 访问 `struct` 中其他数据如 `flag` 等
+2. 为什么 `hisds` 是 `typedef char *hisds;` ？这样我们的元数据（字符串）可以复用所有 c 语言标准库中的函数（`string.h` http://www.gnu.org/software/libc） 此外可以通过 `hisds[-1]` 访问 `struct` 中其他数据如 `flag` 等
 
 在声明动态字符串 sds 的过程中，通过下面的函数判断到底用哪个类型的 sds 。
 
