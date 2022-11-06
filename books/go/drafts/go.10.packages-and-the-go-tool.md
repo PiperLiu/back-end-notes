@@ -39,7 +39,7 @@
 import _ "image/png"  // register PNG decoder
 ```
 
-例子见 [jpeg](../gopl.io/ch10/jpeg/) 。如果没有 black import ，那么 `img, kind, err := image.Decoder(in)` 中就会出错，因为不认识 png 这个格式。
+例子见 [jpeg](../gopl.io/ch10/jpeg/) 。如果没有 blank import ，那么 `img, kind, err := image.Decoder(in)` 中就会出错，因为不认识 png 这个格式。
 
 如下是 png 源码。
 

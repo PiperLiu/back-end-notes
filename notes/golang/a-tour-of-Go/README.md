@@ -20,6 +20,7 @@ https://go.dev/tour/list
 - [Concurrency](#concurrency)
 - [补充记录](#补充记录)
   - [go 中 select 优先级](#go-中-select-优先级)
+  - [database.sql](#databasesql)
 
 <!-- /code_chunk_output -->
 
@@ -123,3 +124,7 @@ https://go.dev/tour/list
 ### go 中 select 优先级
 
 [./drafts/go.etc.001.md](./drafts/go.etc.001.md)
+
+### database.sql
+
+[./drafts/go.etc.002.md](./drafts/go.etc.002.md)
