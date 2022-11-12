@@ -55,6 +55,13 @@
 
 [./drafts/ch.04.md](./drafts/ch.04.md)
 
+- [4.1 字典的实现](./drafts/ch.04.md#41-字典的实现)
+- [4.2 哈希算法](./drafts/ch.04.md#42-哈希算法)
+- [4.3 解决键冲突](./drafts/ch.04.md#43-解决键冲突)
+- [4.4 rehash](./drafts/ch.04.md#44-rehash)
+- [4.5 渐进式 rehash](./drafts/ch.04.md#45-渐进式-rehash)
+- [阅读源码：启动 server -> event loop -> 触发 rehash](./drafts/ch.04.md#阅读源码启动-server-event-loop-触发-rehash)
+
 
 ## 第二部分 单机数据库的实现
 
