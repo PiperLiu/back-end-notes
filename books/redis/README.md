@@ -18,6 +18,7 @@
 - [第 4 章 字典](#第-4-章-字典)
 - [第 5 章 跳跃表](#第-5-章-跳跃表)
 - [第 6 章 整数集合](#第-6-章-整数集合)
+- [第 7 章 压缩列表](#第-7-章-压缩列表)
 
 <!-- /code_chunk_output -->
 
@@ -85,6 +86,18 @@
   - [6.3.2 节约内存](./drafts/ch.06.md#632-节约内存)
 - [6.4 降级](./drafts/ch.06.md#64-降级)
 - [6.5 整数集合 API](./drafts/ch.06.md#65-整数集合-api)
+
+### 第 7 章 压缩列表
+
+[./drafts/ch.07.md](./drafts/ch.07.md)
+
+- [7.1 压缩列表的构成](./drafts/ch.07.md#71-压缩列表的构成)
+- [7.2 压缩列表节点的构成](./drafts/ch.07.md#72-压缩列表节点的构成)
+  - [7.2.1 previous_entry_length](./drafts/ch.07.md#721-previous_entry_length)
+  - [7.2.2 encoding](./drafts/ch.07.md#722-encoding)
+  - [7.2.3 content](./drafts/ch.07.md#723-content)
+- [7.3 连锁更新](./drafts/ch.07.md#73-连锁更新)
+- [7.4 压缩列表 API](./drafts/ch.07.md#74-压缩列表-api)
 
 ## 第二部分 单机数据库的实现
 
