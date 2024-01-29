@@ -1,5 +1,25 @@
 # 第 6 章 整数集合
 
+是一段连续的内存，紧凑地「有序」排列着所有元素：
+```c
+typedef struct intset {
+  // 编码方式
+  int32_t encoding;
+  // 集合包含的元素数量
+  uint32_t length;
+  // 保存元素的数组
+  int8_t contents[];
+} intset;
+```
+
+元素是以 `int8_t` 组织，可以更好的应对各种编码方式。
+
+代价是插入元素需要「升级」，时间复杂度为 O(N) 。其余操作皆可使用二分。不可以「降级」。
+
+属于是为了节约空间付出了较大成本。
+
+Redis 是很考虑底层的设计。
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=3 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
