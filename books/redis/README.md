@@ -29,6 +29,7 @@
 - [第三部分 多机数据库的实现](#第三部分-多机数据库的实现)
   - [第 15 章 复制](#第-15-章-复制)
   - [第 16 章 Sentinel](#第-16-章-sentinel)
+  - [第 17 章 集群](#第-17-章-集群)
 - [第四部分 独立功能的实现](#第四部分-独立功能的实现)
 
 <!-- /code_chunk_output -->
@@ -340,5 +341,41 @@
   - [16.9.1 选出新的主服务器](./drafts/ch.16.md#1691-选出新的主服务器)
   - [16.9.2 修改从服务器的复制目标](./drafts/ch.16.md#1692-修改从服务器的复制目标)
   - [16.9.3 将旧的主服务器变为从服务器](./drafts/ch.16.md#1693-将旧的主服务器变为从服务器)
+
+### 第 17 章 集群
+
+[./drafts/ch.17.md](./drafts/ch.17.md)
+
+- [17.1 节点](./drafts/ch.17.md#171-节点)
+  - [17.1.1 启动节点](./drafts/ch.17.md#1711-启动节点)
+  - [17.1.2 集群数据结构](./drafts/ch.17.md#1712-集群数据结构)
+  - [17.1.3 CLUSTER MEET命令的实现](./drafts/ch.17.md#1713-cluster-meet命令的实现)
+- [17.2 槽指派](./drafts/ch.17.md#172-槽指派)
+  - [17.2.1 纪录节点的槽指派信息](./drafts/ch.17.md#1721-纪录节点的槽指派信息)
+  - [17.2.2 传播节点的槽指派信息](./drafts/ch.17.md#1722-传播节点的槽指派信息)
+  - [17.2.3 纪录集群所有槽的指派信息](./drafts/ch.17.md#1723-纪录集群所有槽的指派信息)
+  - [17.2.4 CLUSTER ADDSLOTS命令的实现](./drafts/ch.17.md#1724-cluster-addslots命令的实现)
+- [17.3 在集群中执行命令](./drafts/ch.17.md#173-在集群中执行命令)
+  - [17.3.1 计算键属于哪个槽](./drafts/ch.17.md#1731-计算键属于哪个槽)
+  - [17.3.2 判断槽是否由当前节点负责处理](./drafts/ch.17.md#1732-判断槽是否由当前节点负责处理)
+  - [17.3.3 MOVED错误](./drafts/ch.17.md#1733-moved错误)
+  - [17.3.4 节点数据库的实现](./drafts/ch.17.md#1734-节点数据库的实现)
+- [17.4 重新分片](./drafts/ch.17.md#174-重新分片)
+- [17.5 ASK错误](./drafts/ch.17.md#175-ask错误)
+  - [17.5.1 CLUSTER SETSLOT IMPORTING命令的实现](./drafts/ch.17.md#1751-cluster-setslot-importing命令的实现)
+  - [17.5.2 CLUSTER SETSLOT MIGRATING命令的实现](./drafts/ch.17.md#1752-cluster-setslot-migrating命令的实现)
+  - [17.5.3 ASK错误](./drafts/ch.17.md#1753-ask错误)
+  - [17.5.4 ASKING命令](./drafts/ch.17.md#1754-asking命令)
+  - [17.5.5 ASK错误和MOVED错误的区别](./drafts/ch.17.md#1755-ask错误和moved错误的区别)
+- [17.6 复制与故障转移](./drafts/ch.17.md#176-复制与故障转移)
+  - [17.6.1 设置从节点](./drafts/ch.17.md#1761-设置从节点)
+  - [17.6.2 故障检测](./drafts/ch.17.md#1762-故障检测)
+  - [17.6.3 故障转移](./drafts/ch.17.md#1763-故障转移)
+  - [17.6.4 选举新的主节点](./drafts/ch.17.md#1764-选举新的主节点)
+- [17.7 消息](./drafts/ch.17.md#177-消息)
+  - [17.7.1 消息头](./drafts/ch.17.md#1771-消息头)
+  - [17.7.2 MEET、PING、PONG消息的实现](./drafts/ch.17.md#1772-meet-ping-pong消息的实现)
+  - [17.7.3 FAIL消息的实现](./drafts/ch.17.md#1773-fail消息的实现)
+  - [17.7.4 PUBLISH消息的实现](./drafts/ch.17.md#1774-publish消息的实现)
 
 ## 第四部分 独立功能的实现
