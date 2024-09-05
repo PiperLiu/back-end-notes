@@ -33,6 +33,7 @@
 - [第四部分 独立功能的实现](#第四部分-独立功能的实现)
   - [第 18 章 发布与订阅](#第-18-章-发布与订阅)
   - [第 19 章 事务](#第-19-章-事务)
+  - [第 20 章 Lua 脚本](#第-20-章-lua-脚本)
 
 <!-- /code_chunk_output -->
 
@@ -419,3 +420,33 @@
   - [19.3.2 一致性](./drafts/ch.19.md#1932-一致性)
   - [19.3.3 隔离性](./drafts/ch.19.md#1933-隔离性)
   - [19.3.4 耐久性](./drafts/ch.19.md#1934-耐久性)
+
+### 第 20 章 Lua 脚本
+
+[./drafts/ch.20.md](./drafts/ch.20.md)
+
+- [20.1 创建并修改 Lua 环境](./drafts/ch.20.md#201-创建并修改-lua-环境)
+  - [20.1.1 创建 Lua 环境](./drafts/ch.20.md#2011-创建-lua-环境)
+  - [20.1.2 载入函数库](./drafts/ch.20.md#2012-载入函数库)
+  - [20.1.3 创建 redis 全局表格](./drafts/ch.20.md#2013-创建-redis-全局表格)
+  - [20.1.4 使用 Redis 自制的随机函数来替换 Lua 原有的随机函数](./drafts/ch.20.md#2014-使用-redis-自制的随机函数来替换-lua-原有的随机函数)
+  - [20.1.5 创建排序辅助函数](./drafts/ch.20.md#2015-创建排序辅助函数)
+  - [20.1.6 创建 redis.pcall 函数的错误报告辅助函数](./drafts/ch.20.md#2016-创建-redispcall-函数的错误报告辅助函数)
+  - [20.1.7 保护 Lua 的全局环境](./drafts/ch.20.md#2017-保护-lua-的全局环境)
+  - [20.1.8 将 Lua 环境保存到服务器状态的 lua 属性中](./drafts/ch.20.md#2018-将-lua-环境保存到服务器状态的-lua-属性中)
+- [20.2 Lua 环境协作组件](./drafts/ch.20.md#202-lua-环境协作组件)
+  - [20.2.1 伪客户端](./drafts/ch.20.md#2021-伪客户端)
+  - [20.2.2 lua_scripts 字典](./drafts/ch.20.md#2022-lua_scripts-字典)
+  - [20.3 EVAL 命令的实现](./drafts/ch.20.md#203-eval-命令的实现)
+  - [20.3.1 定义脚本函数](./drafts/ch.20.md#2031-定义脚本函数)
+  - [20.3.2 将脚本保存到 lua_scripts 字典](./drafts/ch.20.md#2032-将脚本保存到-lua_scripts-字典)
+  - [20.3.3 执行脚本函数](./drafts/ch.20.md#2033-执行脚本函数)
+- [20.4 EVALSHA 命令的实现](./drafts/ch.20.md#204-evalsha-命令的实现)
+- [20.5 脚本管理命令的实现](./drafts/ch.20.md#205-脚本管理命令的实现)
+  - [20.5.1 SCRIPT FLUSH](./drafts/ch.20.md#2051-script-flush)
+  - [20.5.2 SCRIPT EXISTS](./drafts/ch.20.md#2052-script-exists)
+  - [20.5.3 SCRIPT LOAD](./drafts/ch.20.md#2053-script-load)
+  - [20.5.4 SCRIPT KILL](./drafts/ch.20.md#2054-script-kill)
+- [20.6 脚本复制](./drafts/ch.20.md#206-脚本复制)
+  - [20.6.1 复制 EVAL 命令、 SCRIPT FLUSH 命令和 SCRIPT LOAD 命令](./drafts/ch.20.md#2061-复制-eval-命令--script-flush-命令和-script-load-命令)
+  - [20.6.2 复制 EVALSHA 命令](./drafts/ch.20.md#2062-复制-evalsha-命令)
