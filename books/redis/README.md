@@ -34,6 +34,7 @@
   - [第 18 章 发布与订阅](#第-18-章-发布与订阅)
   - [第 19 章 事务](#第-19-章-事务)
   - [第 20 章 Lua 脚本](#第-20-章-lua-脚本)
+  - [第 24 章 监视器](#第-24-章-监视器)
 
 <!-- /code_chunk_output -->
 
@@ -450,3 +451,10 @@
 - [20.6 脚本复制](./drafts/ch.20.md#206-脚本复制)
   - [20.6.1 复制 EVAL 命令、 SCRIPT FLUSH 命令和 SCRIPT LOAD 命令](./drafts/ch.20.md#2061-复制-eval-命令--script-flush-命令和-script-load-命令)
   - [20.6.2 复制 EVALSHA 命令](./drafts/ch.20.md#2062-复制-evalsha-命令)
+
+### 第 24 章 监视器
+
+[./drafts/ch.24.md](./drafts/ch.24.md)
+
+- [24.1 成为监视器](./drafts/ch.24.md#241-成为监视器)
+- [24.2 向监视器发送命令信息](./drafts/ch.24.md#242-向监视器发送命令信息)
