@@ -34,6 +34,7 @@
   - [第 18 章 发布与订阅](#第-18-章-发布与订阅)
   - [第 19 章 事务](#第-19-章-事务)
   - [第 20 章 Lua 脚本](#第-20-章-lua-脚本)
+  - [第 21 章 排序](#第-21-章-排序)
   - [第 24 章 监视器](#第-24-章-监视器)
 
 <!-- /code_chunk_output -->
@@ -451,6 +452,22 @@
 - [20.6 脚本复制](./drafts/ch.20.md#206-脚本复制)
   - [20.6.1 复制 EVAL 命令、 SCRIPT FLUSH 命令和 SCRIPT LOAD 命令](./drafts/ch.20.md#2061-复制-eval-命令--script-flush-命令和-script-load-命令)
   - [20.6.2 复制 EVALSHA 命令](./drafts/ch.20.md#2062-复制-evalsha-命令)
+
+### 第 21 章 排序
+
+[./drafts/ch.21.md](./drafts/ch.21.md)
+
+- [21.1 SORT <key> 命令的实现](./drafts/ch.21.md#211-sort-key-命令的实现)
+- [21.2 ALPHA 选项的实现](./drafts/ch.21.md#212-alpha-选项的实现)
+- [21.3 ASC 选项和 DESC 选项的实现](./drafts/ch.21.md#213-asc-选项和-desc-选项的实现)
+- [21.4 BY 选项的实现](./drafts/ch.21.md#214-by-选项的实现)
+- [21.5 带有 ALPHA 选项的 BY 选项的实现](./drafts/ch.21.md#215-带有-alpha-选项的-by-选项的实现)
+- [21.6 LIMIT 选项的实现](./drafts/ch.21.md#216-limit-选项的实现)
+- [21.7 GET 选项的实现](./drafts/ch.21.md#217-get-选项的实现)
+- [21.8 STORE 选项的实现](./drafts/ch.21.md#218-store-选项的实现)
+- [21.9 多个选项的执行顺序](./drafts/ch.21.md#219-多个选项的执行顺序)
+  - [21.9.1 选项的执行顺序](./drafts/ch.21.md#2191-选项的执行顺序)
+  - [21.9.2 选项的摆放顺序](./drafts/ch.21.md#2192-选项的摆放顺序)
 
 ### 第 24 章 监视器
 
