@@ -6,10 +6,15 @@
 
 本书官网见 [http://redisbook.com/](http://redisbook.com/) 。
 
+> **记于2024.09.07** 第一部分可称之为 C 语言生产级别数据结构的设计与实践。剩下章节中，最感兴趣的是 Redis 3.0 的事件调度。整本书写得像一本叙述原理的说明说， which means 有些死板枯燥，想要面面俱到但是又说不清一些内容。关于 Redis 5.0 新增的 Stream 功能，我需要对其原理有了解，我会补充文章。此外，我还会尝试 debug Redis 3.0 ，我需要看到 sub/pub 的一次完整流程背后发生了什么。
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
+  - [补充](#补充)
+    - [Redis 5.0 新增 Stream](#redis-50-新增-stream)
+    - [debug Redis 3.0](#debug-redis-30)
   - [第 1 章 引言](#第-1-章-引言)
 - [第一部分 数据结构与对象](#第一部分-数据结构与对象)
   - [第 2 章 简单动态字符串](#第-2-章-简单动态字符串)
@@ -35,9 +40,27 @@
   - [第 19 章 事务](#第-19-章-事务)
   - [第 20 章 Lua 脚本](#第-20-章-lua-脚本)
   - [第 21 章 排序](#第-21-章-排序)
+  - [第 22 章 二进制位数组](#第-22-章-二进制位数组)
+  - [第 23 章 慢查询日志](#第-23-章-慢查询日志)
   - [第 24 章 监视器](#第-24-章-监视器)
 
 <!-- /code_chunk_output -->
+
+### 补充
+
+#### Redis 5.0 新增 Stream
+
+[./drafts/patch.01.md](./drafts/patch.01.md)
+
+- [特性：保存历史消息的 sub/pub](./drafts/patch.01.md#特性保存历史消息的-subpub)
+- [操作：可以从历史开始订阅，可以实时订阅](./drafts/patch.01.md#操作可以从历史开始订阅可以实时订阅)
+- [源代码](./drafts/patch.01.md#源代码)
+
+#### debug Redis 3.0
+
+[./drafts/patch.02.md](./drafts/patch.02.md)
+
+- [机器与 VS Code Debugger 配置](./drafts/patch.02.md#机器与-vs-code-debugger-配置)
 
 ### 第 1 章 引言
 
@@ -468,6 +491,30 @@
 - [21.9 多个选项的执行顺序](./drafts/ch.21.md#219-多个选项的执行顺序)
   - [21.9.1 选项的执行顺序](./drafts/ch.21.md#2191-选项的执行顺序)
   - [21.9.2 选项的摆放顺序](./drafts/ch.21.md#2192-选项的摆放顺序)
+
+### 第 22 章 二进制位数组
+
+[./drafts/ch.22.md](./drafts/ch.22.md)
+
+- [22.1 位数组的表示](./drafts/ch.22.md#221-位数组的表示)
+- [22.2 GETBIT 命令的实现](./drafts/ch.22.md#222-getbit-命令的实现)
+- [22.3 SETBIT 命令的实现](./drafts/ch.22.md#223-setbit-命令的实现)
+  - [22.3.1 SETBIT 命令的执行示例](./drafts/ch.22.md#2231-setbit-命令的执行示例)
+  - [22.3.2 带扩展操作的 SETBIT 命令示例](./drafts/ch.22.md#2232-带扩展操作的-setbit-命令示例)
+- [22.4 BITCOUNT 命令的实现](./drafts/ch.22.md#224-bitcount-命令的实现)
+  - [22.4.1 二进制位统计算法（1）：遍历算法](./drafts/ch.22.md#2241-二进制位统计算法1遍历算法)
+  - [22.4.2 二进制位统计算法（2）：查表算法](./drafts/ch.22.md#2242-二进制位统计算法2查表算法)
+  - [22.4.3 二进制位统计算法（3）：variable-precision SWAR 算法](./drafts/ch.22.md#2243-二进制位统计算法3variable-precision-swar-算法)
+  - [22.4.4 二进制位统计算法（4）：Redis的实现](./drafts/ch.22.md#2244-二进制位统计算法4redis的实现)
+- [22.5 BITOP 命令的实现](./drafts/ch.22.md#225-bitop-命令的实现)
+
+### 第 23 章 慢查询日志
+
+[./drafts/ch.23.md](./drafts/ch.23.md)
+
+- [23.1 慢查询记录的保存](./drafts/ch.23.md#231-慢查询记录的保存)
+- [23.2 慢查询日志的阅览和删除](./drafts/ch.23.md#232-慢查询日志的阅览和删除)
+- [23.3 添加新日志](./drafts/ch.23.md#233-添加新日志)
 
 ### 第 24 章 监视器
 
