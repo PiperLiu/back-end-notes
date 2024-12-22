@@ -480,7 +480,7 @@
 
 [./drafts/ch.21.md](./drafts/ch.21.md)
 
-- [21.1 SORT <key> 命令的实现](./drafts/ch.21.md#211-sort-key-命令的实现)
+- [21.1 SORT命令的实现](./drafts/ch.21.md#211-sort-命令的实现)
 - [21.2 ALPHA 选项的实现](./drafts/ch.21.md#212-alpha-选项的实现)
 - [21.3 ASC 选项和 DESC 选项的实现](./drafts/ch.21.md#213-asc-选项和-desc-选项的实现)
 - [21.4 BY 选项的实现](./drafts/ch.21.md#214-by-选项的实现)
