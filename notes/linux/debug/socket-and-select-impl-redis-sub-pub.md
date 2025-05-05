@@ -57,7 +57,7 @@ int socket(int domain, int type, int protocol);
 2.  **文件描述符关联** ：内核在当前进程的文件描述符表中找到一个未使用的条目，并将该条目指向一个代表该套接字的内核`文件对象`（`struct file`）。这个文件描述符（一个非负整数）是用户空间程序操作该套接字的句柄。
 3.  **返回** ：系统调用返回新分配的文件描述符给应用程序。若创建失败（如资源不足、权限问题），则返回 -1，并设置全局变量 `errno` 以指示具体错误代码。
 
-**返回值**：
+**返回值** ：
 
 * 成功：返回一个新的文件描述符（非负整数）。
 * 失败：返回 -1，并设置 `errno`。
@@ -95,7 +95,7 @@ int main() {
 }
 ```
 
-**编译与执行**：
+**编译与执行** ：
 
 ```bash
 gcc create_socket_example.c -o create_socket_example
@@ -125,11 +125,11 @@ struct in_addr {
 };
 ```
 
-**关键字段解析**：
+**关键字段解析** ：
 
 * **`sin_family`** : 地址族，对于 IPv4，必须设置为 `AF_INET`，与 `socket()` 调用中的 `domain` 参数保持一致。
 * **`sin_port`** : 端口号。 **注意** ：该字段必须存储为 **网络字节序** （Network Byte Order，即大端序 Big-Endian）。应用程序需使用 `htons()` (Host to Network Short) 函数将主机字节序（Host Byte Order）的端口号转换为网络字节序。例如，`htons(8080)`。
-* **`sin_addr.s_addr`** : 32位 IPv4 地址。 **注意**： 同样必须是 **网络字节序** 。
+* **`sin_addr.s_addr`** : 32位 IPv4 地址。 **注意** ： 同样必须是 **网络字节序** 。
     * 服务器端执行 `bind()` 时，若希望监听本机所有可用的网络接口，应将此字段设置为 `htonl(INADDR_ANY)`。`INADDR_ANY` 是一个特殊常量（通常为 0），`htonl()` (Host to Network Long) 用于将其转换为主机字节序到网络字节序。
     * 若需绑定到特定 IP 地址（如服务器仅监听某块网卡，或客户端执行 `connect()` 时指定目标服务器 IP），可使用 `inet_pton()` (Presentation to Network) 函数将点分十进制表示的 IP 地址字符串（如 "192.168.1.100"）转换为网络字节序的 32 位整数，并存入 `s_addr`。
 
@@ -256,7 +256,7 @@ int listen(int sockfd, int backlog);
 
 **返回值** ：成功返回 0；失败返回 -1，并设置 `errno`。
 
-**示例（续上）**：
+**示例（续上）** ：
 
 ```c
     // ... bind() 成功后 ...
@@ -368,7 +368,7 @@ int select(int nfds, fd_set *readfds, fd_set *writefds,
     * 若 `timeout` 指向的结构体中 `tv_sec` 和 `tv_usec` 均为 0，`select()` 执行非阻塞检查，立即返回。
     * 若 `timeout` 指向的结构体包含正值，`select()` 最多等待指定时间。超时前有描述符就绪则返回；超时则返回 0。
 
-**`fd_set` 相关宏定义**：
+**`fd_set` 相关宏定义** ：
 
 * `FD_ZERO(fd_set *set)`: 清空（初始化）一个 `fd_set` 集合。 **每次调用 `select()` 前，对工作集合必须执行此操作或从主集合复制** 。
 * `FD_SET(int fd, fd_set *set)`: 将文件描述符 `fd` 添加到集合 `set` 中。
@@ -839,19 +839,21 @@ piperliu@go-x86:~/code/socket$ ./pubsub_server_revised
 * 服务器进程调用 `read(new_socket, ...)`，内核从接收缓冲区复制数据到用户空间 `buffer`。
 * 服务器进程解析 `buffer`，识别订阅请求，更新应用层数据结构（`topics` 数组）。
 
-4.  **客户端发布 (`PUB`)**：
-    * 客户端通过 `new_socket` 发送 "PUB ..." 数据。
-    * 数据到达服务器，内核处理同上，`select` 报告 `new_socket` 可读。
-    * 服务器进程调用 `read()` 获取数据并解析。
-    * 服务器进程查找主题，遍历订阅者列表。
-    * 对于每个订阅者 `sub_socket`（且 `sub_socket != new_socket`）：
-        * 服务器进程调用 `send(sub_socket, ...)`。内核将数据复制到 `sub_socket` 的发送缓冲区。
-        * 内核网络协议栈负责将发送缓冲区的数据打包成 TCP 段并发送出去。
+4.  **客户端发布 (`PUB`)**
 
-5.  **客户端断开连接 (有序关闭)**：
-    * 客户端调用 `close()` 或 `shutdown(SHUT_WR)`，其内核发送 FIN 包。
-    * 服务器内核收到 FIN，将 `new_socket` 标记为收到 FIN，并向客户端回复 ACK。连接进入 `CLOSE_WAIT` 状态。
-    * 服务器进程调用 `select()`，`select` 检测到 `new_socket` 可读（因为收到 FIN 也是可读事件）。
-    * `FD_ISSET(new_socket, ...)` 为真。
-    * 服务器进程调用 `read(new_socket, ...)`，`read` 返回 0。
-    * 服务器进程识别出连接关闭，调用 `close(new_socket)`。内核发送 FIN 包给客户端（如果尚未发送），释放套接字资源（当引用计数为0时），从 `master_fds` 移除 `new_socket`，清理应用层资源。
+* 客户端通过 `new_socket` 发送 "PUB ..." 数据。
+* 数据到达服务器，内核处理同上，`select` 报告 `new_socket` 可读。
+* 服务器进程调用 `read()` 获取数据并解析。
+* 服务器进程查找主题，遍历订阅者列表。
+* 对于每个订阅者 `sub_socket`（且 `sub_socket != new_socket`）：
+    * 服务器进程调用 `send(sub_socket, ...)`。内核将数据复制到 `sub_socket` 的发送缓冲区。
+    * 内核网络协议栈负责将发送缓冲区的数据打包成 TCP 段并发送出去。
+
+5.  **客户端断开连接 (有序关闭)**
+
+* 客户端调用 `close()` 或 `shutdown(SHUT_WR)`，其内核发送 FIN 包。
+* 服务器内核收到 FIN，将 `new_socket` 标记为收到 FIN，并向客户端回复 ACK。连接进入 `CLOSE_WAIT` 状态。
+* 服务器进程调用 `select()`，`select` 检测到 `new_socket` 可读（因为收到 FIN 也是可读事件）。
+* `FD_ISSET(new_socket, ...)` 为真。
+* 服务器进程调用 `read(new_socket, ...)`，`read` 返回 0。
+* 服务器进程识别出连接关闭，调用 `close(new_socket)`。内核发送 FIN 包给客户端（如果尚未发送），释放套接字资源（当引用计数为0时），从 `master_fds` 移除 `new_socket`，清理应用层资源。
