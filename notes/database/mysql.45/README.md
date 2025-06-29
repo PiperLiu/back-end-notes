@@ -72,6 +72,7 @@ https://time.geekbang.org/column/intro/100020801
 - [InnoDB 中 update 内部流程](./drafts/mysql.45.01.002.md#innodb-中-update-内部流程)
 - [两阶段提交](./drafts/mysql.45.01.002.md#两阶段提交)
 - [参数：innodb_flush_log_at_trx_commit 和 sync_binlog](./drafts/mysql.45.01.002.md#参数innodb_flush_log_at_trx_commit-和-sync_binlog)
+- [实践一下看看 binlog](./drafts/mysql.45.01.002.md#实践一下看看-binlog)
 
 #### 03 | 事务隔离：为什么你改了我还看不见？
 

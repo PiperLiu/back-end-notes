@@ -11,6 +11,7 @@
 - [InnoDB 中 update 内部流程](#innodb-中-update-内部流程)
 - [两阶段提交](#两阶段提交)
 - [参数：innodb_flush_log_at_trx_commit 和 sync_binlog](#参数innodb_flush_log_at_trx_commit-和-sync_binlog)
+- [实践一下看看 binlog](#实践一下看看-binlog)
 
 <!-- /code_chunk_output -->
 
@@ -129,3 +130,454 @@ MySQL 整体来看，其实就有两块：
 在一天一备的模式好处是“最长恢复时间”更短，在这里最坏情况下需要应用一天的 `binlog` 。比如，你每天 0 点做一次全量备份，而要恢复出一个到昨天晚上 23 点的备份。一周一备最坏情况就要应用一周的 `binlog` 了。
 
 系统的对应指标就是 RTO（恢复目标时间）。当然这个是有成本的，因为更频繁全量备份需要消耗更多存储空间，所以这个 RTO 是成本换来的，就需要你根据业务重要性来评估了。
+
+### 实践一下看看 binlog
+
+```bash
+piperliu@go-x86:~$ uname -a
+Linux go-x86 6.14.9-orbstack-gd9e87d038362 #131 SMP Tue Jun  3 07:51:59 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+piperliu@go-x86:~$ sudo apt update && sudo apt upgrade && sudo apt install mysql-server-8.0
+
+# install
+sudo mysql_secure_installation
+
+# check
+sudo systemctl status mysql  # if not active, sudo systemctl start mysql
+
+# /etc/mysql/mysql.conf.d/mysqld.cnf
+[mysqld]
+# 这是必须的，用于唯一标识一个 server
+server-id = 1
+
+# 开启 binlog，并指定日志文件的前缀
+log_bin = /var/log/mysql/mysql-bin.log
+
+# 设置 binlog 格式，我们稍后会讨论这个
+binlog_format = ROW
+
+# 每次事务提交都将 binlog 同步到磁盘
+# 这对应你学到的 sync_binlog = 1
+sync_binlog = 1
+
+# 每次事务提交都将 redo log 同步到磁盘
+# 这对应你学到的 innodb_flush_log_at_trx_commit = 1
+# 这是 MySQL 8.0 的默认值，但明确写出有助于理解
+innodb_flush_log_at_trx_commit = 1
+
+sudo systemctl restart mysql
+
+sudo mysql -u root -p  # 设了空密码
+```
+
+```sql
+-- 创建一个数据库用于实验
+CREATE DATABASE test_log;
+USE test_log;
+
+-- 创建一张表
+CREATE TABLE T (
+  ID INT PRIMARY KEY,
+  c INT
+) ENGINE=InnoDB;
+
+-- 插入一条初始数据
+INSERT INTO T VALUES(2, 10);
+
+-- 确认一下当前数据
+SELECT * FROM T;
+```
+
+```sql
+UPDATE T SET c = c + 1 WHERE ID = 2;
+```
+
+这条命令执行后，MySQL 内部已经完成了你所学的复杂流程：
+- 执行器调用 InnoDB 引擎，找到了 ID=2 的行。
+- InnoDB 在内存中更新了数据行（c 变为 11）。
+- InnoDB 将这个更新操作写入了 redo log，并将其置为 prepare 状态。
+- Server 层的执行器生成了这条 UPDATE 语句的 binlog 并写入磁盘。
+- 执行器调用 InnoDB 的提交接口，InnoDB 将 redo log 的状态修改为 commit。
+
+**Binlog 的模式（binlog_format）**
+
+1.  STATEMENT
+  - 内容：记录的是原始的 SQL 语句（例如，UPDATE T SET c=c+1 WHERE ID=2;）。
+  - 优点：日志文件体积小。
+  - 缺点：在某些情况下可能导致主从数据库不一致。例如，如果你使用 UUID() 或者 NOW() 这些非确定性函数，在主库和备库上执行同一条 SQL 语句可能会产生不同的结果。
+2.  ROW（行模式） （MySQL 8.0 默认）
+  - 内容：不记录 SQL 语句，而是记录哪一行数据被修改了，以及修改前后的具体值。例如，它会记录：“表 test_log.T 中，主键 ID=2 的行，字段 c 的值从 10 变成了 11”。
+  - 优点：最安全、最可靠的格式，能保证主从数据的一致性。
+  - 缺点：日志文件体积较大，特别是当你执行一个 UPDATE 或 DELETE 语句影响了很多行数据时。
+3. MIXED（混合模式）
+  - 内容：是 STATEMENT 和 ROW 的混合体。MySQL 会根据执行的 SQL 语句来自动选择使用哪种格式。对于大部分确定性的操作，它会使用 STATEMENT 格式以节省空间；对于可能导致主从不一致的非确定性操作，它会自动切换到 ROW 格式。
+
+**查看 Binlog 内容**
+
+```bash
+mysql> SHOW MASTER STATUS;
++------------------+----------+--------------+------------------+-------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++------------------+----------+--------------+------------------+-------------------+
+| mysql-bin.000001 |     1178 |              |                  |                   |
++------------------+----------+--------------+------------------+-------------------+
+1 row in set (0.00 sec)
+
+piperliu@go-x86:~$ sudo cat /var/log/mysql/mysql-bin.000001
+bbinahz~8.0.42-0ubuntu0.24.10.1ah
+
+
+**4
+(�ۘ,ah#��*�DOah"M�       �=ʳ8Ū8�<�       Oa3 �Estd���
+                                                    test_log�test_logCREATE DATABASE test_logDԅ�Yah"M���ʳ8�8o�~�Yah3 �Estd���
+                                                                                                                             test_lo�test_logCREATE TABLE T (
+  ID INT PRIMARY KEY,
+  c INT
+) ENGINE=InnoDB�K��aah"O���J˳8��8�zk�aa �Estd����test_logBEGIN��Daah4test_logT���Laah,KZ�
+���aahj �5)sah"O��V\̳8�0�8�Q7s& �Estd��� �test_logBEGIN��Zsah4Etest_logT*���sah6{Z��
+
+���sah�
+```
+
+使用 mysqlbinlog 工具查看：
+
+```bash
+piperliu@go-x86:~$ sudo mysqlbinlog -v /var/log/mysql/mysql-bin.000001
+# The proper term is pseudo_replica_mode, but we use this compatibility alias
+# to make the statement usable on server versions 8.0.24 and older.
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;
+/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;
+DELIMITER /*!*/;
+# at 4
+#250629 18:57:34 server id 1  end_log_pos 126 CRC32 0x2c98dbf1  Start: binlog v 4, server v 8.0.42-0ubuntu0.24.10.1 created 250629 18:57:34 at startup
+# Warning: this binlog is either in use or was not closed properly.
+ROLLBACK/*!*/;
+BINLOG '
+HhxhaA8BAAAAegAAAH4AAAABAAQAOC4wLjQyLTB1YnVudHUwLjI0LjEwLjEAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAeHGFoEwANAAgAAAAABAAEAAAAYgAEGggAAAAICAgCAAAACgoKKioAEjQA
+CigAAfHbmCw=
+'/*!*/;
+# at 126
+#250629 18:57:34 server id 1  end_log_pos 157 CRC32 0x447fec2a  Previous-GTIDs
+# [empty]
+# at 157
+#250629 18:58:23 server id 1  end_log_pos 234 CRC32 0x09fe3c9b  Anonymous_GTID  last_committed=0        sequence_number=1       rbr_only=no     original_committed_timestamp=1751194703608329   immediate_commit_timestamp=1751194703608329       transaction_length=197
+# original_commit_timestamp=1751194703608329 (2025-06-29 18:58:23.608329 CST)
+# immediate_commit_timestamp=1751194703608329 (2025-06-29 18:58:23.608329 CST)
+/*!80001 SET @@session.original_commit_timestamp=1751194703608329*//*!*/;
+/*!80014 SET @@session.original_server_version=80042*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80042*//*!*/;
+SET @@SESSION.GTID_NEXT= 'ANONYMOUS'/*!*/;
+# at 234
+#250629 18:58:23 server id 1  end_log_pos 354 CRC32 0x8785d444  Query   thread_id=8     exec_time=0     error_code=0    Xid = 3
+SET TIMESTAMP=1751194703/*!*/;
+SET @@session.pseudo_thread_id=8/*!*/;
+SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;
+SET @@session.sql_mode=1168113696/*!*/;
+SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
+/*!\C utf8mb4 *//*!*/;
+SET @@session.character_set_client=255,@@session.collation_connection=255,@@session.collation_server=255/*!*/;
+SET @@session.lc_time_names=0/*!*/;
+SET @@session.collation_database=DEFAULT/*!*/;
+/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;
+/*!80016 SET @@session.default_table_encryption=0*//*!*/;
+CREATE DATABASE test_log
+/*!*/;
+# at 354
+#250629 18:58:33 server id 1  end_log_pos 431 CRC32 0x807ea16f  Anonymous_GTID  last_committed=1        sequence_number=2       rbr_only=no     original_committed_timestamp=1751194713392074   immediate_commit_timestamp=1751194713392074       transaction_length=235
+# original_commit_timestamp=1751194713392074 (2025-06-29 18:58:33.392074 CST)
+# immediate_commit_timestamp=1751194713392074 (2025-06-29 18:58:33.392074 CST)
+/*!80001 SET @@session.original_commit_timestamp=1751194713392074*//*!*/;
+/*!80014 SET @@session.original_server_version=80042*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80042*//*!*/;
+SET @@SESSION.GTID_NEXT= 'ANONYMOUS'/*!*/;
+# at 431
+#250629 18:58:33 server id 1  end_log_pos 589 CRC32 0xa09d4b94  Query   thread_id=8     exec_time=0     error_code=0    Xid = 8
+use `test_log`/*!*/;
+SET TIMESTAMP=1751194713/*!*/;
+/*!80013 SET @@session.sql_require_primary_key=0*//*!*/;
+CREATE TABLE T (
+  ID INT PRIMARY KEY,
+  c INT
+) ENGINE=InnoDB
+/*!*/;
+# at 589
+#250629 18:58:41 server id 1  end_log_pos 668 CRC32 0x876b7af3  Anonymous_GTID  last_committed=2        sequence_number=3       rbr_only=yes    original_committed_timestamp=1751194721242084   immediate_commit_timestamp=1751194721242084       transaction_length=285
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1751194721242084 (2025-06-29 18:58:41.242084 CST)
+# immediate_commit_timestamp=1751194721242084 (2025-06-29 18:58:41.242084 CST)
+/*!80001 SET @@session.original_commit_timestamp=1751194721242084*//*!*/;
+/*!80014 SET @@session.original_server_version=80042*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80042*//*!*/;
+SET @@SESSION.GTID_NEXT= 'ANONYMOUS'/*!*/;
+# at 668
+#250629 18:58:41 server id 1  end_log_pos 747 CRC32 0x194494b3  Query   thread_id=8     exec_time=0     error_code=0
+SET TIMESTAMP=1751194721/*!*/;
+BEGIN
+/*!*/;
+# at 747
+#250629 18:58:41 server id 1  end_log_pos 799 CRC32 0x4cefd7a0  Table_map: `test_log`.`T` mapped to number 90
+# has_generated_invisible_primary_key=0
+# at 799
+#250629 18:58:41 server id 1  end_log_pos 843 CRC32 0xd99d00c0  Write_rows: table id 90 flags: STMT_END_F
+
+BINLOG '
+YRxhaBMBAAAANAAAAB8DAAAAAFoAAAAAAAEACHRlc3RfbG9nAAFUAAIDAwACAQEAoNfvTA==
+YRxhaB4BAAAALAAAAEsDAAAAAFoAAAAAAAEAAgAC/wACAAAACgAAAMAAndk=
+'/*!*/;
+### INSERT INTO `test_log`.`T`
+### SET
+###   @1=2
+###   @2=10
+# at 843
+#250629 18:58:41 server id 1  end_log_pos 874 CRC32 0x293511a6  Xid = 9
+COMMIT/*!*/;
+# at 874
+#250629 18:58:59 server id 1  end_log_pos 953 CRC32 0x1f3751cd  Anonymous_GTID  last_committed=3        sequence_number=4       rbr_only=yes    original_committed_timestamp=1751194739168960   immediate_commit_timestamp=1751194739168960       transaction_length=304
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1751194739168960 (2025-06-29 18:58:59.168960 CST)
+# immediate_commit_timestamp=1751194739168960 (2025-06-29 18:58:59.168960 CST)
+/*!80001 SET @@session.original_commit_timestamp=1751194739168960*//*!*/;
+/*!80014 SET @@session.original_server_version=80042*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80042*//*!*/;
+SET @@SESSION.GTID_NEXT= 'ANONYMOUS'/*!*/;
+# at 953
+#250629 18:58:59 server id 1  end_log_pos 1041 CRC32 0x5a069987         Query   thread_id=8     exec_time=0     error_code=0
+SET TIMESTAMP=1751194739/*!*/;
+BEGIN
+/*!*/;
+# at 1041
+#250629 18:58:59 server id 1  end_log_pos 1093 CRC32 0x8095a32a         Table_map: `test_log`.`T` mapped to number 90
+# has_generated_invisible_primary_key=0
+# at 1093
+#250629 18:58:59 server id 1  end_log_pos 1147 CRC32 0x18daf098         Update_rows: table id 90 flags: STMT_END_F
+
+BINLOG '
+cxxhaBMBAAAANAAAAEUEAAAAAFoAAAAAAAEACHRlc3RfbG9nAAFUAAIDAwACAQEAKqOVgA==
+cxxhaB8BAAAANgAAAHsEAAAAAFoAAAAAAAEAAgAC//8AAgAAAAoAAAAAAgAAAAsAAACY8NoY
+'/*!*/;
+### UPDATE `test_log`.`T`
+### WHERE
+###   @1=2
+###   @2=10
+### SET
+###   @1=2
+###   @2=11
+# at 1147
+#250629 18:58:59 server id 1  end_log_pos 1178 CRC32 0xfc13d1f3         Xid = 11
+COMMIT/*!*/;
+SET @@SESSION.GTID_NEXT= 'AUTOMATIC' /* added by mysqlbinlog */ /*!*/;
+DELIMITER ;
+# End of log file
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;
+```
+
+**Golang 监听 binlog**
+
+先清理一下 binlog ，把 gtid 模式打开重新生成。
+
+```bash
+mysql> SHOW BINARY LOGS;
++------------------+-----------+-----------+
+| Log_name         | File_size | Encrypted |
++------------------+-----------+-----------+
+| mysql-bin.000001 |      4516 | No        |
+| mysql-bin.000002 |       461 | No        |
++------------------+-----------+-----------+
+2 rows in set (0.02 sec)
+
+mysql> PURGE BINARY LOGS TO 'mysql-bin.000003';
+ERROR 1373 (HY000): Target log not found in binlog index
+mysql> PURGE BINARY LOGS TO 'mysql-bin.000002';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW BINARY LOGS;
++------------------+-----------+-----------+
+| Log_name         | File_size | Encrypted |
++------------------+-----------+-----------+
+| mysql-bin.000002 |       461 | No        |
++------------------+-----------+-----------+
+1 row in set (0.00 sec)
+
+# 也可以用这个
+sudo mysqladmin flush-logs
+
+mysql> SHOW MASTER STATUS;
++------------------+----------+--------------+------------------+----------------------------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                      |
++------------------+----------+--------------+------------------+----------------------------------------+
+| mysql-bin.000003 |      197 |              |                  | 3284707b-54d7-11f0-b8c7-3255068778de:1 |
++------------------+----------+--------------+------------------+----------------------------------------+
+1 row in set (0.01 sec)
+```
+
+```bash
+piperliu@go-x86:~/mysql-go$ sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+
+gtid_mode = ON
+enforce_gtid_consistency = ON
+```
+
+```sql
+SHOW VARIABLES LIKE 'gtid_mode';
+
+-- Create a user for your Go application
+CREATE USER 'go_replica'@'%' IDENTIFIED BY 'a_strong_password';
+
+-- Grant the necessary privileges
+GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'go_replica'@'%';
+
+-- Make sure the changes take effect
+FLUSH PRIVILEGES;
+```
+
+```bash
+piperliu@go-x86:~/mysql-go$ go version
+go version go1.24.0 linux/amd64
+piperliu@go-x86:~/mysql-go$ go go mod init myapp
+piperliu@go-x86:~/mysql-go$ go get github.com/go-mysql-org/go-mysql
+piperliu@go-x86:~/mysql-go$ go mod tidy
+piperliu@go-x86:~/mysql-go$ go list -m github.com/go-mysql-org/go-mysql
+github.com/go-mysql-org/go-mysql v1.12.0
+```
+
+下面的 
+
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/signal"
+    "syscall"
+
+    "github.com/go-mysql-org/go-mysql/canal"
+    "github.com/go-mysql-org/go-mysql/mysql"
+    "github.com/go-mysql-org/go-mysql/replication"
+)
+
+// MyEventHandler handles the binlog events.
+// This is where your custom logic goes.
+type MyEventHandler struct {
+    canal.DummyEventHandler
+}
+
+func (h *MyEventHandler) OnRow(e *canal.RowsEvent) error {
+    // e.Action can be "insert", "update", or "delete"
+    fmt.Printf("Received a %s event for table %s\n", e.Action, e.Table.Name)
+
+    // e.Rows is a slice of rows, for update it holds [before, after]
+    // for insert or delete, it holds the affected rows.
+    for i, row := range e.Rows {
+        // For an UPDATE, the slice contains the old and new data
+        if e.Action == canal.UpdateAction && i%2 == 0 {
+            fmt.Println("--- Before Update:")
+        } else if e.Action == canal.UpdateAction && i%2 != 0 {
+            fmt.Println("--- After Update:")
+        }
+        
+        // Print each column value in the row
+        for colIdx, colValue := range row {
+            colName := e.Table.Columns[colIdx].Name
+            fmt.Printf("    Column '%s' (%s): %v\n", colName, e.Table.Columns[colIdx].Type, colValue)
+        }
+    }
+    return nil
+}
+
+// We just need to print the GTID for position saving
+func (h *MyEventHandler) OnGTID(eh *replication.EventHeader, gtidEvent mysql.BinlogGTIDEvent) error {
+    eh.Dump(os.Stdout)
+    gtids, err := gtidEvent.GTIDNext()
+    if err != nil {
+        fmt.Printf("Error getting GTID: %v\n", err)
+        return err
+    }
+    fmt.Printf("Received GTID: %s\n", gtids)
+    // Here you can save the GTID to a persistent store if needed
+    return nil
+}
+
+func (h *MyEventHandler) String() string {
+    return "MyEventHandler"
+}
+
+func main() {
+    // Configuration for Canal
+    cfg, err := canal.NewConfig("")
+    if err != nil {
+        panic(err)
+    }
+    cfg.Addr = "127.0.0.1:3306"
+    cfg.User = "go_replica"
+    cfg.Password = "a_strong_password"
+    // We want to watch the test_log database, and specifically the T table
+    cfg.Dump.TableDB = "test_log"
+    cfg.Dump.Tables = []string{"T"}
+    // This server_id must be unique among all replicas and the primary
+    cfg.ServerID = 1001 
+
+    // Create a new canal instance
+    c, err := canal.NewCanal(cfg)
+    if err != nil {
+        panic(err)
+    }
+
+    // Register our custom event handler
+    c.SetEventHandler(&MyEventHandler{})
+
+    fmt.Println("Starting binlog listener...")
+    
+    // Start the listener. You can start from a specific GTID set if you have one saved.
+    // For the first run, it will dump the table data and then start streaming from the current position.
+    go func() {
+        // Use Run() to start from the current master position.
+        // To start from a specific GTID, use c.StartFromGTID(gtidSet)
+        err = c.Run()
+        if err != nil {
+            fmt.Printf("Error during canal run: %v\n", err)
+        }
+    }()
+
+    // Wait for a signal to gracefully shut down
+    quit := make(chan os.Signal, 1)
+    signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+    
+    <-quit
+    fmt.Println("Shutting down...")
+    c.Close()
+}
+```
+
+如下是输出：
+```bash
+=== GTIDEvent ===
+Date: 2025-06-29 19:45:54
+Log position: 276
+Event size: 79
+Received GTID: 3284707b-54d7-11f0-b8c7-3255068778de:2
+=== GTIDEvent ===
+Date: 2025-06-29 19:47:44
+Log position: 561
+Event size: 79
+Received GTID: 3284707b-54d7-11f0-b8c7-3255068778de:3
+```
+
+```bash
+mysql> INSERT INTO T VALUES(21, 10);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> DELETE FROM T WHERE ID = 21;
+Query OK, 1 row affected (0.04 sec)
+```
+
+预期是：
+1. MySQL commits a transaction.
+2. It writes a GTIDEvent to the binlog.
+3. It writes a TableMapEvent to describe the table T.
+4. It writes a RowsEvent (Insert/Update/Delete) containing the actual data change.
+5. It writes a XIDEvent (Commit).
+6. go-mysql receives these events. The canal wrapper processes the GTID, maps the table structure, and when it gets the RowsEvent, it knows everything about the change and finally calls your OnRow handler.
+
+但是这里 `OnRow` 事件没有被触发，暂且不纠结这个问题。
