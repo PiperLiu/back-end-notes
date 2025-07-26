@@ -12,6 +12,10 @@
   - [主动死锁检测](#主动死锁检测)
   - [解决由这种热点行更新导致的性能问题](#解决由这种热点行更新导致的性能问题)
 - [问题：如何删除一个表前 10000 行数据](#问题如何删除一个表前-10000-行数据)
+- [补充章节：深入代码：InnoDB行锁与死锁检测的实现细节](#补充章节深入代码innodb行锁与死锁检测的实现细节)
+  - [1. InnoDB 行锁与两阶段锁的实现](#1-innodb-行锁与两阶段锁的实现)
+  - [2. 主动死锁检测的实现](#2-主动死锁检测的实现)
+  - [3. 死锁处理：受害者选择与回滚](#3-死锁处理受害者选择与回滚)
 
 <!-- /code_chunk_output -->
 
@@ -116,3 +120,206 @@ MySQL 的行锁是在引擎层由各个引擎自己实现的。但并不是所�
 第三种方式（即：在 20 个连接中同时执行 `delete from T limit 500` ），会人为造成锁冲突。
 
 如果可以加上特定条件，将这 10000 行天然分开，可以考虑第三种。实际上在操作的时候老师也建议尽量拿到 ID 再删除。
+
+### 补充章节：深入代码：InnoDB行锁与死锁检测的实现细节
+
+#### 1. InnoDB 行锁与两阶段锁的实现
+
+InnoDB 的行锁并不是直接存储在数据行（row）上的，而是通过一个独立的 **锁信息结构** 来管理，并与事务对象（`trx_t`）关联。
+
+**核心数据结构**
+
+* `trx_t`: 事务对象。每个事务在 InnoDB 内部都由一个 `trx_t` 结构体表示，它包含了事务ID、状态、以及该事务持有的所有锁链表（`trx->locks`）。
+* `lock_t`: 通用锁对象。描述一个锁的详细信息，包括持有该锁的事务（`lock->trx`）、锁模式（`lock->mode`，如 `LOCK_S` 读锁/共享锁、`LOCK_X` 写锁/排他锁）、以及一个指向下一个锁对象的指针，形成一个链表。
+* `rec_lock_t`: 行锁（Record Lock）对象。这是 `lock_t` 的一种具体实现，专门用于行锁。
+* **锁哈希表（`lock_sys->rec_hash`）** : InnoDB 在内存中维护一个全局的哈希表来快速定位行锁。这个哈希表的 `key` 通常是 `(space_id, page_no)`，`value` 是一个链表，包含了该数据页上所有的行锁对象（`rec_lock_t`）。
+
+**加锁与两阶段锁的实现流程 (以 `SELECT ... FOR UPDATE` 为例)**
+
+当 InnoDB 需要对某一行加锁时，主要入口是 `row_search_mvcc()` 函数，其内部会调用加锁的核心函数 `lock_rec_lock()`。
+
+```cpp
+// 伪代码: lock_rec_lock() - 尝试对一条记录加锁
+// location: lock/lock0lock.cc
+
+lock_t* lock_rec_lock(
+    bool          implicit, // 是否是隐式锁
+    lock_mode_t   mode,     // 请求的锁模式, e.g., LOCK_X
+    const rec_t*  rec,      // 指向要加锁的物理记录
+    trx_t*        trx       // 请求加锁的事务
+) {
+    // 步骤1: 定位或创建该记录所在数据页的锁队列头。
+    // 使用 (space_id, page_no) 作为 key 在全局锁哈希表中查找。
+    lock_queue = lock_rec_get_queue(rec);
+
+    // 步骤2: 遍历该页的锁队列，检查是否存在冲突的锁。
+    // 这是锁冲突检测的核心。
+    for (lock in lock_queue) {
+        // a. 检查这个锁是否在同一条记录上。
+        if (!lock_rec_same_trx(lock, trx) && lock_rec_is_on_rec(lock, rec)) {
+
+            // b. 如果是其他事务持有的锁，则检查锁模式是否冲突。
+            // is_conflicting() 会根据锁兼容性矩阵返回 true/false。
+            // 例如，请求的 LOCK_X 与已有的 LOCK_S/LOCK_X 冲突。
+            if (is_conflicting(mode, lock->mode)) {
+                // *** 发现锁冲突 ***
+                
+                // 步骤 2.1: 创建一个新的 lock_t 对象来表示本次"等待"的锁请求。
+                wait_lock = lock_alloc(trx, ...);
+                wait_lock->type_mode = mode | LOCK_WAIT; // 标记为等待状态
+
+                // 步骤 2.2: 将这个等待锁请求加入到锁队列的末尾。
+                add_to_queue(lock_queue, wait_lock);
+
+                // 步骤 2.3: 将当前事务状态设置为等待，并挂起当前线程。
+                trx->state = TRX_STATE_LOCK_WAIT;
+                suspend_thread(trx); // 线程进入休眠
+
+                // ... 线程在这里等待，直到被唤醒 (锁被释放或死锁回滚) ...
+
+                // 唤醒后，重新检查状态，可能成功，也可能被回滚。
+                // ...
+                return nullptr; // 暂时返回，表示等待
+            }
+        }
+    }
+
+    // *** 没有锁冲突 ***
+    // 步骤3: 创建一个新的 lock_t 对象。
+    granted_lock = lock_alloc(trx, ...);
+    granted_lock->type_mode = mode; // 正常模式，非等待
+
+    // 步骤4: 将新锁加入到数据页的锁队列中。
+    add_to_queue(lock_queue, granted_lock);
+
+    // 步骤5:【两阶段锁的关键】将新锁加入到事务的私有锁链表(trx->locks)中。
+    // 只要事务不提交/回滚，这个链表就不会清空，锁就一直被持有。
+    trx->locks.add(granted_lock);
+
+    return granted_lock; // 成功获得锁
+}
+```
+
+**两阶段锁协议的体现** ：从 `步骤5` 可以清晰地看到，一旦一个锁被成功获取（`granted_lock`），它就会被添加到事务对象 `trx_t` 的 `locks` 链表中。这个链表中的所有锁，只会在事务提交（`trx_commit`）或回滚（`trx_rollback`）时，通过 `lock_trx_release_locks()` 函数统一遍历并释放。语句执行完并不会触发释放，这就是两阶段锁协议在代码层面的直接体现。
+
+#### 2. 主动死锁检测的实现
+
+当一个事务因锁冲突而进入等待状态时（即 `lock_rec_lock` 中 `suspend_thread` 的地方），InnoDB 会触发主动死锁检测。
+
+**核心逻辑：构建“等待关系图”（Waits-for Graph）并深度优先搜索（DFS）**
+
+这个图是在需要检测时 **动态构建** 的，节点是事务（`trx_t`），有向边 `T1 -> T2` 表示 `T1` 正在等待 `T2` 释放锁。
+
+**核心函数：`DeadlockChecker::check_and_resolve()` (位于 `lock/lock0deadlock.cc`)**
+
+```cpp
+// 伪代码: DeadlockChecker::check_and_resolve()
+bool DeadlockChecker::check_and_resolve(lock_t* wait_lock, trx_t* trx) {
+    // 步骤1: 初始化。获取等待的事务(wait_trx)和它等待的锁(wait_lock)。
+    m_wait_trx = trx;
+    
+    // 步骤2: 启动深度优先搜索（DFS）来寻找等待图中的环。
+    // search() 函数是DFS的核心实现。
+    // m_start_node 记录了DFS的起点，用于判断是否回到原点。
+    m_start_node = trx; 
+    bool found = search(trx);
+
+    if (found) {
+        // *** 发现死锁 ***
+
+        // 步骤3: 如果检测到环，则选择一个“代价”最小的事务作为受害者。
+        trx_t* victim_trx = select_victim();
+
+        // 步骤4: 回滚受害者事务。
+        // 这会释放受害者持有的所有锁，从而打破死锁环。
+        trx_rollback_for_deadlock(victim_trx);
+
+        return true; // 报告已处理死锁
+    }
+
+    return false; // 未发现死lok
+}
+
+
+// 伪代码: DeadlockChecker::search() - DFS核心
+bool DeadlockChecker::search(trx_t* current_trx) {
+    // a. 将当前事务加入到本次搜索的路径中，防止在同一个路径上重复访问。
+    m_path.add(current_trx);
+
+    // b. 获取 current_trx 正在等待的那个锁 lock_being_waited_for。
+    lock_t* lock = current_trx->wait_lock;
+
+    // c. 遍历这个锁的持有者和等待者，找到锁的直接持有者。
+    //    对于行锁，通常只有一个持有者 trx_holder。
+    trx_t* trx_holder = get_trx_holding_the_lock(lock);
+
+    if (trx_holder == m_start_node) {
+        // ** 找到环 **
+        // 如果锁的持有者正是我们搜索的起点，说明形成了一个闭环。
+        // 例如：T1 -> T2 -> T1
+        return true; // 死锁发现！
+    }
+
+    // d. 检查 trx_holder 是否已经存在于当前的搜索路径中。
+    if (m_path.contains(trx_holder)) {
+        // ** 找到环 **
+        // 例如：T1 -> T2 -> T3 -> T2，当从T3访问T2时，发现T2已在路径中。
+        return true; // 死锁发现！
+    }
+
+    // e. 递归深入: 以锁的持有者 trx_holder 作为新节点，继续进行DFS搜索。
+    if (search(trx_holder)) {
+        return true;
+    }
+    
+    // f. 回溯: 如果从 trx_holder 出发的所有路径都没有找到环，
+    //    则将 current_trx 从当前搜索路径中移除。
+    m_path.remove(current_trx);
+
+    return false; // 在这个分支没有找到死锁
+}
+```
+
+**性能瓶颈** ：笔记中提到的热点行更新导致CPU飙升，根源就在于此。当1000个线程同时更新同一行时，第2个线程等待第1个，第3个等待第1个... 第1000个也等待第1个。当第 `n` 个线程进入等待时，它会触发一次死锁检测。这次检测需要构建一个包含 `n-1` 个节点（都在等待第1个线程）的图，并进行遍历。虽然最终没有环，但这个遍历的成本随着 `n` 的增大而急剧升高，导致大量CPU消耗在死锁检测上。
+
+#### 3. 死锁处理：受害者选择与回滚
+
+一旦 `DeadlockChecker` 发现了死锁环，就需要选择一个事务进行回滚，以打破循环。
+
+**核心逻辑：选择回滚代价最小的事务**
+
+InnoDB 不会随机选择受害者，而是倾向于选择“最年轻”、做的工作最少的事务。这样回滚的成本（Undo Log的回放等）最低。
+
+**核心函数：`DeadlockChecker::select_victim()`**
+
+```cpp
+// 伪代码: DeadlockChecker::select_victim()
+trx_t* DeadlockChecker::select_victim() {
+    trx_t* victim = nullptr;
+    uint32_t min_weight = MAX_UINT32;
+
+    // 步骤1: 遍历死锁环上的所有事务。
+    // DFS找到的环已经记录在 m_path 或类似的数据结构中。
+    for (trx in deadlock_cycle) {
+
+        // 步骤2: 计算每个事务的“权重”（weight）。
+        // 权重越小，代表事务做的修改越少，回滚代价越低。
+        // 主要的考量是事务生成的 undo log 记录数量。
+        uint32_t weight = trx->undo_no;
+
+        // 也可以加入其他考量，比如事务是否修改了非事务性表等。
+        // ...
+
+        // 步骤3: 选择权重最小的事务。
+        if (weight < min_weight) {
+            min_weight = weight;
+            victim = trx;
+        }
+    }
+
+    // 步骤4: 返回被选中的受害者事务。
+    return victim;
+}
+```
+
+选出受害者后，引擎会对其执行 `trx_rollback_for_deadlock`，释放其全部锁，并唤醒其他因它而等待的事务。被回滚的事务对应的客户端会收到一个 “Deadlock found when trying to get lock; try restarting transaction” 的错误。

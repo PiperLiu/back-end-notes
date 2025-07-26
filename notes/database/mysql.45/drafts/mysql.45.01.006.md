@@ -16,6 +16,10 @@
   - [如何安全地给小表加字段？](#如何安全地给小表加字段)
 - [小结](#小结)
 - [问题：备库上备份，主库DDL会发生什么](#问题备库上备份主库ddl会发生什么)
+- [补充章节：深入代码：Server层锁的实现原理](#补充章节深入代码server层锁的实现原理)
+  - [1. 全局锁 `FTWRL` 的实现](#1-全局锁-ftwrl-的实现)
+  - [2. 表锁 `LOCK TABLES` 的实现](#2-表锁-lock-tables-的实现)
+  - [3. 元数据锁 `MDL` 的实现](#3-元数据锁-mdl-的实现)
 
 <!-- /code_chunk_output -->
 
@@ -184,3 +188,154 @@ Q6:ROLLBACK TO SAVEPOINT sp;
 - 如果在“时刻 2”到达，则表结构被改过，Q5 执行的时候，报 `Table definition has changed, please retry transaction` ，现象： `mysqldump` 终止；
 - 如果在“时刻 2”和“时刻 3”之间到达， `mysqldump` 占着 `t1` 的 `MDL` 读锁， `binlog` 被阻塞，现象：主从延迟，直到 Q6 执行完成。
 - 从“时刻 4”开始， `mysqldump` 释放了 MDL 读锁，现象：没有影响，备份拿到的是 `DDL` 前的表结构。
+
+### 补充章节：深入代码：Server层锁的实现原理
+
+本章旨在补充笔记中提到的三种锁在MySQL源代码层面的核心实现逻辑。为了便于理解，我们将使用简化的伪代码和注释来描述其工作流程，这些逻辑主要分布在 `sql/` 目录下的 `sql_base.cc`, `sql_lock.cc`, `mdl.cc` 等文件中。
+
+#### 1. 全局锁 `FTWRL` 的实现
+
+`FLUSH TABLES WITH READ LOCK` (FTWRL) 的目标是暂停整个实例的写入活动。其实现依赖于一个全局性的锁和对所有工作线程状态的协调。
+
+**核心函数：`lock_global_read_lock()` (位于 `sql_lock.cc`)**
+
+当用户执行FTWRL命令时，MySQL Server最终会调用这个函数。
+
+```cpp
+// 伪代码: lock_global_read_lock()
+int lock_global_read_lock(THD* thd) {
+    // 步骤1: 获取全局读锁的互斥锁（Mutex）
+    // 这是一个内部控制锁，用来确保同一时间只有一个线程可以执行FTWRL或UNLOCK操作。
+    // 防止多个FTWRL请求相互干扰。
+    mysql_mutex_lock(&LOCK_global_read);
+
+    // 步骤2: 检查当前线程是否已经持有全局锁，防止重入导致死锁。
+    if (thd->global_read_lock) {
+        // 如果已经持有，则直接返回。
+        mysql_mutex_unlock(&LOCK_global_read);
+        return 0; 
+    }
+
+    // 步骤3: 关键步骤 - 刷新并关闭所有打开的表。
+    // 这个操作会强制所有线程释放它们当前持有的表缓存。
+    // 同时，它会等待所有正在使用表的线程完成当前操作。
+    close_cached_tables(thd, true, true);
+
+    // 步骤4: 设置全局变量，标记整个实例已进入全局读锁状态。
+    // 这个变量是一个全局的"交通信号灯"，新的写操作会检查这个变量。
+    mysql_gaq_add_lock(&global_read_lock);
+
+    // 步骤5: 标记当前会话（THD）持有了全局锁。
+    // 这很重要，因为当这个会话断开连接时，服务端会根据这个标记自动释放全局锁。
+    thd->global_read_lock = true;
+
+    // 步骤6: 释放内部控制锁
+    mysql_mutex_unlock(&LOCK_global_read);
+    return 0;
+}
+
+// 释放锁的逻辑在 `unlock_global_read_lock()` 中，过程相反。
+// 它会清除全局状态变量 `global_read_lock` 和会话标记 `thd->global_read_lock`。
+```
+
+**总结** ：`FTWRL`的实现可以看作是一个“两阶段”过程。首先，通过`close_cached_tables`强制所有正在进行中的操作“靠边停车”。然后，通过设置一个全局变量`global_read_lock`来阻止新的写操作“上路”。
+
+#### 2. 表锁 `LOCK TABLES` 的实现
+
+`LOCK TABLES` 是一种显式的、由用户控制的表级锁。其实现与线程的上下文（`THD`对象）紧密相关。
+
+**核心函数：`mysql_lock_tables()` (位于 `sql_lock.cc`)**
+
+```cpp
+// 伪代码: mysql_lock_tables()
+bool mysql_lock_tables(THD *thd, TABLE_LIST *tables) {
+    // 步骤1: 清理当前线程之前可能持有的所有表锁。
+    // LOCK TABLES命令会覆盖之前的任何LOCK TABLES操作。
+    unlock_tables(thd, thd->lock);
+
+    // 步骤2: 遍历用户请求加锁的表列表（tables）。
+    for (TABLE_LIST *table = tables; table; table = table->next) {
+        // 步骤2.1: 为每个表打开并获取一个表实例。
+        // 这个过程会触发MDL锁的获取（见下一节）。
+        open_ltable(thd, table, ...);
+
+        // 步骤2.2: 设置锁的类型（READ, WRITE等）到表实例的 lock_type 属性中。
+        table->lock_type = ...;
+    }
+
+    // 步骤3: 核心步骤 - 执行加锁操作。
+    // 这个函数会真正地去获取物理的表锁。
+    if (lock_tables(thd, tables)) {
+        // 如果加锁失败（例如发生死锁），则回滚并释放所有已尝试加的锁。
+        return true; // 返回失败
+    }
+
+    // 步骤4: 将成功加锁的表列表保存到当前线程的上下文中。
+    // thd->lock 指向这个锁定的表列表。
+    // Server层的其他部分会通过检查 thd->lock 来判断该线程的权限。
+    // 例如，如果一个线程执行了 LOCK TABLES t1 READ，
+    // 当它尝试 "UPDATE t1 ..." 时，Server会检查 thd->lock 发现 t1 是读锁，从而报错。
+    thd->lock = tables;
+
+    return false; // 返回成功
+}
+```
+
+**总结** ：`LOCK TABLES` 的实现是将锁信息（哪些表、何种锁）直接绑定到了发起操作的线程对象`THD`上。Server层的SQL执行器在处理后续语句时，会主动检查`thd->lock`来强制执行锁的约束，这完全是Server层的行为。
+
+#### 3. 元数据锁 `MDL` 的实现
+
+MDL是为保证事务期间表结构不被修改而设计的。它的实现是现代MySQL中锁管理最精巧的部分之一，其核心是基于一个“锁请求队列”的机制。
+
+**核心组件与函数 (位于 `mdl.h`, `mdl.cc`)**
+* **`MDL_context`** : 每个事务（或语句）都有一个MDL上下文，用于管理其生命周期内的所有MDL锁。
+* **`MDL_request`** : 代表一个锁请求，包含要锁的对象名、锁类型（如`MDL_SHARED_READ`, `MDL_EXCLUSIVE`）等信息。
+* **`MDL_ticket`** : 代表一个已成功获取的锁。它是一个“凭证”，当这个凭证被销毁时，锁就被释放。通常在事务结束时，`MDL_context`会销毁其持有的所有`MDL_ticket`。
+
+**核心函数：`MDL_context::acquire_lock()`**
+
+```cpp
+// 伪代码: MDL_context::acquire_lock()
+bool MDL_context::acquire_lock(MDL_request *mdl_request, MDL_ticket **ticket) {
+    // 步骤1: 找到或创建一个对应于请求对象（如表't'）的锁对象。
+    MDL_object *obj = find_or_create_mdl_object(mdl_request->key);
+
+    // 步骤2: 检查这个锁对象的队列，判断请求的锁是否与已授予的锁兼容。
+    // 这是最关键的调度逻辑。
+    if (is_compatible_with_granted_locks(obj, mdl_request)) {
+        // 场景A: 锁兼容 (例如，读请求遇到读锁)
+        // 步骤2A.1: 直接授予锁。
+        grant_lock(obj, mdl_request);
+        
+        // 步骤2A.2: 创建一个MDL_ticket，并返回给调用者。
+        *ticket = create_ticket(...);
+        return true; // 成功获取锁
+    } else {
+        // 场景B: 锁不兼容 (例如，写请求遇到读锁，或读请求遇到等待中的写锁)
+        // 步骤2B.1: 将当前的MDL_request放入该锁对象的等待队列（pending_requests）。
+        obj->pending_requests.push_back(mdl_request);
+
+        // 步骤2B.2: 当前线程进入等待状态（休眠）。
+        // 它会等待，直到持有冲突锁的线程释放锁。
+        thd_wait_begin(...);
+        
+        // ... 等待被唤醒 ...
+
+        // 当被唤醒后，会重新尝试获取锁。
+        // 如果获取成功，则从等待队列中移除请求，并返回ticket。
+        // 如果因超时等原因失败，则返回false。
+    }
+}
+
+// 锁释放逻辑 (发生在事务结束时)
+MDL_context::~MDL_context() {
+    for (ticket in all_my_tickets) {
+        // 销毁ticket会触发锁的释放
+        release_lock(ticket->lock_object, ticket);
+        // 释放锁后，会检查并唤醒等待队列中的其他线程。
+        wakeup_pending_threads(ticket->lock_object);
+    }
+}
+```
+
+**总结** ：MDL的实现精髓在于其 **队列机制** 。一个`ALTER TABLE`（请求`MDL_EXCLUSIVE`）之所以会因一个长事务中的`SELECT`（持有`MDL_SHARED_READ`）而阻塞，就是因为它在`acquire_lock`时发现锁不兼容，其请求被放入了等待队列。而更致命的是，一旦队列中有写锁请求（即使在等待），后续的读锁请求为了防止写锁“饿死”，也会被阻塞排队。这就是“给小表加字段导致库挂了”的根本代码层原因。锁的生命周期与事务绑定，确保了事务的原子性和隔离性不受DDL干扰。
