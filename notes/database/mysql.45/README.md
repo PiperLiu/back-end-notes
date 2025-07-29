@@ -193,19 +193,19 @@ https://time.geekbang.org/column/intro/100020801
 
 #### 09 | 普通索引和唯一索引，应该怎么选择？
 
-[./drafts/mysql.45.02.001.md](./drafts/mysql.45.01.002.md)
+[./drafts/mysql.45.02.001.md](./drafts/mysql.45.02.001.md)
 
-- [概述：选择普通索引还是唯一索引？](./drafts/mysql.45.01.002.md#概述选择普通索引还是唯一索引)
-- [查询过程](./drafts/mysql.45.01.002.md#查询过程)
-- [更新过程](./drafts/mysql.45.01.002.md#更新过程)
-  - [change buffer](./drafts/mysql.45.01.002.md#change-buffer)
-  - [什么条件下可以使用 change buffer](./drafts/mysql.45.01.002.md#什么条件下可以使用-change-buffer)
-  - [坑：别把普通索引改成唯一索引](./drafts/mysql.45.01.002.md#坑别把普通索引改成唯一索引)
-- [change buffer 的使用场景](./drafts/mysql.45.01.002.md#change-buffer-的使用场景)
-- [索引选择和实践](./drafts/mysql.45.01.002.md#索引选择和实践)
-- [change buffer 和 redo log](./drafts/mysql.45.01.002.md#change-buffer-和-redo-log)
-- [业务中是否使用唯一索引](./drafts/mysql.45.01.002.md#业务中是否使用唯一索引)
-- [问题：断电是否会丢失 change buffer](./drafts/mysql.45.01.002.md#问题断电是否会丢失-change-buffer)
+- [概述：选择普通索引还是唯一索引？](./drafts/mysql.45.02.001.md#概述选择普通索引还是唯一索引)
+- [查询过程](./drafts/mysql.45.02.001.md#查询过程)
+- [更新过程](./drafts/mysql.45.02.001.md#更新过程)
+  - [change buffer](./drafts/mysql.45.02.001.md#change-buffer)
+  - [什么条件下可以使用 change buffer](./drafts/mysql.45.02.001.md#什么条件下可以使用-change-buffer)
+  - [坑：别把普通索引改成唯一索引](./drafts/mysql.45.02.001.md#坑别把普通索引改成唯一索引)
+- [change buffer 的使用场景](./drafts/mysql.45.02.001.md#change-buffer-的使用场景)
+- [索引选择和实践](./drafts/mysql.45.02.001.md#索引选择和实践)
+- [change buffer 和 redo log](./drafts/mysql.45.02.001.md#change-buffer-和-redo-log)
+- [业务中是否使用唯一索引](./drafts/mysql.45.02.001.md#业务中是否使用唯一索引)
+- [问题：断电是否会丢失 change buffer](./drafts/mysql.45.02.001.md#问题断电是否会丢失-change-buffer)
 
 #### 10 | MySQL为什么有时候会选错索引？
 
