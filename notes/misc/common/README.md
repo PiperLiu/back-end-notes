@@ -14,6 +14,7 @@ https://time.geekbang.org/column/intro/100551601
 - [开篇词 (1讲)](#开篇词-1讲)
 - [微服务架构 (10讲)](#微服务架构-10讲)
   - [01 | 服务注册与发现：AP和CP，你选哪个？](#01--服务注册与发现ap和cp你选哪个)
+  - [02 | 负载均衡：调用结果、缓存机制是怎么影响负载均衡的？](#02--负载均衡调用结果-缓存机制是怎么影响负载均衡的)
 
 <!-- /code_chunk_output -->
 
@@ -41,3 +42,20 @@ https://time.geekbang.org/column/intro/100551601
 - [AP vs. CP：可用性与一致性的抉择](./drafts/01.microservices.01.md#ap-vs-cp可用性与一致性的抉择)
   - [为什么说 ZooKeeper (和 etcd) 是 CP 的？](./drafts/01.microservices.01.md#为什么说-zookeeper-和-etcd-是-cp-的)
   - [Eureka/Nacos 如何做到 AP？它们舍弃了什么？](./drafts/01.microservices.01.md#eurekanacos-如何做到-ap它们舍弃了什么)
+
+#### 02 | 负载均衡：调用结果、缓存机制是怎么影响负载均衡的？
+
+[./drafts/01.microservices.02.md)](./drafts/01.microservices.02.md)
+
+- [前置知识](./drafts/01.microservices.02.md#前置知识)
+  - [轮询与加权](./drafts/01.microservices.02.md#轮询与加权)
+  - [随机与加权随机](./drafts/01.microservices.02.md#随机与加权随机)
+  - [哈希与一致性哈希](./drafts/01.microservices.02.md#哈希与一致性哈希)
+  - [最少连接数](./drafts/01.microservices.02.md#最少连接数)
+  - [最少活跃数](./drafts/01.microservices.02.md#最少活跃数)
+  - [最快响应时间](./drafts/01.microservices.02.md#最快响应时间)
+  - [小结一下](./drafts/01.microservices.02.md#小结一下)
+- [亮点方案](./drafts/01.microservices.02.md#亮点方案)
+  - [调用结果对负载均衡的影响](./drafts/01.microservices.02.md#调用结果对负载均衡的影响)
+  - [哈希一致性结合本地缓存](./drafts/01.microservices.02.md#哈希一致性结合本地缓存)
+- [面试思路总结](./drafts/01.microservices.02.md#面试思路总结)
