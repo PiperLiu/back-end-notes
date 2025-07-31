@@ -15,6 +15,7 @@ https://time.geekbang.org/column/intro/100551601
 - [微服务架构 (10讲)](#微服务架构-10讲)
   - [01 | 服务注册与发现：AP和CP，你选哪个？](#01--服务注册与发现ap和cp你选哪个)
   - [02 | 负载均衡：调用结果、缓存机制是怎么影响负载均衡的？](#02--负载均衡调用结果-缓存机制是怎么影响负载均衡的)
+  - [03 | 熔断：熔断-恢复-熔断-恢复，抖来抖去怎么办？](#03--熔断熔断-恢复-熔断-恢复抖来抖去怎么办)
 
 <!-- /code_chunk_output -->
 
@@ -59,3 +60,15 @@ https://time.geekbang.org/column/intro/100551601
   - [调用结果对负载均衡的影响](./drafts/01.microservices.02.md#调用结果对负载均衡的影响)
   - [哈希一致性结合本地缓存](./drafts/01.microservices.02.md#哈希一致性结合本地缓存)
 - [面试思路总结](./drafts/01.microservices.02.md#面试思路总结)
+
+#### 03 | 熔断：熔断-恢复-熔断-恢复，抖来抖去怎么办？
+
+[./drafts/01.microservices.03.md)](./drafts/01.microservices.03.md)
+
+- [前置知识](./drafts/01.microservices.03.md#前置知识)
+  - [判定服务的健康状态](./drafts/01.microservices.03.md#判定服务的健康状态)
+  - [服务恢复正常](./drafts/01.microservices.03.md#服务恢复正常)
+- [面试准备](./drafts/01.microservices.03.md#面试准备)
+  - [基本思路](./drafts/01.microservices.03.md#基本思路)
+  - [亮点方案](./drafts/01.microservices.03.md#亮点方案)
+  - [面试思路总结](./drafts/01.microservices.03.md#面试思路总结)
