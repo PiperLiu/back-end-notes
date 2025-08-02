@@ -16,6 +16,7 @@ https://time.geekbang.org/column/intro/100551601
   - [01 | 服务注册与发现：AP和CP，你选哪个？](#01--服务注册与发现ap和cp你选哪个)
   - [02 | 负载均衡：调用结果、缓存机制是怎么影响负载均衡的？](#02--负载均衡调用结果-缓存机制是怎么影响负载均衡的)
   - [03 | 熔断：熔断-恢复-熔断-恢复，抖来抖去怎么办？](#03--熔断熔断-恢复-熔断-恢复抖来抖去怎么办)
+  - [04 | 降级：为什么每次大促的时候总是要把退款之类的服务停掉？](#04--降级为什么每次大促的时候总是要把退款之类的服务停掉)
 
 <!-- /code_chunk_output -->
 
@@ -72,3 +73,16 @@ https://time.geekbang.org/column/intro/100551601
   - [基本思路](./drafts/01.microservices.03.md#基本思路)
   - [亮点方案](./drafts/01.microservices.03.md#亮点方案)
   - [面试思路总结](./drafts/01.microservices.03.md#面试思路总结)
+
+#### 04 | 降级：为什么每次大促的时候总是要把退款之类的服务停掉？
+
+[./drafts/01.microservices.04.md)](./drafts/01.microservices.04.md)
+
+- [前置知识](./drafts/01.microservices.04.md#前置知识)
+  - [降级与熔断](./drafts/01.microservices.04.md#降级与熔断)
+  - [如何降级？](./drafts/01.microservices.04.md#如何降级)
+- [面试准备](./drafts/01.microservices.04.md#面试准备)
+  - [基本思路](./drafts/01.microservices.04.md#基本思路)
+- [亮点方案](./drafts/01.microservices.04.md#亮点方案)
+  - [读写服务降级写服务](./drafts/01.microservices.04.md#读写服务降级写服务)
+  - [快慢路径降级慢路径](./drafts/01.microservices.04.md#快慢路径降级慢路径)
